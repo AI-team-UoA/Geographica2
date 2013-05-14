@@ -8,15 +8,18 @@
  */
 package gr.uoa.di.rdf.Geographica.queries;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
 import gr.uoa.di.rdf.Geographica.systemsundertest.ParliamentSUT;
-import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
 import gr.uoa.di.rdf.Geographica.systemsundertest.StrabonSUT;
+import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
 import gr.uoa.di.rdf.Geographica.systemsundertest.UseekmSUT;
 import gr.uoa.di.rdf.Geographica.systemsundertest.VirtuosoSUT;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -36,8 +39,8 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 			+ "}  \n" 
 	;
 
-	private String givenPolygonFile = "classes/givenPolygon.txt";
-	private String givenLinesFile = "classes/givenLine.txt";
+	private String givenPolygonFile = "givenPolygon.txt";
+	private String givenLinesFile = "givenLine.txt";
 	private String givenPolygon;
 	private String givenLine, givenLine2, givenLine3;
 	private String givenPoint;
@@ -66,18 +69,29 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 			givenRadius = "2.93782";
 		}
 		
-		// <http://geo.linkedopendata.gr/gag/geometry/9061>
-		givenPolygon = ((List<String>)FileUtils.readLines(new File(givenPolygonFile))).get(0);
+		InputStream is = getClass().getResourceAsStream("/"+givenPolygonFile);
+		BufferedReader in = new BufferedReader(new InputStreamReader(is));
+		givenPolygon = in.readLine();
 		givenPolygon = "\""+givenPolygon+"\"^^"+spatialDatatype;
+		in.close();
+		in = null;
+		is.close();
+		is = null;
+		is = getClass().getResourceAsStream("/"+givenLinesFile);
+		in = new BufferedReader(new InputStreamReader(is));
 		// <http://linkedgeodata.org/geometry/way168092715>
-		givenLine = ((List<String>)FileUtils.readLines(new File(givenLinesFile))).get(0);
+		givenLine = in.readLine();
 		givenLine = "\""+givenLine+"\"^^"+spatialDatatype;
 		// <http://linkedgeodata.org/geometry/way31642973>
-		givenLine2 = ((List<String>)FileUtils.readLines(new File(givenLinesFile))).get(1);
+		givenLine2 = in.readLine();
 		givenLine2 = "\""+givenLine2+"\"^^"+spatialDatatype;
 		// <http://linkedgeodata.org/geometry/way45476887>
-		givenLine3 = ((List<String>)FileUtils.readLines(new File(givenLinesFile))).get(2);
+		givenLine3 = in.readLine();
 		givenLine3 = "\""+givenLine3+"\"^^"+spatialDatatype;
+		in.close();
+		in = null;
+		is.close();
+		is = null;
 	}
 	
 	@Override
