@@ -1,0 +1,258 @@
+/**
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * Copyright (C) 2013, Pyravlos Team
+ *
+ */
+package gr.uoa.di.rdf.Geographica.queries;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import gr.uoa.di.rdf.Geographica.systemsundertest.ParliamentSUT;
+import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
+import gr.uoa.di.rdf.Geographica.systemsundertest.StrabonSUT;
+import gr.uoa.di.rdf.Geographica.systemsundertest.UseekmSUT;
+import gr.uoa.di.rdf.Geographica.systemsundertest.VirtuosoSUT;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
+
+/**
+ * @author George Garbis <ggarbis@di.uoa.gr>
+ */
+public class MicroSelectionsQueriesSet extends QueriesSet {
+
+	static Logger logger = Logger.getLogger(MicroSelectionsQueriesSet.class.getSimpleName());
+	
+	// Template to create queries
+	private final String queryTemplate = prefixes 
+			+ "\n select ?s1 ?o1 where { \n"
+			+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1} \n"
+			+ "  FILTER(geof:FUNCTION(?o1, GIVEN_SPATIAL_LITERAL)). " 
+			+ "}  \n" 
+	;
+
+	private String givenPolygonFile = "classes/givenPolygon.txt";
+	private String givenLinesFile = "classes/givenLine.txt";
+	private String givenPolygon;
+	private String givenLine, givenLine2, givenLine3;
+	private String givenPoint;
+	private String givenRadius;
+		
+	@SuppressWarnings("unchecked")
+	public MicroSelectionsQueriesSet(SystemUnderTest sut) throws IOException {
+		super(sut);
+		queriesN = 11; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
+		
+		String spatialDatatype=null;
+		if (sut instanceof StrabonSUT) {
+			spatialDatatype = "<http://www.opengis.net/ont/geosparql#wktLiteral>";
+			givenRadius = "3000";
+			givenPoint = "\"POINT(23.71622 37.97945)\"^^"+spatialDatatype;
+		} else if (sut instanceof ParliamentSUT) {
+			spatialDatatype = "<http://www.opengis.net/ont/sf#wktLiteral>";
+			givenRadius = "3000";
+			givenPoint = "\"POINT(23.71622 37.97945)\"^^"+spatialDatatype;
+		} else if (sut instanceof UseekmSUT) {
+			spatialDatatype = "<http://www.opengis.net/ont/geosparql#wktLiteral>";
+			givenRadius = "0.03";
+			givenPoint = "\"POINT(23.71622 37.97945)\"^^"+spatialDatatype;
+		} else if (sut instanceof VirtuosoSUT) {
+			givenPoint = "bif:st_point(23.71622, 37.97945)";
+			givenRadius = "2.93782";
+		}
+		
+		// <http://geo.linkedopendata.gr/gag/geometry/9061>
+		givenPolygon = ((List<String>)FileUtils.readLines(new File(givenPolygonFile))).get(0);
+		givenPolygon = "\""+givenPolygon+"\"^^"+spatialDatatype;
+		// <http://linkedgeodata.org/geometry/way168092715>
+		givenLine = ((List<String>)FileUtils.readLines(new File(givenLinesFile))).get(0);
+		givenLine = "\""+givenLine+"\"^^"+spatialDatatype;
+		// <http://linkedgeodata.org/geometry/way31642973>
+		givenLine2 = ((List<String>)FileUtils.readLines(new File(givenLinesFile))).get(1);
+		givenLine2 = "\""+givenLine2+"\"^^"+spatialDatatype;
+		// <http://linkedgeodata.org/geometry/way45476887>
+		givenLine3 = ((List<String>)FileUtils.readLines(new File(givenLinesFile))).get(2);
+		givenLine3 = "\""+givenLine3+"\"^^"+spatialDatatype;
+	}
+	
+	@Override
+	public QueryStruct getQuery(int queryIndex, int repetition) {
+		
+		String query = null, label = null;
+		
+		// IMPORTANT: Add/remove queries in getQuery implies changing queriesN and changing case numbers
+		switch (queryIndex) {
+
+		// -- Equals -- //
+		case 0:
+			// Line = GivenLine
+			label = "Equals_LGD_GivenLine"; 
+			query = queryTemplate;
+			query = query.replace("GRAPH1", lgd);
+			query = query.replace("ASWKT1", lgd_asWKT);
+			query = query.replace("GIVEN_SPATIAL_LITERAL", givenLine);
+			query = query.replace("FUNCTION", "sfEquals");
+			break;
+	
+		case 1:
+			// Polygon = GivenPolygon
+			label = "Equals_GADM_GivenPolygon"; 
+			query = queryTemplate;
+			query = query.replace("GRAPH1", gadm);
+			query = query.replace("ASWKT1", gadm_asWKT);
+			query = query.replace("GIVEN_SPATIAL_LITERAL", givenPolygon);
+			query = query.replace("FUNCTION", "sfEquals");
+			break;
+	
+		// -- Intersects -- //
+		case 2:
+			// Line & GivenPolygon
+			label = "Intersects_LGD_GivenPolygon"; 
+			query = queryTemplate;
+			query = query.replace("GRAPH1", lgd);
+			query = query.replace("ASWKT1", lgd_asWKT);
+			query = query.replace("GIVEN_SPATIAL_LITERAL", givenPolygon);
+			query = query.replace("FUNCTION", "sfIntersects");
+			break;
+	
+		case 3:
+			// Polygon & GivenLine
+			label = "Intersects_CLC_GivenLine"; 
+			query = queryTemplate;
+			query = query.replace("GRAPH1", clc);
+			query = query.replace("ASWKT1", clc_asWKT);
+			query = query.replace("GIVEN_SPATIAL_LITERAL", givenLine2);
+			query = query.replace("FUNCTION", "sfIntersects");
+			break;
+	
+		// -- Overlaps -- //
+		case 4:
+			label = "Overlaps_CLC_GivenPolygon"; 
+			query = queryTemplate;
+			query = query.replace("GRAPH1", clc);
+			query = query.replace("ASWKT1", clc_asWKT);
+			query = query.replace("GIVEN_SPATIAL_LITERAL", givenPolygon);
+			query = query.replace("FUNCTION", "sfOverlaps");
+			break;
+	
+
+		// -- Crosses -- //
+		case 5:
+			label = "Crosses_LGD_GivenLine"; 
+			query = queryTemplate;
+			query = query.replace("GRAPH1", lgd);
+			query = query.replace("ASWKT1", lgd_asWKT);
+			query = query.replace("GIVEN_SPATIAL_LITERAL", givenLine3);
+			query = query.replace("FUNCTION", "sfCrosses");
+			break;
+			
+		// -- Within -- //
+		case 6:
+			label = "Within_GeoNames_GivenPolygon";// times = 345699520 + 840787868 = 1186487388, 136
+			query = queryTemplate;
+			query = query.replace("GRAPH1", geonames);
+			query = query.replace("ASWKT1", geonames_asWKT);
+			query = query.replace("GIVEN_SPATIAL_LITERAL", givenPolygon);
+			query = query.replace("FUNCTION", "sfWithin");
+			break;
+	
+		// -- Within buffer -- //
+		case 7:
+			label = "Intersects_GeoNames_Point_Buffer"; 
+			if (sut instanceof StrabonSUT) { 
+				query = prefixes + "\n select ?s1 where { \n" 
+						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n"
+						+ " FILTER(geof:sfWithin(?o1, geof:buffer( \n"
+						+ givenPoint + ", " + givenRadius + ", <http://www.opengis.net/def/uom/OGC/1.0/metre>"
+						+ "))).  \n" 
+						+ "} "
+						; 
+			} else if (sut instanceof ParliamentSUT) {
+				query = prefixes + "\n select ?s1 where { \n" 
+						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n"
+						+ " FILTER(geof:sfWithin(?o1, geof:buffer( \n"
+						+ givenPoint + ", " + givenRadius + ", <http://www.opengis.net/def/uom/OGC/1.0/metre>"
+						+ "))).  \n" 
+						+ "} "
+						; 
+			} else if (sut instanceof VirtuosoSUT) {
+				query = prefixes + "\n select ?s1 where { \n" 
+						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n"
+						+ " FILTER(bif:st_within(?o1, " + givenPoint + ", " + givenRadius 
+						+ ")).  \n" 
+						+ "} "
+						; 
+
+			} else if (sut instanceof UseekmSUT) {
+				query = prefixes + "\n select ?s1 where { \n" 
+						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n"
+						+ " FILTER(geof:sfWithin(?o1, geof:buffer( \n"
+						+ givenPoint + ", " +givenRadius
+						+ "))).  \n" 
+						+ "} "
+						;
+			}
+			break;
+	
+		// -- Within distance -- //
+		case 8:
+			label = "Intersects_GeoNames_Point_Distance";
+			if (sut instanceof StrabonSUT) {
+				query = prefixes + "\n select ?s1 where { \n" 
+						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n" 
+						+ "  FILTER(strdf:distance(?o1, "+ givenPoint + ", <http://www.opengis.net/def/uom/OGC/1.0/metre>) <= " + givenRadius + ").  \n" 
+						+ "} "
+						;
+			} else if (sut instanceof VirtuosoSUT) {
+				query = prefixes + "\n select ?s1 where { \n" 
+						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n" 
+						+ "  FILTER(bif:st_distance(?o1, "+ givenPoint + ") <= " + givenRadius + ").  \n" 
+						+ "} "
+						;
+			} else if (sut instanceof UseekmSUT) {
+				query = prefixes + "\n select ?s1 where { \n" 
+						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n" 
+						+ "  FILTER(geof:distance(?o1, "+ givenPoint + ") <= " + givenRadius + ").  \n" 
+						+ "} "
+						;
+			} else { // Parliament	
+				query = prefixes + "\n select ?s1 where { \n" 
+						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n" 
+						+ "  FILTER(geof:distance(?o1, "+ givenPoint + ", <http://www.opengis.net/def/uom/OGC/1.0/metre>) <= " + givenRadius + ").  \n" 
+						+ "} "
+						;
+			}
+			break;
+		case 9:
+			// -- Disjoint -- //
+			// Point != GivenPolygon
+			label = "Disjoint_GeoNames_MaxPolygon";
+			query = queryTemplate;
+			query = query.replace("GRAPH1", geonames);
+			query = query.replace("ASWKT1", geonames_asWKT);
+			query = query.replace("GIVEN_SPATIAL_LITERAL", givenPolygon);
+			query = query.replace("FUNCTION", "sfDisjoint");
+			break;
+		case 10:
+			// Line != GivenPolygon
+			label = "Disjoint_LGD_MaxPolygon";
+			query = queryTemplate;
+			query = query.replace("GRAPH1", lgd);
+			query = query.replace("ASWKT1", lgd_asWKT);
+			query = query.replace("GIVEN_SPATIAL_LITERAL", givenPolygon);
+			query = query.replace("FUNCTION", "sfDisjoint");
+			break;
+			
+		default:
+			logger.error("No such query number exists:"+queryIndex);
+		}
+	
+		return new QueryStruct(query, label);	
+	}
+
+}
