@@ -2,18 +2,23 @@
 
 logFile=/tmp/stdout
 
-#sudo su benchmark -c '/home/benchmark/virtuoso/bin/virtuoso-stop.sh';
-#sudo su benchmark -c 'rm -rf /home/benchmark/virtuoso/real';
-#sudo su benchmark -c "cd /home/benchmark/virtuoso; tar xf real.tgz"
-#sudo su benchmark -c "/home/benchmark/virtuoso/bin/virtuoso-start.sh" |& tee ${logFile}
-sudo su -c '/home/benchmark/virtuoso/bin/virtuoso-stop.sh';
-sudo su -c 'rm -rf /home/benchmark/virtuoso/real';
-sudo su -c "cd /home/benchmark/virtuoso; tar xf real.tar"
-sudo su -c "/home/benchmark/virtuoso/bin/virtuoso-start.sh" |& tee ${logFile}
+VIRTUOSO_HOME="/home/benchmark/rdf-stores/Virtuoso/virtuoso-7-test"
+${VIRTUOSO_HOME}/bin/virtuoso-stop.sh
+echo "`date`: Virtuoso stoped"; 
+
+db="geographica-gr-points"
+rm -rf ${VIRTUOSO_HOME}/${db}
+echo "`date`: Directory ${db} deleted"; 
+(cd ${VIRTUOSO_HOME}; tar xvzf ${db}.tar.gz)
+echo "`date`: Directory ${db} recreated"; 
+
+db="generator-512-POINT"
+rm -rf ${VIRTUOSO_HOME}/${db}
+echo "`date`: Directory ${db} deleted"; 
+(cd ${VIRTUOSO_HOME}; tar xvzf ${db}.tar.gz)
+echo "`date`: Directory ${db} recreated"; 
+
+#${VIRTUOSO_HOME}/bin/virtuoso-start.sh geo
+#echo "`date`: Virtuso started"; 
 
 
-if test "`grep -i -e error ${logFile}`" = ""; then
-	echo "Virtuoso reseted: `date`"
-else
-	echo "Error! Check ${logFile}"
-fi
