@@ -440,4 +440,8 @@ public class UseekmSUT implements SystemUnderTest {
 	public Object getSystem() {
 		return this.repository;
 	}
+	
+	public String translateQuery(String query, String label) { 
+		return query;
+	}
 }

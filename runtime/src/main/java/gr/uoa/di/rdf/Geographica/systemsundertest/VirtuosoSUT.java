@@ -71,6 +71,8 @@ public class VirtuosoSUT implements SystemUnderTest {
 		this.script_stop = stopScript;
 	}
 
+	public BindingSet getFirstBindingSet() {return firstBindingSet;}
+	
 	@Override
 	public void initialize() {
 		try {
@@ -103,7 +105,7 @@ public class VirtuosoSUT implements SystemUnderTest {
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
-			logger.fatal("Cannot clear caches");
+			logger.fatal("Cannot close Virtuoso");
 			StringWriter sw = new StringWriter();
 			e.printStackTrace(new PrintWriter(sw));
 			String stacktrace = sw.toString();
@@ -134,16 +136,23 @@ public class VirtuosoSUT implements SystemUnderTest {
 				logger.error("Something went wrong while stoping virtuoso");
 			}
 
+			//Thread.sleep(5);
+			//String[] check_virtuoso = {"/bin/sh", "-c", "ps -ef | grep 'virtuoso +wait' >> /tmp/virtuoso-stop.log"};
+			//pr = Runtime.getRuntime().exec(check_virtuoso);
+			//pr.waitFor();
+		
+			
 			pr = Runtime.getRuntime().exec(clear_caches);
 			pr.waitFor();
 			if ( pr.exitValue() != 0) {
 				logger.error("Something went wrong while clearing caches");
 			}
 
+			logger.info("Starting virtuoso:...database: "+database+", command: "+script_start);
 			pr = Runtime.getRuntime().exec(start_virtuoso);
 			pr.waitFor();
 			if ( pr.exitValue() != 0) {
-				logger.error("Something went wrong while clearing caches");
+				logger.error("Something went wrong while starting Virtuoso");
 			}
 
 			Thread.sleep(5000);
@@ -159,8 +168,8 @@ public class VirtuosoSUT implements SystemUnderTest {
 
 	@Override
 	public void restart() {
-		String[] stop_virtuoso = {"/bin/sh", "-c" , script_stop};
-		String[] start_virtuoso = {"/bin/sh", "-c" , script_start};
+		String[] stop_virtuoso = {"/bin/sh", "-c" , script_stop + " " + database};
+		String[] start_virtuoso = {"/bin/sh", "-c" , script_start + " " + database};
 
 		Process pr;
 
@@ -344,5 +353,9 @@ public class VirtuosoSUT implements SystemUnderTest {
 	QueryEvaluationException, TupleQueryResultHandlerException,
 	IOException {
 		return null;
+	}
+	
+	public String translateQuery(String query, String label) { 
+		return query;
 	}
 }

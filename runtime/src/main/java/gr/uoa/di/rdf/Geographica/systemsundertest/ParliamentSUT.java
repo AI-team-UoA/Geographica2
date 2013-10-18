@@ -72,6 +72,8 @@ public class ParliamentSUT implements SystemUnderTest {
 
 	public QuerySolution getFirstQuerySolution() {return firstQuerySolution;}
 	
+	public Object getFirstBindingSet() {return null; } // TODO
+	
 	public void initialize() {
 		if (!java.lang.System.getProperty("java.library.path").contains("parliament-dependencies")) {
 			logger.warn("Do not forget to add the folder Geographica/runtime/src/main/resources/parliament-dependencies/linux-32 or 64 to the variable java.library.path.");
@@ -319,5 +321,9 @@ public class ParliamentSUT implements SystemUnderTest {
 	@Override
 	public Object getSystem() {
 		return this.dataSource;
+	}
+	
+	public String translateQuery(String query, String label) { 
+		return query;
 	}
 }

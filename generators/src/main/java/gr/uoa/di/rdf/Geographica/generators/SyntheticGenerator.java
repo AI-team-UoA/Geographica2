@@ -84,8 +84,6 @@ public class SyntheticGenerator {
 						" PREFIX geof: <http://www.opengis.net/def/function/geosparql/> \n" +
 						" PREFIX geo: <http://www.opengis.net/ont/geosparql#> \n" +
 						" PREFIX geo-sf: <http://www.opengis.net/ont/sf#> \n"
-						+ "PREFIX al-geofn: <http://franz.com/ns/allegrograph/3.0/geospatial/fn/> \n"          
-						+ "PREFIX al-geo: <http://franz.com/ns/allegrograph/3.0/geospatial/> \n"
 						;
 
 	// folder where the output files will be stored

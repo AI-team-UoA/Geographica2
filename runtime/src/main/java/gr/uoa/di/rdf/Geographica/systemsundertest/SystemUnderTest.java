@@ -11,6 +11,7 @@ package gr.uoa.di.rdf.Geographica.systemsundertest;
 
 import java.io.IOException;
 
+import org.openrdf.query.BindingSet;
 import org.openrdf.query.MalformedQueryException;
 import org.openrdf.query.QueryEvaluationException;
 import org.openrdf.query.TupleQueryResultHandlerException;
@@ -27,4 +28,6 @@ public interface SystemUnderTest {
 	void clearCaches();
 	void restart();
 	Object getSystem();
+	public String translateQuery(String query, String label);
+	Object getFirstBindingSet();
 }

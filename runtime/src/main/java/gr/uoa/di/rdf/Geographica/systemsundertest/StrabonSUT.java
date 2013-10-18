@@ -309,5 +309,8 @@ public class StrabonSUT implements SystemUnderTest {
 			logger.fatal(stacktrace);
 		}
 	}
-	
+
+	public String translateQuery(String query, String label) { 
+		return query;
+	}
 }
