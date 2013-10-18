@@ -8,18 +8,28 @@ OUTPUT_PATH=${BASE}/generator
 ELEMENTS_PER_AXIS=1024
 
 DEBUG=false
-if test "$1" = "-d"; then
-	DEBUG=true
-	shift
-fi
+case ${1} in
+	-d)
+		DEBUG=true
+		shift
+	;;
+	-h)
+		echo "Usage: ${0} <output-path> <elements-per-axis>"
+		exit
+	;;
+esac
+
 
 args=$*
 
 if [[ $# -eq 0 ]] ; then
 	args="${OUTPUT_PATH} ${ELEMENTS_PER_AXIS}"
+else
+	OUTPUT_PATH=${1}
+	ELEMENTS_PER_AXIS=${2}	
 fi
 
-if [[ -d ${OUTPUT_PATH} ]] ; then
+if test ! -d ${OUTPUT_PATH}; then
 	mkdir ${OUTPUT_PATH}
 fi
 
