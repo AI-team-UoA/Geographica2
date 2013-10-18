@@ -22,7 +22,11 @@ public class MicroAggregationsExperiment extends Experiment {
 		super(sut, repetitions, timeoutSecs, logPath);
 		logger = Logger.getLogger(MicroAggregationsExperiment.class.getSimpleName());
 		queriesSet = new MicroAggregationQueriesSet(sut);
-
 	}
 
+	public MicroAggregationsExperiment(SystemUnderTest sut, int repetitions, int timeoutSecs, int[] queriesToRun, String logPath) {
+		super(sut, repetitions, timeoutSecs, queriesToRun, logPath);
+		logger = Logger.getLogger(MicroAggregationsExperiment.class.getSimpleName());
+		queriesSet = new MicroAggregationQueriesSet(sut);
+	}
 }

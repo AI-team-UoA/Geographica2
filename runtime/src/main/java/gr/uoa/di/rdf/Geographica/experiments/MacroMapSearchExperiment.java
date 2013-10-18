@@ -8,16 +8,17 @@
  */
 package gr.uoa.di.rdf.Geographica.experiments;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 import gr.uoa.di.rdf.Geographica.queries.MacroMapSearchQueriesSet;
 import gr.uoa.di.rdf.Geographica.queries.QueriesSet.QueryStruct;
 import gr.uoa.di.rdf.Geographica.systemsundertest.ParliamentSUT;
 import gr.uoa.di.rdf.Geographica.systemsundertest.StrabonSUT;
-import gr.uoa.di.rdf.Geographica.systemsundertest.UseekmSUT;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
+import gr.uoa.di.rdf.Geographica.systemsundertest.UseekmSUT;
+import gr.uoa.di.rdf.Geographica.systemsundertest.VirtuosoSUT;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import org.apache.log4j.Logger;
 import org.openrdf.query.Binding;
@@ -30,11 +31,22 @@ import com.hp.hpl.jena.query.QuerySolution;
  */
 public class MacroMapSearchExperiment extends MacroExperiment {
 	
+	protected int[] queriesToRun = null;
+	protected int queriesToRunN;
+
 	public MacroMapSearchExperiment(SystemUnderTest sut, int repetitions, int timeoutSecs, int runTimeInMinutes, String logPath) throws IOException {
 		super(sut, repetitions, timeoutSecs, runTimeInMinutes, logPath);
 		logger = Logger.getLogger(MacroMapSearchExperiment.class.getSimpleName());
 		queriesSet = new MacroMapSearchQueriesSet(sut);
 		this.runTimeInMinutes = runTimeInMinutes;
+	}
+	
+	public MacroMapSearchExperiment(SystemUnderTest sut, int repetitions, int timeoutSecs, int runTimeInMinutes, int[] queriesToRun, String logPath) throws IOException {
+		super(sut, repetitions, timeoutSecs, runTimeInMinutes, logPath);
+		logger = Logger.getLogger(MacroMapSearchExperiment.class.getSimpleName());
+		queriesSet = new MacroMapSearchQueriesSet(sut);
+		this.runTimeInMinutes = runTimeInMinutes;
+		this.queriesToRun = queriesToRun;
 	}
 	
 	@Override
@@ -53,10 +65,22 @@ public class MacroMapSearchExperiment extends MacroExperiment {
 		int repetitionI = 0;
 		int queryI = 0;
 		long t1 = System.currentTimeMillis();
+
+		if (queriesToRun == null) {
+			queriesToRunN = queriesSet.getQueriesN();
+		} else {
+			queriesToRunN = queriesToRun.length;
+		}
 		
 		while (true) {
 			try {
-				for (queryI = 0; queryI < queriesSet.getQueriesN(); queryI++) {
+				for (int i = 0; i < queriesToRunN; i++) {
+					if (queriesToRun != null) {
+						queryI = queriesToRun[i];
+					} else {
+						queryI = i;
+					}
+					
 					queryStruct = queriesSet.getQuery(queryI, repetitionI);
 
 					logger.info("Executing query (" + queryI + ", " + repetitionI + "): "	+ queryStruct.getQuery());
@@ -69,6 +93,11 @@ public class MacroMapSearchExperiment extends MacroExperiment {
 							Binding geo = firstBindingSet.getBinding("wkt");
 							((MacroMapSearchQueriesSet)queriesSet).setCurrentPoint(geo.getValue().stringValue());
 						}
+						if (sut instanceof VirtuosoSUT) {
+							BindingSet firstBindingSet = ((VirtuosoSUT)sut).getFirstBindingSet();
+							Binding geo = firstBindingSet.getBinding("wkt");
+							((MacroMapSearchQueriesSet)queriesSet).setCurrentPoint(geo.getValue().stringValue());
+						}
 						if (sut instanceof UseekmSUT) {
 							BindingSet firstBindingSet = ((UseekmSUT)sut).getFirstBindingSet();
 							Binding geo = firstBindingSet.getBinding("wkt");
@@ -78,7 +107,10 @@ public class MacroMapSearchExperiment extends MacroExperiment {
 							QuerySolution firstQuerySolution = ((ParliamentSUT)sut).getFirstQuerySolution();
 							((MacroMapSearchQueriesSet)queriesSet).setCurrentPoint(firstQuerySolution.getLiteral("wkt").getString());
 						} else {
-							logger.error("sut not recognizable");
+							BindingSet firstBindingSet = (BindingSet) sut.getFirstBindingSet();
+							Binding geo = firstBindingSet.getBinding("WKT");
+							((MacroMapSearchQueriesSet)queriesSet).setCurrentPoint(geo.getValue().stringValue());
+
 						}
 					}
 					
@@ -108,7 +140,7 @@ public class MacroMapSearchExperiment extends MacroExperiment {
 				}
 				repetitionI++;
 			} catch (Exception e) {
-				logger.error("While evaluating update(cold, " 
+				logger.error("While evaluating query(cold, " 
 						+ queryI + ", " + repetitionI + ")");
 				StringWriter sw = new StringWriter();
 				e.printStackTrace(new PrintWriter(sw));

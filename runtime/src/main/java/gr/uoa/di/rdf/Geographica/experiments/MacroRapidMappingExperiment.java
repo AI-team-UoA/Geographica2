@@ -27,5 +27,14 @@ public class MacroRapidMappingExperiment extends MacroExperiment {
 		queriesSet = new MacroRapidMappingQueriesSet(sut);
 		this.runTimeInMinutes = runTimeInMinutes;
 	}
+	
+	public MacroRapidMappingExperiment(SystemUnderTest sut, int repetitions,
+			int timeoutSecs, int runTimeInMinutes, int[] queriesToRun, String logPath) throws IOException {
+		super(sut, repetitions, timeoutSecs, runTimeInMinutes, logPath);
+		logger = Logger.getLogger(MacroRapidMappingExperiment.class.getSimpleName());
+		queriesSet = new MacroRapidMappingQueriesSet(sut);
+		this.runTimeInMinutes = runTimeInMinutes;
+		this.queriesToRun = queriesToRun;
+	}
 }
 

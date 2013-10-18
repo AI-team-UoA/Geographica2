@@ -27,8 +27,10 @@ public abstract class MacroExperiment extends Experiment {
 
 	protected long[] measurements;
 	protected int runTimeInMinutes;
-
 	
+	protected int[] queriesToRun = null;
+	protected int queriesToRunN;
+
 	public MacroExperiment(SystemUnderTest sut, int repetitions,
 			int timeoutSecs, int runTimeInMinutes, String logPath) throws IOException {
 		super(sut, repetitions, timeoutSecs, logPath);
@@ -36,6 +38,14 @@ public abstract class MacroExperiment extends Experiment {
 		this.runTimeInMinutes = runTimeInMinutes;
 	}
 
+	public MacroExperiment(SystemUnderTest sut, int repetitions,
+			int timeoutSecs, int runTimeInMinutes, int[] queriesToRun, String logPath) throws IOException {
+		super(sut, repetitions, timeoutSecs, logPath);
+		logger = Logger.getLogger(MacroExperiment.class.getSimpleName());
+		this.runTimeInMinutes = runTimeInMinutes;
+		this.queriesToRun = queriesToRun;
+	}
+	
 	@Override
 	public void run() {
 		
@@ -53,9 +63,21 @@ public abstract class MacroExperiment extends Experiment {
 		int queryI = 0;
 		long t1 = System.currentTimeMillis();
 		
+		if (queriesToRun == null) {
+			queriesToRunN = queriesSet.getQueriesN();
+		} else {
+			queriesToRunN = queriesToRun.length;
+		}
+		
 		while (true) {
 			try {
-				for (queryI = 0; queryI < queriesSet.getQueriesN(); queryI++) {
+				for (int i = 0; i < queriesToRunN; i++) {
+					if (queriesToRun == null) {
+						queryI = i;
+					} else {
+						queryI = queriesToRun[i];
+					}
+					
 					queryStruct = queriesSet.getQuery(queryI, repetitionI);
 
 					logger.info("Executing query (" + queryI + ", " + repetitionI + "): "	+ queryStruct.getQuery());
@@ -88,7 +110,7 @@ public abstract class MacroExperiment extends Experiment {
 				}
 				
 			} catch (Exception e) {
-				logger.error("While evaluating update(cold, " 
+				logger.error("While evaluating query(cold, " 
 						+ queryI + ", " + repetitionI + ")");
 				StringWriter sw = new StringWriter();
 				e.printStackTrace(new PrintWriter(sw));
@@ -127,7 +149,7 @@ public abstract class MacroExperiment extends Experiment {
 		File file;
 
 		// If not exists create experiment folder
-		String dirPath = logPath + sut.getClass().getSimpleName() + "-" + experiment;
+		String dirPath = logPath + "/" + sut.getClass().getSimpleName() + "-" + experiment;
 		File dir = new File(dirPath);
 		if (!dir.exists()) {
 			logger.info("Creating directory: " + dirPath);
@@ -140,9 +162,9 @@ public abstract class MacroExperiment extends Experiment {
 		// If not exists create short file
 		filePath = dirPath + "/" + queryStruct.getLabel();
 		file = new File (filePath);
-		if (!file.createNewFile()) {
-			logger.error("File "+filePath+" already exists");
-		}
+		//if (!file.createNewFile()) {
+		//	logger.error("File "+filePath+" already exists");
+		//}
 		
 		// Print short mode
 		fstream = new FileWriter(filePath, true);
@@ -169,7 +191,7 @@ public abstract class MacroExperiment extends Experiment {
 		File file;
 
 		// If not exists create experiment folder
-		String dirPath = logPath + sut.getClass().getSimpleName() + "-" + experiment;
+		String dirPath = logPath + "/" + sut.getClass().getSimpleName() + "-" + experiment;
 		File dir = new File(dirPath);
 		if (!dir.exists()) {
 			logger.info("Creating directory: " + dirPath);
@@ -182,9 +204,9 @@ public abstract class MacroExperiment extends Experiment {
 		// Create short file
 		filePath = dirPath + "/" + "repetitions";
 		file = new File (filePath);
-		if (!file.createNewFile()) {
-			logger.error("File "+filePath+" already exists");
-		}
+		//if (!file.createNewFile()) {
+		//	logger.error("File "+filePath+" already exists");
+		//}
 		
 		// Print short mode
 		fstream = new FileWriter(filePath, true);

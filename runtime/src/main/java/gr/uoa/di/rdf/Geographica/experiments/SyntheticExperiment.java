@@ -24,7 +24,11 @@ public class SyntheticExperiment extends Experiment {
 		super(sut, repetitions, timeoutSecs, logPath);
 		logger = Logger.getLogger(MicroSelectionsExperiment.class.getSimpleName());
 		queriesSet = new SyntheticQueriesSet(sut, N);
-
 	}
 
+	public SyntheticExperiment(SystemUnderTest sut, int repetitions, int timeoutSecs, int N, int[] queriesToRun, String logPath) throws IOException {
+		super(sut, repetitions, timeoutSecs, queriesToRun, logPath);
+		logger = Logger.getLogger(MicroSelectionsExperiment.class.getSimpleName());
+		queriesSet = new SyntheticQueriesSet(sut, N);
+	}
 }

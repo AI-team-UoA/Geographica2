@@ -28,6 +28,15 @@ public class MacroReverseGeocodingExperiment extends MacroExperiment {
 		queriesSet = new MacroReverseGeocodingQueriesSet(sut);
 		this.runTimeInMinutes = runTimeInMinutes;
 	}
-	
+
+	public MacroReverseGeocodingExperiment(SystemUnderTest sut,
+			int repetitions, int timeoutSecs, int runTimeInMinutes, int[] queriesToRun, String logPath)
+			throws IOException {
+		super(sut, repetitions, timeoutSecs, runTimeInMinutes, logPath);
+		logger = Logger.getLogger(MacroReverseGeocodingExperiment.class.getSimpleName());
+		queriesSet = new MacroReverseGeocodingQueriesSet(sut);
+		this.runTimeInMinutes = runTimeInMinutes;
+		this.queriesToRun = queriesToRun;
+	}
 }
 

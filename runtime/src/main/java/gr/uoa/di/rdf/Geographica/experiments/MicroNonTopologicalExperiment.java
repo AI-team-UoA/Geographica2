@@ -22,7 +22,11 @@ public class MicroNonTopologicalExperiment extends Experiment {
 		super(sut, repetitions, timeoutSecs, logPath);
 		logger = Logger.getLogger(MicroNonTopologicalExperiment.class.getSimpleName());
 		queriesSet = new MicroNonTopologicalQueriesSet(sut);
-
 	}
 
+	public MicroNonTopologicalExperiment(SystemUnderTest sut, int repetitions, int timeoutSecs, int[] queriesToRun, String logPath) {
+		super(sut, repetitions, timeoutSecs, queriesToRun, logPath);
+		logger = Logger.getLogger(MicroNonTopologicalExperiment.class.getSimpleName());
+		queriesSet = new MicroNonTopologicalQueriesSet(sut);
+	}
 }

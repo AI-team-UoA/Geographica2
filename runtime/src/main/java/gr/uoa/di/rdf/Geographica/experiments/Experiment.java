@@ -12,6 +12,7 @@ import gr.uoa.di.rdf.Geographica.queries.QueriesSet;
 import gr.uoa.di.rdf.Geographica.queries.QueriesSet.QueryStruct;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
 import gr.uoa.di.rdf.Geographica.systemsundertest.VirtuosoSUT;
+import gr.uoa.di.rdf.Geographica.systemsundertest.UseekmSUT;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -40,6 +41,8 @@ public abstract class Experiment {
 	protected SystemUnderTest sut = null;
 	protected long[][][] warmruns = null;
 	protected long[][][] coldruns = null;
+	protected int[] queriesToRun = null;
+	protected int queriesToRunN;
 	
 	Experiment(SystemUnderTest sut, int repetitions, int timeoutSecs, String logPath) {
 		this.sut = sut;
@@ -48,16 +51,34 @@ public abstract class Experiment {
 		this.logPath = logPath;
 	}
 	
+	Experiment(SystemUnderTest sut, int repetitions, int timeoutSecs, int[] queriesToRun, String logPath) {
+		this.sut = sut;
+		this.repetitions = repetitions;
+		this.timeoutSecs = timeoutSecs;
+		this.logPath = logPath;
+		this.queriesToRun = queriesToRun;
+	}
+	
 	public QueriesSet getQueriesSet() {
 		return queriesSet;
 	}
 	
 	public void run() {
 		QueryStruct queryStruct = null;
+		int queriesN;
+		int queryI;
+		
 
+		queriesN = queriesSet.getQueriesN();
+		if (queriesToRun == null) {
+			queriesToRunN = queriesSet.getQueriesN();
+		} else {
+			queriesToRunN = queriesToRun.length;
+		}
+		
 		// Initialize cold runs
-		coldruns = new long[queriesSet.getQueriesN()][repetitions][4];
-		for (int i=0; i<queriesSet.getQueriesN(); i++) {
+		coldruns = new long[queriesN][repetitions][4];
+		for (int i=0; i<queriesN; i++) {
 			for (int j=0; j<repetitions; j++) {
 				coldruns[i][j][0] = timeoutSecs + 1;  
 				coldruns[i][j][1] = timeoutSecs + 1; 
@@ -71,21 +92,27 @@ public abstract class Experiment {
 		logger.info("Clear caches before cold runs");
 
 		// Run first all repetitions of each query so stats can be printed
-		for (int queryI = 0; queryI < queriesSet.getQueriesN(); queryI++) {
+		for (int i = 0; i < queriesToRunN; i++) {
+			
+			if (queriesToRun == null) {
+				queryI = i;
+			} else {
+				queryI = queriesToRun[i];
+			}
 			
 			// KK 
 			// hack
-			if (sut instanceof VirtuosoSUT) {
-				if (this instanceof MicroSelectionsExperiment) {
-					if (!(queryI == 7 || queryI == 8))
-						continue;
-				} else if (this instanceof MicroJoinsExperiment) {
-					if (!(queryI == 0))
-						continue;
-				} else {
-					continue;
-				}
-			}
+//			if (sut instanceof VirtuosoSUT) {
+//				if (this instanceof MicroSelectionsExperiment) {
+//					if (!(queryI == 7 || queryI == 8))
+//						continue;
+//				} else if (this instanceof MicroJoinsExperiment) {
+//					if (!(queryI == 0))
+//						continue;
+//				} else {
+//					continue;
+//				}
+//			} 
 			// KK
 			
 			int repetitionI = 0;
@@ -138,8 +165,8 @@ public abstract class Experiment {
 		}
 
 		// Initialize warm runs
-		warmruns = new long[queriesSet.getQueriesN()][repetitions][4];
-		for (int i=0; i<queriesSet.getQueriesN(); i++) {
+		warmruns = new long[queriesN][repetitions][4];
+		for (int i=0; i<queriesN; i++) {
 			for (int j=0; j<repetitions; j++) {
 				warmruns[i][j][0] = timeoutSecs + 1;  
 				warmruns[i][j][1] = timeoutSecs + 1; 
@@ -150,8 +177,28 @@ public abstract class Experiment {
 		
 		// warm runs
 		// Run first all repetitions of each query so stats can be printed
-		for (int queryI = 0; queryI < queriesSet.getQueriesN(); queryI++) {
+		for (int i = 0; i < queriesToRunN; i++) {
 		
+			if (queriesToRun == null) {
+				queryI = i;
+			} else {
+				queryI = queriesToRun[i];
+			}
+			// KK 
+			// hack
+//			if (sut instanceof VirtuosoSUT) {
+//				if (this instanceof MicroSelectionsExperiment) {
+//					if (!(queryI == 7 || queryI == 8))
+//						continue;
+//				} else if (this instanceof MicroJoinsExperiment) {
+//					if (!(queryI == 0))
+//						continue;
+//				} else {
+//					continue;
+//				}
+//			} 
+			// KK
+
 			// If cold run has timed out then skip warm run as well
 			if ( coldruns[queryI][0][0] > (long)timeoutSecs*1000000000 ) {
 				logger.info("Skip warm run of query "+queryI+" because cold has timed out("+coldruns[queryI][0][0]+">"+(long)timeoutSecs*1000000000);
@@ -160,6 +207,7 @@ public abstract class Experiment {
 			
 			int repetitionI = 0;
 			try {
+				sut.clearCaches();
 				sut.initialize();
 				queryStruct = queriesSet.getQuery(queryI, 0);
 				// warm up caches
@@ -168,6 +216,12 @@ public abstract class Experiment {
 						+ queryStruct.getQuery());
 
 				long [] tempTimes = sut.runQueryWithTimeout(queryStruct.getQuery(), timeoutSecs);
+
+				if ( tempTimes[0] > (long)timeoutSecs*1000000000 ) {
+					logger.info("Skip warm run of query "+queryI+" because cold has timed out("+tempTimes[0]+">"+(long)timeoutSecs*1000000000);
+					sut.close();
+					continue;
+				}
 
 				logger.info("Query warmed (warm, "
 						+ queryI + "," + repetitionI + "): "
@@ -237,7 +291,7 @@ public abstract class Experiment {
 		File file;
 
 		// If not exists create experiment folder
-		String dirPath = logPath + sut.getClass().getSimpleName() + "-" + experiment;
+		String dirPath = logPath + "/" + sut.getClass().getSimpleName() + "-" + experiment;
 		File dir = new File(dirPath);
 		if (!dir.exists()) {
 			logger.info("Creating directory: " + dirPath);
@@ -280,7 +334,11 @@ public abstract class Experiment {
 		
 		out = new BufferedWriter(fstream);
 
-		out.write(measurements[queryI][0][3] + " " + time + "\n");
+		// If time out write 0 as median
+		if (time > (long)timeoutSecs*1000000000)
+			out.write(measurements[queryI][0][3] + " " + 0 + "\n");
+		else
+			out.write(measurements[queryI][0][3] + " " + time + "\n");
 		out.close();
 		logger.info("Statistiscs printed: " + filePath);
 		

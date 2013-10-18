@@ -24,7 +24,11 @@ public class MicroSelectionsExperiment extends Experiment {
 		super(sut, repetitions, timeoutSecs, logPath);
 		logger = Logger.getLogger(MicroSelectionsExperiment.class.getSimpleName());
 		queriesSet = new MicroSelectionsQueriesSet(sut);
-
 	}
 
+	public MicroSelectionsExperiment(SystemUnderTest sut, int repetitions, int timeoutSecs, int[] queriesToRun, String logPath) throws IOException {
+		super(sut, repetitions, timeoutSecs, queriesToRun, logPath);
+		logger = Logger.getLogger(MicroSelectionsExperiment.class.getSimpleName());
+		queriesSet = new MicroSelectionsQueriesSet(sut);
+	}
 }

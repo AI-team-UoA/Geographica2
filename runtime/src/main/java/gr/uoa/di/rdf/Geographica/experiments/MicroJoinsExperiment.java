@@ -24,4 +24,11 @@ public class MicroJoinsExperiment extends Experiment {
 		queriesSet = new MicroJoinsQueriesSet(sut);
 
 	}
+	
+	public MicroJoinsExperiment(SystemUnderTest sut, int repetitions, int timeoutSecs, int[] queriesToRun, String logPath) {
+		super(sut, repetitions, timeoutSecs, queriesToRun, logPath);
+		logger = Logger.getLogger(MicroJoinsExperiment.class.getSimpleName());
+		queriesSet = new MicroJoinsQueriesSet(sut);
+
+	}
 }
