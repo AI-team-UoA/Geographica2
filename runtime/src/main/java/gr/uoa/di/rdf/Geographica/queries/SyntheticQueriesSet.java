@@ -98,7 +98,8 @@ public class SyntheticQueriesSet extends QueriesSet {
 			query = query.replace("http://www.opengis.net/ont/geosparql#wktLiteral", "http://www.opengis.net/ont/sf#wktLiteral");
 		}
 	
-		return new QueryStruct(query, label);	
+		String translatedQuery = sut.translateQuery(query, label);
+		return new QueryStruct(translatedQuery, label);	
 	}
 
 }

@@ -8,16 +8,17 @@
  */
 package gr.uoa.di.rdf.Geographica.queries;
 
-import gr.uoa.di.rdf.Geographica.systemsundertest.StrabonSUT;
-import gr.uoa.di.rdf.Geographica.systemsundertest.UseekmSUT;
+import gr.uoa.di.rdf.Geographica.systemsundertest.ParliamentSUT;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
 
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -34,12 +35,22 @@ public class MacroMapSearchQueriesSet extends QueriesSet {
 	private String currentPoint = null, boundingBox = null;
 	private Random rn;
 
-	@SuppressWarnings("unchecked")
 	public MacroMapSearchQueriesSet(SystemUnderTest sut) throws IOException {
 		super(sut);
-		String geonamesPath = "classes/geonames.txt";
-//		String geonamesPath = "src/main/resources/geonames.txt";
-		names = (List<String>)FileUtils.readLines(new File(geonamesPath));
+		
+		String geonamesFile = "geonames.txt";
+		names = new ArrayList<String>();
+		
+		InputStream is = getClass().getResourceAsStream("/"+geonamesFile);
+		BufferedReader in = new BufferedReader(new InputStreamReader(is));
+		String name;
+		while ( (name = in.readLine()) != null ) {
+			names.add(name);
+		}
+		in.close();
+		in = null;
+		is.close();
+		is = null;
 		
 		rn  = new Random(0);
 	}
@@ -86,7 +97,7 @@ public class MacroMapSearchQueriesSet extends QueriesSet {
 		case 0:			
 			String name = names.get(rn.nextInt(names.size()));
 			label = "Thematic_Search"; 
-			query = prefixes + "\n" + "SELECT * \n" + "WHERE { \n"
+			query = prefixes + "\n" + "SELECT ?f ?name ?geo ?wkt \n" + "WHERE { \n"
 					+ " GRAPH <"+geonames+"> { \n"
 					+ "	?f geonames:name ?name;\n"
 					+ "	   "+geonames_hasGeometry+" ?geo.\n"
@@ -99,7 +110,7 @@ public class MacroMapSearchQueriesSet extends QueriesSet {
 			label = "Get_Around_POIs"; 
 			query = prefixes
 					+ "\n"
-					+ " SELECT * \n"
+					+ " SELECT ?f ?name ?fGeo ?code ?parent ?class ?fGeoWKT \n"
 					+ " WHERE { \n"
 					+ " GRAPH <"+geonames+"> { \n"
 					+ "  ?f geonames:name ?name; \n"
@@ -108,9 +119,9 @@ public class MacroMapSearchQueriesSet extends QueriesSet {
 					+ "     geonames:parentFeature ?parent; \n"
 					+ "     geonames:featureClass ?class. \n"
 					+ "  ?fGeo "+geonames_asWKT+" ?fGeoWKT. \n"
-					+ ((sut instanceof StrabonSUT || sut instanceof UseekmSUT)?
-							"  FILTER(geof:sfIntersects(?fGeoWKT, \""+boundingBox+"\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>)).\n"
-						   :"  FILTER(geof:sfIntersects(?fGeoWKT, \""+boundingBox+"\"^^<http://www.opengis.net/ont/sf#wktLiteral>)).\n")
+					+ ((sut instanceof ParliamentSUT)?
+							"  FILTER(geof:sfIntersects(?fGeoWKT, \""+boundingBox+"\"^^<http://www.opengis.net/ont/sf#wktLiteral>)).\n"
+						   :"  FILTER(geof:sfIntersects(?fGeoWKT, \""+boundingBox+"\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>)).\n")
 					+ " } } \n";
 			break;
 
@@ -118,16 +129,16 @@ public class MacroMapSearchQueriesSet extends QueriesSet {
 			label = "Get_Around_Roads";  
 			query = prefixes
 					+ "\n"
-					+ "SELECT * \n"
+					+ "SELECT ?r ?type ?label ?rGeo ?rGeoWKT \n"
 					+ "WHERE { \n"
 					+ " GRAPH <"+lgd+"> { \n"
 					+ "	 ?r rdf:type ?type. \n"
 					+ "	 OPTIONAL{ ?r rdfs:label ?label }. \n"
 					+ "	 ?r "+lgd_hasGeometry+" ?rGeo. \n"
 					+ "	 ?rGeo "+lgd_asWKT+" ?rGeoWKT. \n"
-					+ ((sut instanceof StrabonSUT || sut instanceof UseekmSUT)?
-							"  FILTER(geof:sfIntersects(?rGeoWKT, \""+boundingBox+"\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>)).\n"
-						   :"  FILTER(geof:sfIntersects(?rGeoWKT, \""+boundingBox+"\"^^<http://www.opengis.net/ont/sf#wktLiteral>)).\n")
+					+ ((sut instanceof ParliamentSUT)?
+							"  FILTER(geof:sfIntersects(?rGeoWKT, \""+boundingBox+"\"^^<http://www.opengis.net/ont/sf#wktLiteral>)).\n"
+						   :"  FILTER(geof:sfIntersects(?rGeoWKT, \""+boundingBox+"\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>)).\n")
 				   + " } \n"
 					+ "}";
 			break;
@@ -135,7 +146,8 @@ public class MacroMapSearchQueriesSet extends QueriesSet {
 			logger.error("No such query number exists:" + queryIndex);
 		}
 
-		return new QueryStruct(query, label);
+		String translatedQuery = sut.translateQuery(query, label);
+		return new QueryStruct(translatedQuery, label);
 	}
 
 }

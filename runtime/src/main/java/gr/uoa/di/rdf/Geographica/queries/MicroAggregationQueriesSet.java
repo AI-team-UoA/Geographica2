@@ -8,6 +8,7 @@
  */
 package gr.uoa.di.rdf.Geographica.queries;
 
+import gr.uoa.di.rdf.Geographica.queries.QueriesSet.QueryStruct;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
 
 import org.apache.log4j.Logger;
@@ -81,7 +82,8 @@ public class MicroAggregationQueriesSet  extends QueriesSet {
 				
 		}
 		
-		return new QueryStruct(query, label);
+		String translatedQuery = sut.translateQuery(query, label);
+		return new QueryStruct(translatedQuery, label);
 	}
 	
 }

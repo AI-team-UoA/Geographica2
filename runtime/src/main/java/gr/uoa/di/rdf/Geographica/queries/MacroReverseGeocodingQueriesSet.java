@@ -8,6 +8,8 @@
  */
 package gr.uoa.di.rdf.Geographica.queries;
 
+import gr.uoa.di.rdf.Geographica.queries.QueriesSet.QueryStruct;
+import gr.uoa.di.rdf.Geographica.systemsundertest.ParliamentSUT;
 import gr.uoa.di.rdf.Geographica.systemsundertest.StrabonSUT;
 import gr.uoa.di.rdf.Geographica.systemsundertest.UseekmSUT;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
@@ -56,11 +58,11 @@ public class MacroReverseGeocodingQueriesSet extends QueriesSet {
 			case 0:
 				label = "Find_Closest_Populated_Place"; 
 				query = prefixes
-					+ (sut instanceof StrabonSUT?
-						" \n SELECT ?f (strdf:distance(?cGeoWKT, \""+pointWKT+"\"^^geo:wktLiteral, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?distance)" // Strabon
+					+ (sut instanceof ParliamentSUT?
+						" \n SELECT ?f (geof:distance(?cGeoWKT, \""+pointWKT+"\"^^<http://www.opengis.net/ont/sf#wktLiteral>, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?distance)"
 					  :(sut instanceof UseekmSUT?
 						" \n SELECT ?f (geof:distance(?cGeoWKT, \""+pointWKT+"\"^^geo:wktLiteral) as ?distance)" // USeekM 
-					  :" \n SELECT ?f (geof:distance(?cGeoWKT, \""+pointWKT+"\"^^<http://www.opengis.net/ont/sf#wktLiteral>, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?distance)")) // Parliament
+					   :" \n SELECT ?f (strdf:distance(?cGeoWKT, \""+pointWKT+"\"^^geo:wktLiteral, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?distance)")) // Strabon
 					+ "WHERE { \n"
 					+ " GRAPH <"+geonames+"> { \n"
 					+ "  ?f geonames:featureCode geonames:P.PPL; \n"
@@ -75,11 +77,11 @@ public class MacroReverseGeocodingQueriesSet extends QueriesSet {
 			case 1:
 				label = "Find_Closest_Motorway"; 
 				query = prefixes
-					+ (sut instanceof StrabonSUT?
-						" \n SELECT ?c ?type ?label (strdf:distance(?cGeoWKT, \""+pointWKT+"\"^^geo:wktLiteral, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?distance) ?cGeoWKT \n" // Strabon
+					+ (sut instanceof ParliamentSUT?
+							" \n SELECT ?c ?type ?label (geof:distance(?cGeoWKT, \""+pointWKT+"\"^^<http://www.opengis.net/ont/sf#wktLiteral>, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?distance) ?cGeoWKT \n"
 					  :(sut instanceof UseekmSUT?
-						" \n SELECT ?c ?type ?label (strdf:distance(?cGeoWKT, \""+pointWKT+"\"^^geo:wktLiteral, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?distance) ?cGeoWKT \n" // USeekM
-					   :" \n SELECT ?c ?type ?label (geof:distance(?cGeoWKT, \""+pointWKT+"\"^^<http://www.opengis.net/ont/sf#wktLiteral>, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?distance) ?cGeoWKT \n")) // Parliament
+						" \n SELECT ?c ?type ?label (geof:distance(?cGeoWKT, \""+pointWKT+"\"^^geo:wktLiteral) as ?distance) ?cGeoWKT \n" // USeekM
+					   :" \n SELECT ?c ?type ?label (strdf:distance(?cGeoWKT, \""+pointWKT+"\"^^geo:wktLiteral, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?distance) ?cGeoWKT \n")) // Strabon
 					+ "WHERE { \n"
 					+ " GRAPH <"+lgd+"> { \n"
 					+ "  ?c rdf:type lgdo:Motorway; \n"
@@ -96,7 +98,8 @@ public class MacroReverseGeocodingQueriesSet extends QueriesSet {
 				logger.error("No such query number exists:"+queryIndex);
 		}
 		
-		return new QueryStruct(query, label);
+		String translatedQuery = sut.translateQuery(query, label);
+		return new QueryStruct(translatedQuery, label);
 	}
 	
 }

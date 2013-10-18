@@ -8,8 +8,8 @@
  */
 package gr.uoa.di.rdf.Geographica.queries;
 
+import gr.uoa.di.rdf.Geographica.queries.QueriesSet.QueryStruct;
 import gr.uoa.di.rdf.Geographica.systemsundertest.ParliamentSUT;
-import gr.uoa.di.rdf.Geographica.systemsundertest.StrabonSUT;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
 import gr.uoa.di.rdf.Geographica.systemsundertest.UseekmSUT;
 import gr.uoa.di.rdf.Geographica.systemsundertest.VirtuosoSUT;
@@ -46,16 +46,7 @@ public class MicroNonTopologicalQueriesSet extends QueriesSet {
 	public MicroNonTopologicalQueriesSet(SystemUnderTest sut) {
 		super(sut);
 		
-		if (sut instanceof StrabonSUT) {
-			queriesN = 6; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
-			
-			queryBufferTemplate = prefixes 
-					+ " \n select (strdf:buffer(?o1,4, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?ret) where {"
-					+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1}"
-					+ "} "
-					;
-		}
-		else if (sut instanceof ParliamentSUT) { 
+		if (sut instanceof ParliamentSUT) { 
 			queriesN = 5; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
 			
 			queryBufferTemplate = prefixes 
@@ -73,9 +64,17 @@ public class MicroNonTopologicalQueriesSet extends QueriesSet {
 					+ "} "
 					;
 		}
-		else { // VirtuosoSUT
-			assert sut instanceof VirtuosoSUT;
+		else if (sut instanceof VirtuosoSUT) {
 			queriesN = 5; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
+			
+			queryBufferTemplate = prefixes 
+					+ " \n select (geof:buffer(?o1,4, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?ret) where {"
+					+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1}"
+					+ "} "
+					;
+		}
+		else { // Strabon
+			queriesN = 6; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
 			
 			queryBufferTemplate = prefixes 
 					+ " \n select (geof:buffer(?o1,4, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?ret) where {"
@@ -137,7 +136,15 @@ public class MicroNonTopologicalQueriesSet extends QueriesSet {
 			break;
 
 		case 5:
-			if (sut instanceof StrabonSUT) {
+			if (sut instanceof UseekmSUT) {
+				// Q12 Area of Polygons
+				label = "Area_CLC"; 
+				query = queryUseekmTemplate;
+				query = query.replace("FUNCTION", "area");
+				query = query.replace("GRAPH1", clc);
+				query = query.replace("ASWKT1", clc_asWKT);
+				break;
+			} else  { // Strabon
 				// Q12 Area of Polygons
 				label = "Area_CLC"; 
 				query = queryStsparqlTemplate;
@@ -146,23 +153,14 @@ public class MicroNonTopologicalQueriesSet extends QueriesSet {
 				query = query.replace("ASWKT1", clc_asWKT);
 				break;
 			}
-			else if (sut instanceof UseekmSUT) {
-				// Q12 Area of Polygons
-				label = "Area_CLC"; 
-				query = queryUseekmTemplate;
-				query = query.replace("FUNCTION", "area");
-				query = query.replace("GRAPH1", clc);
-				query = query.replace("ASWKT1", clc_asWKT);
-				break;
-			}// else continue to default case
-			
 			
 			
 		default:
 			logger.error("No such query number exists:"+queryIndex);
 		}
 	
-		return new QueryStruct(query, label);
+		String translatedQuery = sut.translateQuery(query, label);
+		return new QueryStruct(translatedQuery, label);
 	}
 	
 }

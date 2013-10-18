@@ -8,6 +8,7 @@
  */
 package gr.uoa.di.rdf.Geographica.queries;
 
+import gr.uoa.di.rdf.Geographica.queries.QueriesSet.QueryStruct;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
 import gr.uoa.di.rdf.Geographica.systemsundertest.VirtuosoSUT;
 
@@ -49,7 +50,7 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 			+ "\n select ?s1 ?s2 where { \n"
 			+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1} \n"
 			+ "	GRAPH <GRAPH2> {?s2 ASWKT2 ?o2} \n"
-			+ "   FILTER(?s1 < ?s2).  \n"
+//			+ "   FILTER(?s1 != ?s2).  \n"
 			+ "  FILTER(bif:FUNCTION(?o1, ?o2, 0)).  \n"
 			+ "} \n"
 			;
@@ -64,8 +65,8 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 			// -- Equals -- //
 			case 0:			
 				// Q1 Find equal points in GeoNames & DBPedia
+				label = "Equals_GeoNames_DBPedia";
 				if (sut instanceof VirtuosoSUT) {
-					label = "Equals_GeoNames_DBPedia"; 
 					query = queryTemplateVirtuoso;
 					query = query.replace("GRAPH1", geonames);
 					query = query.replace("ASWKT1", geonames_asWKT);
@@ -73,7 +74,6 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 					query = query.replace("ASWKT2", dbpedia_asWKT);
 					query = query.replace("FUNCTION", "st_within");
 				} else {
-					label = "Equals_GeoNames_DBPedia"; 
 					query = queryTemplate;
 					query = query.replace("GRAPH1", geonames);
 					query = query.replace("ASWKT1", geonames_asWKT);
@@ -81,6 +81,7 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 					query = query.replace("ASWKT2", dbpedia_asWKT);
 					query = query.replace("FUNCTION", "sfEquals");
 				}
+				query = sut.translateQuery(query, label);
 				break;
 
 
@@ -203,7 +204,9 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 			default:
 				logger.error("No such query number exists:"+queryIndex);
 		}
-		return new QueryStruct(query, label);
+		
+		String translatedQuery = sut.translateQuery(query, label);
+		return new QueryStruct(translatedQuery, label);
 	}
 	
 }

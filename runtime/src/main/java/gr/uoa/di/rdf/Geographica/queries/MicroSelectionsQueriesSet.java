@@ -8,6 +8,7 @@
  */
 package gr.uoa.di.rdf.Geographica.queries;
 
+import gr.uoa.di.rdf.Geographica.queries.QueriesSet.QueryStruct;
 import gr.uoa.di.rdf.Geographica.systemsundertest.ParliamentSUT;
 import gr.uoa.di.rdf.Geographica.systemsundertest.StrabonSUT;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
@@ -64,9 +65,13 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 			spatialDatatype = "<http://www.opengis.net/ont/geosparql#wktLiteral>";
 			givenRadius = "0.03";
 			givenPoint = "\"POINT(23.71622 37.97945)\"^^"+spatialDatatype;
-		} else if (sut instanceof VirtuosoSUT) {
+		} else if (sut instanceof VirtuosoSUT ) {
 			givenPoint = "bif:st_point(23.71622, 37.97945)";
 			givenRadius = "2.93782";
+		} else {
+			spatialDatatype = "<http://www.opengis.net/ont/geosparql#wktLiteral>";
+			givenRadius = "3000";
+			givenPoint = "\"POINT(23.71622 37.97945)\"^^"+spatialDatatype;
 		}
 		
 		InputStream is = getClass().getResourceAsStream("/"+givenPolygonFile);
@@ -210,6 +215,15 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 						+ "))).  \n" 
 						+ "} "
 						;
+			} else {
+				query = prefixes + "\n select ?s1 where { \n" 
+						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n"
+						+ " FILTER(geof:sfWithin(?o1, geof:buffer( \n"
+						+ givenPoint + ", " + givenRadius + ", <http://www.opengis.net/def/uom/OGC/1.0/metre>"
+						+ "))).  \n" 
+						+ "} "
+						; 
+				query = sut.translateQuery(query, label);
 			}
 			break;
 	
@@ -231,15 +245,22 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 			} else if (sut instanceof UseekmSUT) {
 				query = prefixes + "\n select ?s1 where { \n" 
 						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n" 
-						+ "  FILTER(geof:distance(?o1, "+ givenPoint + ") <= " + givenRadius + ").  \n" 
+						+ "  FILTER(geof:distance(?o1, " + givenPoint + ") <= " + givenRadius + ").  \n" 
 						+ "} "
 						;
-			} else { // Parliament	
+			} else if (sut instanceof ParliamentSUT) {	
 				query = prefixes + "\n select ?s1 where { \n" 
 						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n" 
 						+ "  FILTER(geof:distance(?o1, "+ givenPoint + ", <http://www.opengis.net/def/uom/OGC/1.0/metre>) <= " + givenRadius + ").  \n" 
 						+ "} "
 						;
+			} else {
+				query = prefixes + "\n select ?s1 where { \n" 
+						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n" 
+						+ "  FILTER(geof:distance(?o1, "+ givenPoint + ", <http://www.opengis.net/def/uom/OGC/1.0/metre>) <= " + givenRadius + ").  \n" 
+						+ "} "
+						;
+				query = sut.translateQuery(query, label);
 			}
 			break;
 		case 9:
@@ -266,7 +287,8 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 			logger.error("No such query number exists:"+queryIndex);
 		}
 	
-		return new QueryStruct(query, label);	
+		String translatedQuery = sut.translateQuery(query, label);
+		return new QueryStruct(translatedQuery, label);
 	}
 
 }

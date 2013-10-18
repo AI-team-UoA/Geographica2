@@ -54,8 +54,8 @@ public abstract class QueriesSet {
 		
 		this.sut = sut;
 		
-		if (sut instanceof StrabonSUT || sut instanceof UseekmSUT || sut instanceof VirtuosoSUT ) {
-			prefixes = "PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> \n"
+		if (sut instanceof ParliamentSUT) {
+			prefixes = "PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> \n" // TODO this should changes in data as well
 				+ "PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> \n"
 				+ "PREFIX gadm: <http://www.gadm.org/ontology#> \n"
 				+ "PREFIX lgdo: <http://linkedgeodata.org/ontology/> \n"
@@ -69,7 +69,6 @@ public abstract class QueriesSet {
 				+ "PREFIX geof: <http://www.opengis.net/def/function/geosparql/> \n"
 				+ "PREFIX geo: <http://www.opengis.net/ont/geosparql#> \n" 
 				+ "PREFIX geo-sf: <http://www.opengis.net/ont/sf#> \n" 
-				+ "PREFIX ext: <http://rdf.useekm.com/ext#> \n"
 				+ "\n"
 				;
 			
@@ -88,10 +87,10 @@ public abstract class QueriesSet {
 			geonames_hasGeometry = "<http://www.geonames.org/ontology#hasGeometry>";
 			hotspots_hasGeometry = "<http://teleios.di.uoa.gr/ontologies/noaOntology.owl#hasGeometry>";
 			lgd_hasGeometry = "<http://linkedgeodata.org/ontology/hasGeometry>";
-			
+
 		} else {
-			assert sut instanceof ParliamentSUT;
-			prefixes = "PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> \n" // TODO this should changes in data as well
+//		if (sut instanceof StrabonSUT || sut instanceof UseekmSUT || sut instanceof VirtuosoSUT ) {
+			prefixes = "PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> \n"
 				+ "PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> \n"
 				+ "PREFIX gadm: <http://www.gadm.org/ontology#> \n"
 				+ "PREFIX lgdo: <http://linkedgeodata.org/ontology/> \n"
@@ -105,6 +104,7 @@ public abstract class QueriesSet {
 				+ "PREFIX geof: <http://www.opengis.net/def/function/geosparql/> \n"
 				+ "PREFIX geo: <http://www.opengis.net/ont/geosparql#> \n" 
 				+ "PREFIX geo-sf: <http://www.opengis.net/ont/sf#> \n" 
+				+ "PREFIX ext: <http://rdf.useekm.com/ext#> \n"
 				+ "\n"
 				;
 			
