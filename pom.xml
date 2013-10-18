@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -14,7 +15,7 @@
 
 	<!-- Repositories -->
 	<repositories>
-	    <repository>
+		<repository>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -36,17 +37,17 @@
 			<name>Strabon - maven repository</name>
 			<url>http://maven.strabon.di.uoa.gr/content/repositories/releases</url>
 		</repository>
-                <repository>
-	            <releases>
-	                <enabled>true</enabled>
-	            </releases>
-        	    <snapshots>
-	                <enabled>false</enabled>
-	            </snapshots>
-	            <id>strabon.sesame</id>
-	            <name>Strabon - maven repository - sesame artifacts (temporary)</name>
-	            <url>http://maven.strabon.di.uoa.gr/content/repositories/strabon.sesame/</url>
-	        </repository>
+		<repository>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>strabon.sesame</id>
+			<name>Strabon - maven repository - sesame artifacts (temporary)</name>
+			<url>http://maven.strabon.di.uoa.gr/content/repositories/strabon.sesame/</url>
+		</repository>
 		<repository>
 			<releases>
 				<enabled>false</enabled>
@@ -108,11 +109,11 @@
 			<id>aduna-opensource.snapshots</id>
 			<name>Aduna Open Source - Maven snapshots</name>
 			<url>http://repo.aduna-software.org/maven2/snapshots</url>
-		</repository>		
+		</repository>
 		<repository>
 			<id>public.opensahara.com</id>
 			<url>http://dev.opensahara.com/nexus/content/groups/public/</url>
-		</repository>		
+		</repository>
 	</repositories>
 
 	<build>
@@ -146,15 +147,8 @@
 			</relocation> -->
 	</distributionManagement>
 
-	<!--
-	<pluginRepositories>
-	-->
-		<!-- For onejar-maven-plugin -->
-	<!--
-		<pluginRepository>
-			<id>onejar-maven-plugin.googlecode.com</id>
-			<url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
-		</pluginRepository>
-	</pluginRepositories>
-	-->
+	<!-- <pluginRepositories> -->
+	<!-- For onejar-maven-plugin -->
+	<!-- <pluginRepository> <id>onejar-maven-plugin.googlecode.com</id> <url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url> 
+		</pluginRepository> </pluginRepositories> -->
 </project>
