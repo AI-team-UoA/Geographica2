@@ -29,5 +29,5 @@ public interface SystemUnderTest {
 	void restart();
 	Object getSystem();
 	public String translateQuery(String query, String label);
-	Object getFirstBindingSet();
+	public BindingSet getFirstBindingSet();
 }

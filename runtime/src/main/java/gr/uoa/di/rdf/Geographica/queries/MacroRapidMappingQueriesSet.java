@@ -8,10 +8,7 @@
  */
 package gr.uoa.di.rdf.Geographica.queries;
 
-import gr.uoa.di.rdf.Geographica.systemsundertest.ParliamentSUT;
-import gr.uoa.di.rdf.Geographica.systemsundertest.StrabonSUT;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
-import gr.uoa.di.rdf.Geographica.systemsundertest.UseekmSUT;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -40,7 +37,6 @@ public class MacroRapidMappingQueriesSet extends QueriesSet {
 								// implies changing queriesN
 	Random rn;
 
-	@SuppressWarnings("unchecked")
 	public MacroRapidMappingQueriesSet(SystemUnderTest sut) throws IOException {
 		super(sut);
 		String timestampsFile = "timestamps.txt";
@@ -90,11 +86,7 @@ public class MacroRapidMappingQueriesSet extends QueriesSet {
 					+ "       "+clc_hasGeometry+" ?aGeo . \n"
 					+ "    ?aGeo "+clc_asWKT+" ?aGeoWKT. \n"
 					+ "  }"
-					+ (sut instanceof StrabonSUT?
-						"  FILTER(geof:sfIntersects(?aGeoWKT, "+polygonWKT+"^^strdf:WKT))\n"
-					 :(sut instanceof ParliamentSUT?
-						"  FILTER(geof:sfIntersects(?aGeoWKT, "+polygonWKT+"^^<http://www.opengis.net/ont/sf#wktLiteral>))\n"
-				   	   :"  FILTER(geof:sfIntersects(?aGeoWKT, "+polygonWKT+"^^<http://www.opengis.net/ont/geosparql#wktLiteral>))\n"))
+					+ "  FILTER(geof:sfIntersects(?aGeoWKT, "+polygonWKT+"^^<http://www.opengis.net/ont/geosparql#wktLiteral>))\n"
 					+ "} \n"
 				;				
 				break;
@@ -109,12 +101,7 @@ public class MacroRapidMappingQueriesSet extends QueriesSet {
 					+ "       "+lgd_hasGeometry+" ?rGeo . \n"
 					+ "    ?rGeo "+lgd_asWKT+" ?rGeoWKT. \n"
 					+ "  } \n"
-					+ (sut instanceof StrabonSUT?
-							"  FILTER(geof:sfIntersects(?rGeoWKT, "+polygonWKT+"^^strdf:WKT))\n"
-				     :(sut instanceof ParliamentSUT?
-				    		"  FILTER(geof:sfIntersects(?rGeoWKT, "+polygonWKT+"^^<http://www.opengis.net/ont/sf#wktLiteral>))\n"
-   					       :"  FILTER(geof:sfIntersects(?rGeoWKT, "+polygonWKT+"^^<http://www.opengis.net/ont/geosparql#wktLiteral>))\n")
-)
+					+ "  FILTER(geof:sfIntersects(?rGeoWKT, "+polygonWKT+"^^<http://www.opengis.net/ont/geosparql#wktLiteral>))\n"
 					+ "} \n"
 				;
 				break;	
@@ -130,11 +117,7 @@ public class MacroRapidMappingQueriesSet extends QueriesSet {
 					 + "       "+gadm_hasGeometry+" ?gGeo . \n"
 					 + "    ?gGeo "+gadm_asWKT+" ?gGeoWKT . \n"
 					 + "  } \n" 
-					 + (sut instanceof StrabonSUT?
-						"  FILTER(geof:sfIntersects(?gGeoWKT, "+polygonWKT+"^^strdf:WKT))\n"
-					  :(sut instanceof ParliamentSUT?
-						"  FILTER(geof:sfIntersects(?gGeoWKT, "+polygonWKT+"^^<http://www.opengis.net/ont/sf#wktLiteral>))\n"
-					   :"  FILTER(geof:sfIntersects(?gGeoWKT, "+polygonWKT+"^^<http://www.opengis.net/ont/geosparql#wktLiteral>))\n"))
+					 + "  FILTER(geof:sfIntersects(?gGeoWKT, "+polygonWKT+"^^<http://www.opengis.net/ont/geosparql#wktLiteral>))\n"
 					 + "} \n" 
 				;
 				break;
@@ -157,11 +140,7 @@ public class MacroRapidMappingQueriesSet extends QueriesSet {
 					 + "    OPTIONAL {?h noa:refinedBy ?r} \n"
 					 + "    FILTER(!bound(?r)) \n"
 					 + "    ?geometry "+hotspots_asWKT+" ?wkt . \n"
-					 + (sut instanceof StrabonSUT?
-						"  FILTER(geof:sfIntersects(?wkt, "+polygonWKT+"^^strdf:WKT))\n"
-					   :(sut instanceof ParliamentSUT?
-						"  FILTER(geof:sfIntersects(?wkt, "+polygonWKT+"^^<http://www.opengis.net/ont/sf#wktLiteral>))\n"
-					   :"  FILTER(geof:sfIntersects(?wkt, "+polygonWKT+"^^<http://www.opengis.net/ont/geosparql#wktLiteral>))\n"))
+					 + "  FILTER(geof:sfIntersects(?wkt, "+polygonWKT+"^^<http://www.opengis.net/ont/geosparql#wktLiteral>))\n"
 					 + "} }\n"
 				;
 				break;
@@ -184,11 +163,7 @@ public class MacroRapidMappingQueriesSet extends QueriesSet {
 					+ "    ?aGeo "+clc_asWKT+" ?aWKT . \n"
 					+ "  } \n"
 					+ "  FILTER( geof:sfIntersects(?hWKT, ?aWKT) ) . \n"
-					+ (sut instanceof StrabonSUT?
-					 "  FILTER(geof:sfIntersects(?aWKT, "+polygonWKT+"^^strdf:WKT))\n"
-					:(sut instanceof UseekmSUT?
-					 "  FILTER(geof:sfIntersects(?aWKT, "+polygonWKT+"^^<http://www.opengis.net/ont/sf#wktLiteral>))\n"
-					:"  FILTER(geof:sfIntersects(?aWKT, "+polygonWKT+"^^<http://www.opengis.net/ont/geosparql#wktLiteral>))\n"))
+					+ "  FILTER(geof:sfIntersects(?aWKT, "+polygonWKT+"^^<http://www.opengis.net/ont/geosparql#wktLiteral>))\n"
 					+ "} \n"
 				;
 				break;
@@ -210,11 +185,7 @@ public class MacroRapidMappingQueriesSet extends QueriesSet {
 					+ "	   ?rGeo	"+lgd_asWKT+" ?rWKT. \n"
 					+ "  } \n"
 					+ "  FILTER( geof:sfIntersects(?rWKT, ?hWKT) ) .  \n"
-					+ (sut instanceof StrabonSUT?
-					 "  FILTER(geof:sfIntersects(?rWKT, "+polygonWKT+"^^strdf:WKT))\n"
-					:(sut instanceof ParliamentSUT?
-					"  FILTER(geof:sfIntersects(?rWKT, "+polygonWKT+"^^<http://www.opengis.net/ont/sf#wktLiteral>))\n"
-				   :"  FILTER(geof:sfIntersects(?rWKT, "+polygonWKT+"^^<http://www.opengis.net/ont/geosparql#wktLiteral>))\n"))
+					+ "  FILTER(geof:sfIntersects(?rWKT, "+polygonWKT+"^^<http://www.opengis.net/ont/geosparql#wktLiteral>))\n"
 					+ "} \n"
 				;
 				break;

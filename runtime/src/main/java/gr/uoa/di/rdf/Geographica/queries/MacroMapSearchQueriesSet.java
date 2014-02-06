@@ -8,7 +8,6 @@
  */
 package gr.uoa.di.rdf.Geographica.queries;
 
-import gr.uoa.di.rdf.Geographica.systemsundertest.ParliamentSUT;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
 
 import java.io.BufferedReader;
@@ -119,9 +118,7 @@ public class MacroMapSearchQueriesSet extends QueriesSet {
 					+ "     geonames:parentFeature ?parent; \n"
 					+ "     geonames:featureClass ?class. \n"
 					+ "  ?fGeo "+geonames_asWKT+" ?fGeoWKT. \n"
-					+ ((sut instanceof ParliamentSUT)?
-							"  FILTER(geof:sfIntersects(?fGeoWKT, \""+boundingBox+"\"^^<http://www.opengis.net/ont/sf#wktLiteral>)).\n"
-						   :"  FILTER(geof:sfIntersects(?fGeoWKT, \""+boundingBox+"\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>)).\n")
+					+ "  FILTER(geof:sfIntersects(?fGeoWKT, \""+boundingBox+"\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>)).\n"
 					+ " } } \n";
 			break;
 
@@ -136,10 +133,8 @@ public class MacroMapSearchQueriesSet extends QueriesSet {
 					+ "	 OPTIONAL{ ?r rdfs:label ?label }. \n"
 					+ "	 ?r "+lgd_hasGeometry+" ?rGeo. \n"
 					+ "	 ?rGeo "+lgd_asWKT+" ?rGeoWKT. \n"
-					+ ((sut instanceof ParliamentSUT)?
-							"  FILTER(geof:sfIntersects(?rGeoWKT, \""+boundingBox+"\"^^<http://www.opengis.net/ont/sf#wktLiteral>)).\n"
-						   :"  FILTER(geof:sfIntersects(?rGeoWKT, \""+boundingBox+"\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>)).\n")
-				   + " } \n"
+					+ "  FILTER(geof:sfIntersects(?rGeoWKT, \""+boundingBox+"\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>)).\n"
+					+ " } \n"
 					+ "}";
 			break;
 		default:

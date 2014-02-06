@@ -8,11 +8,7 @@
  */
 package gr.uoa.di.rdf.Geographica.queries;
 
-import gr.uoa.di.rdf.Geographica.queries.QueriesSet.QueryStruct;
-import gr.uoa.di.rdf.Geographica.systemsundertest.ParliamentSUT;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
-import gr.uoa.di.rdf.Geographica.systemsundertest.UseekmSUT;
-import gr.uoa.di.rdf.Geographica.systemsundertest.VirtuosoSUT;
 
 import org.apache.log4j.Logger;
 
@@ -35,53 +31,24 @@ public class MicroNonTopologicalQueriesSet extends QueriesSet {
 			+ "} "
 			;
 
-	private String queryUseekmTemplate = prefixes 
-			+ " \n select (ext:FUNCTION(?o1) as ?ret) where { \n"
-			+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1} \n"
-			+ "} "
-			;
+//	private String queryUseekmTemplate = prefixes 
+//			+ " \n select (ext:FUNCTION(?o1) as ?ret) where { \n"
+//			+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1} \n"
+//			+ "} "
+//			;
 	
 	private String queryBufferTemplate;
 	
 	public MicroNonTopologicalQueriesSet(SystemUnderTest sut) {
 		super(sut);
 		
-		if (sut instanceof ParliamentSUT) { 
-			queriesN = 5; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
+		queriesN = 6; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
 			
-			queryBufferTemplate = prefixes 
-					+ " \n select (geof:buffer(?o1,4, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?ret) where {"
-					+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1}"
-					+ "} "
-					;
-		}
-		else if (sut instanceof UseekmSUT) { 
-			queriesN = 6; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
-			
-			queryBufferTemplate = prefixes 
-					+ " \n select (geof:buffer(?o1,0.00000004) as ?ret) where {"
-					+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1}"
-					+ "} "
-					;
-		}
-		else if (sut instanceof VirtuosoSUT) {
-			queriesN = 5; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
-			
-			queryBufferTemplate = prefixes 
-					+ " \n select (geof:buffer(?o1,4, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?ret) where {"
-					+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1}"
-					+ "} "
-					;
-		}
-		else { // Strabon
-			queriesN = 6; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
-			
-			queryBufferTemplate = prefixes 
-					+ " \n select (geof:buffer(?o1,4, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?ret) where {"
-					+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1}"
-					+ "} "
-					;
-		}
+		queryBufferTemplate = prefixes 
+				+ " \n select (geof:buffer(?o1,4, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?ret) where {"
+				+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1}"
+				+ "} "
+				;
 	}
 	
 	@Override
@@ -136,23 +103,13 @@ public class MicroNonTopologicalQueriesSet extends QueriesSet {
 			break;
 
 		case 5:
-			if (sut instanceof UseekmSUT) {
-				// Q12 Area of Polygons
-				label = "Area_CLC"; 
-				query = queryUseekmTemplate;
-				query = query.replace("FUNCTION", "area");
-				query = query.replace("GRAPH1", clc);
-				query = query.replace("ASWKT1", clc_asWKT);
-				break;
-			} else  { // Strabon
-				// Q12 Area of Polygons
-				label = "Area_CLC"; 
-				query = queryStsparqlTemplate;
-				query = query.replace("FUNCTION", "area");
-				query = query.replace("GRAPH1", clc);
-				query = query.replace("ASWKT1", clc_asWKT);
-				break;
-			}
+			// Q12 Area of Polygons
+			label = "Area_CLC"; 
+			query = queryStsparqlTemplate;
+			query = query.replace("FUNCTION", "area");
+			query = query.replace("GRAPH1", clc);
+			query = query.replace("ASWKT1", clc_asWKT);
+			break;
 			
 			
 		default:

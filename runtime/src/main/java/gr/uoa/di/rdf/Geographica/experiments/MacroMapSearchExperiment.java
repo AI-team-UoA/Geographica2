@@ -10,11 +10,7 @@ package gr.uoa.di.rdf.Geographica.experiments;
 
 import gr.uoa.di.rdf.Geographica.queries.MacroMapSearchQueriesSet;
 import gr.uoa.di.rdf.Geographica.queries.QueriesSet.QueryStruct;
-import gr.uoa.di.rdf.Geographica.systemsundertest.ParliamentSUT;
-import gr.uoa.di.rdf.Geographica.systemsundertest.StrabonSUT;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
-import gr.uoa.di.rdf.Geographica.systemsundertest.UseekmSUT;
-import gr.uoa.di.rdf.Geographica.systemsundertest.VirtuosoSUT;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,8 +19,6 @@ import java.io.StringWriter;
 import org.apache.log4j.Logger;
 import org.openrdf.query.Binding;
 import org.openrdf.query.BindingSet;
-
-import com.hp.hpl.jena.query.QuerySolution;
 
 /**
  * @author George Garbis <ggarbis@di.uoa.gr>
@@ -88,30 +82,9 @@ public class MacroMapSearchExperiment extends MacroExperiment {
 					measurements =  sut.runQueryWithTimeout(queryStruct.getQuery(), timeoutSecs);
 					
 					if (queryI == 0) {
-						if (sut instanceof StrabonSUT) {
-							BindingSet firstBindingSet = ((StrabonSUT)sut).getFirstBindingSet();
-							Binding geo = firstBindingSet.getBinding("wkt");
-							((MacroMapSearchQueriesSet)queriesSet).setCurrentPoint(geo.getValue().stringValue());
-						}
-						if (sut instanceof VirtuosoSUT) {
-							BindingSet firstBindingSet = ((VirtuosoSUT)sut).getFirstBindingSet();
-							Binding geo = firstBindingSet.getBinding("wkt");
-							((MacroMapSearchQueriesSet)queriesSet).setCurrentPoint(geo.getValue().stringValue());
-						}
-						if (sut instanceof UseekmSUT) {
-							BindingSet firstBindingSet = ((UseekmSUT)sut).getFirstBindingSet();
-							Binding geo = firstBindingSet.getBinding("wkt");
-							((MacroMapSearchQueriesSet)queriesSet).setCurrentPoint(geo.getValue().stringValue());
-						}
-						else if (sut instanceof ParliamentSUT) {
-							QuerySolution firstQuerySolution = ((ParliamentSUT)sut).getFirstQuerySolution();
-							((MacroMapSearchQueriesSet)queriesSet).setCurrentPoint(firstQuerySolution.getLiteral("wkt").getString());
-						} else {
-							BindingSet firstBindingSet = (BindingSet) sut.getFirstBindingSet();
-							Binding geo = firstBindingSet.getBinding("WKT");
-							((MacroMapSearchQueriesSet)queriesSet).setCurrentPoint(geo.getValue().stringValue());
-
-						}
+						BindingSet firstBindingSet = (BindingSet) sut.getFirstBindingSet();
+						Binding geo = firstBindingSet.getBinding("wkt");
+						((MacroMapSearchQueriesSet)queriesSet).setCurrentPoint(geo.getValue().stringValue());
 					}
 					
 					logger.info("Query executed ("

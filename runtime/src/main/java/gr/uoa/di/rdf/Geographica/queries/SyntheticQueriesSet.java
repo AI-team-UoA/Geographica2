@@ -9,7 +9,6 @@
 package gr.uoa.di.rdf.Geographica.queries;
 
 import gr.uoa.di.rdf.Geographica.generators.SyntheticGenerator;
-import gr.uoa.di.rdf.Geographica.systemsundertest.ParliamentSUT;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
 
 import java.io.IOException;
@@ -93,11 +92,7 @@ public class SyntheticQueriesSet extends QueriesSet {
 		else {
 			logger.error("No such query number exists:" + queryIndex);
 		}
-		 
-		if (sut instanceof ParliamentSUT) {
-			query = query.replace("http://www.opengis.net/ont/geosparql#wktLiteral", "http://www.opengis.net/ont/sf#wktLiteral");
-		}
-	
+		
 		String translatedQuery = sut.translateQuery(query, label);
 		return new QueryStruct(translatedQuery, label);	
 	}

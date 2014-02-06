@@ -9,10 +9,7 @@
 package gr.uoa.di.rdf.Geographica.queries;
 
 import gr.uoa.di.rdf.Geographica.generators.SyntheticGenerator;
-import gr.uoa.di.rdf.Geographica.queries.QueriesSet.QueryStruct;
-import gr.uoa.di.rdf.Geographica.systemsundertest.ParliamentSUT;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
-import gr.uoa.di.rdf.Geographica.systemsundertest.VirtuosoSUT;
 
 import java.io.IOException;
 
@@ -67,22 +64,6 @@ public class SyntheticOnlyPointsQueriesSet extends QueriesSet {
 		
 		else {
 			logger.error("No such query number exists:" + queryIndex);
-		}
-		 
-		if (sut instanceof ParliamentSUT) {
-			query = query.replace("http://www.opengis.net/ont/geosparql#wktLiteral", "http://www.opengis.net/ont/sf#wktLiteral");
-		} else if (sut instanceof VirtuosoSUT) {
-			query = query.replace("http://www.opengis.net/ont/geosparql#wktLiteral", "http://www.openlinksw.com/schemas/virtrdf#Geometry");
-			query = query.replace("geof:distance", "bif:st_distance");
-			query = query.replace(", <http://www.opengis.net/def/uom/OGC/1.0/metre>", "");
-			String[] querySplitted = query.split("<= ");
-			if (querySplitted.length == 2) {
-				String distanceString = query.split("<= ")[1];
-				distanceString = distanceString = distanceString.split("\\)")[0];
-				double distanceInMeter = Double.parseDouble(distanceString);
-				double distanceInKm = distanceInMeter / 1000;
-				query = query.replace(distanceString, String.format("%f", distanceInKm));
-			}
 		}
 	
 		String translatedQuery = sut.translateQuery(query, label);

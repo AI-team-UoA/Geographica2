@@ -8,9 +8,7 @@
  */
 package gr.uoa.di.rdf.Geographica.queries;
 
-import gr.uoa.di.rdf.Geographica.queries.QueriesSet.QueryStruct;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
-import gr.uoa.di.rdf.Geographica.systemsundertest.VirtuosoSUT;
 
 import org.apache.log4j.Logger;
 
@@ -45,15 +43,6 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 			+ " FILTER(geof:FUNCTION(?o1, ?o2)).  \n"
 			+ "} \n"
 			;
-	
-	private String queryTemplateVirtuoso = prefixes 
-			+ "\n select ?s1 ?s2 where { \n"
-			+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1} \n"
-			+ "	GRAPH <GRAPH2> {?s2 ASWKT2 ?o2} \n"
-//			+ "   FILTER(?s1 != ?s2).  \n"
-			+ "  FILTER(bif:FUNCTION(?o1, ?o2, 0)).  \n"
-			+ "} \n"
-			;
 
 	@Override
 	public QueryStruct getQuery(int queryIndex, int repetition) {
@@ -66,24 +55,14 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 			case 0:			
 				// Q1 Find equal points in GeoNames & DBPedia
 				label = "Equals_GeoNames_DBPedia";
-				if (sut instanceof VirtuosoSUT) {
-					query = queryTemplateVirtuoso;
-					query = query.replace("GRAPH1", geonames);
-					query = query.replace("ASWKT1", geonames_asWKT);
-					query = query.replace("GRAPH2", dbpedia);
-					query = query.replace("ASWKT2", dbpedia_asWKT);
-					query = query.replace("FUNCTION", "st_within");
-				} else {
-					query = queryTemplate;
-					query = query.replace("GRAPH1", geonames);
-					query = query.replace("ASWKT1", geonames_asWKT);
-					query = query.replace("GRAPH2", dbpedia);
-					query = query.replace("ASWKT2", dbpedia_asWKT);
-					query = query.replace("FUNCTION", "sfEquals");
-				}
-				query = sut.translateQuery(query, label);
+				query = queryTemplate;
+				query = query.replace("GRAPH1", geonames);
+				query = query.replace("ASWKT1", geonames_asWKT);
+				query = query.replace("GRAPH2", dbpedia);
+				query = query.replace("ASWKT2", dbpedia_asWKT);
+				query = query.replace("FUNCTION", "sfEquals");
+				
 				break;
-
 
 			// -- Intersects -- //
 			case 1:

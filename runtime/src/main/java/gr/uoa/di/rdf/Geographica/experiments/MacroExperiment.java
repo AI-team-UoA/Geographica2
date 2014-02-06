@@ -89,6 +89,13 @@ public abstract class MacroExperiment extends Experiment {
 									+ measurements[1] + " = "
 									+ measurements[2] + ", "
 									+ measurements[3] + "\n");
+
+					logger.debug("Reinitialize? query-result:"+measurements[3]);
+					if (measurements[3] == -1) {
+						// Sth went wront (e.g., time out) and sut should be reinitialized
+						logger.debug("reinitialization");
+						sut.initialize();
+					}
 				
 					try {
 						printStatisticsPerQuery(this.getClass().getSimpleName(), queryI, repetitionI, queryStruct, measurements);

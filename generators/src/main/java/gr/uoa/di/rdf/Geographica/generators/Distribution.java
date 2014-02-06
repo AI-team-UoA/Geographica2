@@ -8,24 +8,24 @@
  */
 package gr.uoa.di.rdf.Geographica.generators;
 
-import java.util.Random;
+//import java.util.Random;
 
 /**
  * @author Kostis Kyzirakos <kkyzir@di.uoa.gr>
  */
 public class Distribution {	
 	
-	private Distributions type;
+//	private Distributions type;
 	
-	private double min, max;
+//	private double min, max;
 	
-	private static volatile long seed = 1232777807144237L;
+//	private static volatile long seed = 1232777807144237L;
 	
 	
 	public Distribution(Distributions type, double min, double max) {
-		this.type = type;
-		this.min = min;
-		this.max = max;
+//		this.type = type;
+//		this.min = min;
+//		this.max = max;
 		
 		switch (type) {
 		case UNIFORM:

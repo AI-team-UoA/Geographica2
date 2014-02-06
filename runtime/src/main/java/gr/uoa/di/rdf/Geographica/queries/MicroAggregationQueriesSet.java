@@ -8,7 +8,6 @@
  */
 package gr.uoa.di.rdf.Geographica.queries;
 
-import gr.uoa.di.rdf.Geographica.queries.QueriesSet.QueryStruct;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
 
 import org.apache.log4j.Logger;

@@ -465,7 +465,8 @@ public class SyntheticGenerator {
 		writeFile(shp, "<" + prefix + "geometry/" + currentId + "/> <" + prefix + "asWKT> \"" + geometry + "\"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .");
 
 //		for (int tagId = 1;  ((currentId-(int)(currentId/MAX_TAG_VALUE)) % tagId == 0) && tagId <= MAX_TAG_VALUE; tagId *= 2) {
-		for (int tagId = 1;  ((currentId+MAX_TAG_VALUE/2) % tagId == 0) && tagId <= MAX_TAG_VALUE; tagId *= 2) {
+//		for (int tagId = 1;  ((currentId+MAX_TAG_VALUE/2) % tagId == 0) && tagId <= MAX_TAG_VALUE; tagId *= 2) {
+		for (int tagId = 1;  (currentId % tagId == 0) && tagId <= MAX_TAG_VALUE; tagId *= 2) {
 			if (tagId > 1 && tagId < MAX_TAG_VALUE)
 				continue;
 			

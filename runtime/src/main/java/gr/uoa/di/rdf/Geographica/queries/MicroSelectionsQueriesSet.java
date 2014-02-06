@@ -8,21 +8,13 @@
  */
 package gr.uoa.di.rdf.Geographica.queries;
 
-import gr.uoa.di.rdf.Geographica.queries.QueriesSet.QueryStruct;
-import gr.uoa.di.rdf.Geographica.systemsundertest.ParliamentSUT;
-import gr.uoa.di.rdf.Geographica.systemsundertest.StrabonSUT;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
-import gr.uoa.di.rdf.Geographica.systemsundertest.UseekmSUT;
-import gr.uoa.di.rdf.Geographica.systemsundertest.VirtuosoSUT;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -46,33 +38,14 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 	private String givenLine, givenLine2, givenLine3;
 	private String givenPoint;
 	private String givenRadius;
-		
-	@SuppressWarnings("unchecked")
+	
 	public MicroSelectionsQueriesSet(SystemUnderTest sut) throws IOException {
 		super(sut);
 		queriesN = 11; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
 		
-		String spatialDatatype=null;
-		if (sut instanceof StrabonSUT) {
-			spatialDatatype = "<http://www.opengis.net/ont/geosparql#wktLiteral>";
-			givenRadius = "3000";
-			givenPoint = "\"POINT(23.71622 37.97945)\"^^"+spatialDatatype;
-		} else if (sut instanceof ParliamentSUT) {
-			spatialDatatype = "<http://www.opengis.net/ont/sf#wktLiteral>";
-			givenRadius = "3000";
-			givenPoint = "\"POINT(23.71622 37.97945)\"^^"+spatialDatatype;
-		} else if (sut instanceof UseekmSUT) {
-			spatialDatatype = "<http://www.opengis.net/ont/geosparql#wktLiteral>";
-			givenRadius = "0.03";
-			givenPoint = "\"POINT(23.71622 37.97945)\"^^"+spatialDatatype;
-		} else if (sut instanceof VirtuosoSUT ) {
-			givenPoint = "bif:st_point(23.71622, 37.97945)";
-			givenRadius = "2.93782";
-		} else {
-			spatialDatatype = "<http://www.opengis.net/ont/geosparql#wktLiteral>";
-			givenRadius = "3000";
-			givenPoint = "\"POINT(23.71622 37.97945)\"^^"+spatialDatatype;
-		}
+		String spatialDatatype = "<http://www.opengis.net/ont/geosparql#wktLiteral>";
+		givenPoint = "\"POINT(23.71622 37.97945)\"^^"+spatialDatatype;
+		givenRadius = "3000";
 		
 		InputStream is = getClass().getResourceAsStream("/"+givenPolygonFile);
 		BufferedReader in = new BufferedReader(new InputStreamReader(is));
@@ -182,86 +155,24 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 	
 		// -- Within buffer -- //
 		case 7:
-			label = "Intersects_GeoNames_Point_Buffer"; 
-			if (sut instanceof StrabonSUT) { 
-				query = prefixes + "\n select ?s1 where { \n" 
-						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n"
-						+ " FILTER(geof:sfWithin(?o1, geof:buffer( \n"
-						+ givenPoint + ", " + givenRadius + ", <http://www.opengis.net/def/uom/OGC/1.0/metre>"
-						+ "))).  \n" 
-						+ "} "
-						; 
-			} else if (sut instanceof ParliamentSUT) {
-				query = prefixes + "\n select ?s1 where { \n" 
-						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n"
-						+ " FILTER(geof:sfWithin(?o1, geof:buffer( \n"
-						+ givenPoint + ", " + givenRadius + ", <http://www.opengis.net/def/uom/OGC/1.0/metre>"
-						+ "))).  \n" 
-						+ "} "
-						; 
-			} else if (sut instanceof VirtuosoSUT) {
-				query = prefixes + "\n select ?s1 where { \n" 
-						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n"
-						+ " FILTER(bif:st_within(?o1, " + givenPoint + ", " + givenRadius 
-						+ ")).  \n" 
-						+ "} "
-						; 
-
-			} else if (sut instanceof UseekmSUT) {
-				query = prefixes + "\n select ?s1 where { \n" 
-						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n"
-						+ " FILTER(geof:sfWithin(?o1, geof:buffer( \n"
-						+ givenPoint + ", " +givenRadius
-						+ "))).  \n" 
-						+ "} "
-						;
-			} else {
-				query = prefixes + "\n select ?s1 where { \n" 
-						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n"
-						+ " FILTER(geof:sfWithin(?o1, geof:buffer( \n"
-						+ givenPoint + ", " + givenRadius + ", <http://www.opengis.net/def/uom/OGC/1.0/metre>"
-						+ "))).  \n" 
-						+ "} "
-						; 
-				query = sut.translateQuery(query, label);
-			}
+			label = "Intersects_GeoNames_Point_Buffer";
+			query = prefixes + "\n select ?s1 where { \n"
+					+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n"
+					+ " FILTER(geof:sfWithin(?o1, geof:buffer("
+					+ givenPoint + ", " + givenRadius + ", <http://www.opengis.net/def/uom/OGC/1.0/metre>"
+					+ "))).  \n" 
+					+ "} "
+					;
 			break;
 	
 		// -- Within distance -- //
 		case 8:
 			label = "Intersects_GeoNames_Point_Distance";
-			if (sut instanceof StrabonSUT) {
-				query = prefixes + "\n select ?s1 where { \n" 
-						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n" 
-						+ "  FILTER(strdf:distance(?o1, "+ givenPoint + ", <http://www.opengis.net/def/uom/OGC/1.0/metre>) <= " + givenRadius + ").  \n" 
-						+ "} "
-						;
-			} else if (sut instanceof VirtuosoSUT) {
-				query = prefixes + "\n select ?s1 where { \n" 
-						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n" 
-						+ "  FILTER(bif:st_distance(?o1, "+ givenPoint + ") <= " + givenRadius + ").  \n" 
-						+ "} "
-						;
-			} else if (sut instanceof UseekmSUT) {
-				query = prefixes + "\n select ?s1 where { \n" 
-						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n" 
-						+ "  FILTER(geof:distance(?o1, " + givenPoint + ") <= " + givenRadius + ").  \n" 
-						+ "} "
-						;
-			} else if (sut instanceof ParliamentSUT) {	
-				query = prefixes + "\n select ?s1 where { \n" 
-						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n" 
-						+ "  FILTER(geof:distance(?o1, "+ givenPoint + ", <http://www.opengis.net/def/uom/OGC/1.0/metre>) <= " + givenRadius + ").  \n" 
-						+ "} "
-						;
-			} else {
-				query = prefixes + "\n select ?s1 where { \n" 
-						+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n" 
-						+ "  FILTER(geof:distance(?o1, "+ givenPoint + ", <http://www.opengis.net/def/uom/OGC/1.0/metre>) <= " + givenRadius + ").  \n" 
-						+ "} "
-						;
-				query = sut.translateQuery(query, label);
-			}
+			query = prefixes + "\n select ?s1 where { \n" 
+					+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n" 
+					+ "  FILTER(geof:distance(?o1, "+ givenPoint + ", <http://www.opengis.net/def/uom/OGC/1.0/metre>) <= " + givenRadius + ").  \n" 
+					+ "} "
+					;
 			break;
 		case 9:
 			// -- Disjoint -- //

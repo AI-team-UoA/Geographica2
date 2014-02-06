@@ -9,7 +9,6 @@
 package gr.uoa.di.rdf.Geographica.experiments;
 
 import gr.uoa.di.rdf.Geographica.queries.SyntheticOnlyPointsQueriesSet;
-import gr.uoa.di.rdf.Geographica.queries.SyntheticQueriesSet;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
 
 import java.io.IOException;

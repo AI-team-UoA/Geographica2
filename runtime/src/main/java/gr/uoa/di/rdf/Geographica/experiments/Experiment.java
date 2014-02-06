@@ -11,8 +11,6 @@ package gr.uoa.di.rdf.Geographica.experiments;
 import gr.uoa.di.rdf.Geographica.queries.QueriesSet;
 import gr.uoa.di.rdf.Geographica.queries.QueriesSet.QueryStruct;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
-import gr.uoa.di.rdf.Geographica.systemsundertest.VirtuosoSUT;
-import gr.uoa.di.rdf.Geographica.systemsundertest.UseekmSUT;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -120,6 +118,11 @@ public abstract class Experiment {
 				for (repetitionI = 0; repetitionI < repetitions; repetitionI++) {
 					queryStruct = queriesSet.getQuery(queryI, repetitionI);
 
+					if (queryStruct.getQuery() == null) {
+						logger.warn("Query '"+queryStruct.getLabel()+"' is not defined");
+						continue;
+					}
+					
 					logger.info("Executing query ["+timeoutSecs+"] (cold, "
 							+ queryI + ", " + repetitionI + "): "
 							+ queryStruct.getQuery());
