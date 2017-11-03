@@ -11,18 +11,54 @@
     <name>GraphDBSUT</name>
     <description>A client SUT for GraphDB</description>
     <packaging>jar</packaging>
+    <properties>
+        <rdf4j.version>2.2.2</rdf4j.version>
+    </properties>
     <dependencies>
+        <dependency>
+            <groupId>com.ontotext.graphdb</groupId>
+            <artifactId>graphdb-free-runtime</artifactId>
+            <version>8.3.1</version>
+            <exclusions>
+                <exclusion>  <!-- declare the exclusion here -->
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-classic</artifactId>
+                </exclusion>
+            </exclusions> 
+        </dependency>
         <dependency>
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-repository-manager</artifactId>
-            <version>2.2.2</version>
+            <version>${rdf4j.version}</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.rdf4j</groupId>
+            <artifactId>rdf4j-rio-api</artifactId>
+            <version>${rdf4j.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.rdf4j</groupId>
+            <artifactId>rdf4j-rio-rdfxml</artifactId>
+            <version>${rdf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.rdf4j</groupId>
+            <artifactId>rdf4j-rio-turtle</artifactId>
+            <version>${rdf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>gr.uoa.di.rdf</groupId>
             <artifactId>runtime</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${gr.uoa.di.rdf.geographica.version}</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>eu.earthobservatory</groupId>
+            <artifactId>strabon-runtime</artifactId>
+            <version>${eu.earthobservatory.version}</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

@@ -126,7 +126,7 @@ public abstract class Experiment {
 					}
 					
 					logger.info("Executing query ["+timeoutSecs+"] (cold, "
-							+ queryI + ", " + repetitionI + "): "
+							+ queryI + ", " + repetitionI + "): \n"
 							+ queryStruct.getQuery());
 
 					sut.initialize();
