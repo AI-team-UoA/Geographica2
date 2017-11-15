@@ -9,7 +9,6 @@
 
 package gr.uoa.di.rdf.Geographica2.systemsundertest;
 
-import gr.uoa.di.rdf.Geographica.systemsundertest.*;
 import java.io.IOException;
 
 import org.eclipse.rdf4j.query.BindingSet;
