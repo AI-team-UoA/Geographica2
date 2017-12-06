@@ -1,0 +1,1 @@
+-h localhost -db geographica -p 5432 -u postgres -P postgres -r 1 -l tioa run MicroNonTopological

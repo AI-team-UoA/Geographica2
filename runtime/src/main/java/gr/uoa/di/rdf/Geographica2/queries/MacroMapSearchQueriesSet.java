@@ -8,7 +8,6 @@
  */
 package gr.uoa.di.rdf.Geographica2.queries;
 
-import gr.uoa.di.rdf.Geographica2.queries.*;
 import gr.uoa.di.rdf.Geographica2.systemsundertest.SystemUnderTest;
 
 import java.io.BufferedReader;
@@ -44,7 +43,7 @@ public class MacroMapSearchQueriesSet extends QueriesSet {
 		InputStream is = getClass().getResourceAsStream("/"+geonamesFile);
 		BufferedReader in = new BufferedReader(new InputStreamReader(is));
 		String name;
-		while ( (name = in.readLine()) != null ) {
+                while ( (name = in.readLine()) != null ) {
 			names.add(name);
 		}
 		in.close();
@@ -58,8 +57,14 @@ public class MacroMapSearchQueriesSet extends QueriesSet {
 	public void setCurrentPoint(String currentPoint) {
 		this.currentPoint = currentPoint;
 		
-		String[] temp = currentPoint.split("[( )]");
-
+		/* Commented out because it works only when currentPoint is in
+                   the form POINT(xxx.xx yyy.yy), but fails when the CRS URI is
+                   included!!
+                String[] temp = currentPoint.split("[( )]");
+                */
+                
+                String[] temp = currentPoint.split("POINT")[1].split("[( )]");
+                
 		double x = Double.parseDouble(temp[1]);
 		double y = Double.parseDouble(temp[2]);
 		double xd=0.03;

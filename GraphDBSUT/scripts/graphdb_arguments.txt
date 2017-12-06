@@ -1,0 +1,1 @@
+-bd "/home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data" -rp geographica2 -cr false -r 1 -l "/home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDBResults" run MicroAggregations

@@ -29,10 +29,13 @@ public class MacroMapSearchExperiment extends MacroExperiment {
 	protected int queriesToRunN;
 
 	public MacroMapSearchExperiment(SystemUnderTest sut, int repetitions, int timeoutSecs, int runTimeInMinutes, String logPath) throws IOException {
-		super(sut, repetitions, timeoutSecs, runTimeInMinutes, logPath);
+                /*
+                super(sut, repetitions, timeoutSecs, runTimeInMinutes, logPath);
 		logger = Logger.getLogger(MacroMapSearchExperiment.class.getSimpleName());
 		queriesSet = new MacroMapSearchQueriesSet(sut);
 		this.runTimeInMinutes = runTimeInMinutes;
+                */
+                this(sut, repetitions, timeoutSecs, runTimeInMinutes, null, logPath);
 	}
 	
 	public MacroMapSearchExperiment(SystemUnderTest sut, int repetitions, int timeoutSecs, int runTimeInMinutes, int[] queriesToRun, String logPath) throws IOException {
@@ -40,7 +43,7 @@ public class MacroMapSearchExperiment extends MacroExperiment {
 		logger = Logger.getLogger(MacroMapSearchExperiment.class.getSimpleName());
 		queriesSet = new MacroMapSearchQueriesSet(sut);
 		this.runTimeInMinutes = runTimeInMinutes;
-		this.queriesToRun = queriesToRun;
+		this.queriesToRun = queriesToRun;      
 	}
 	
 	@Override

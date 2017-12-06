@@ -268,6 +268,8 @@ public class GraphDBSUT implements SystemUnderTest {
 
         private void runQuery() throws MalformedQueryException, QueryEvaluationException, TupleQueryResultHandlerException, IOException {
 
+            BindingSet bindingSet;
+            
             logger.info("Evaluating query...");
             TupleQuery tupleQuery = graphDB.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, query);
 
@@ -277,14 +279,17 @@ public class GraphDBSUT implements SystemUnderTest {
             TupleQueryResult tupleQueryResult = tupleQuery.evaluate();
             long t2 = System.nanoTime();
 
+            logger.debug("----------------> Query Results <-----------------");
             if (tupleQueryResult.hasNext()) {
                 firstBindingSet = tupleQueryResult.next();
+                logger.debug(firstBindingSet.toString());
                 noOfResults++;
             }
 
             while (tupleQueryResult.hasNext()) {
                 noOfResults++;
-                tupleQueryResult.next();
+                bindingSet = tupleQueryResult.next();
+                logger.debug(bindingSet.toString());
             }
             // Calculate durations: Evaluation, Full ResultSet Scan
             fullResultScanTime = System.nanoTime() - t2;

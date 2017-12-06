@@ -19,14 +19,17 @@ import org.apache.log4j.Logger;
 public class MicroNonTopologicalExperiment extends Experiment {
 
 	public MicroNonTopologicalExperiment(SystemUnderTest sut, int repetitions, int timeoutSecs, String logPath) {
-		super(sut, repetitions, timeoutSecs, logPath);
-		logger = Logger.getLogger(MicroNonTopologicalExperiment.class.getSimpleName());
-		queriesSet = new MicroNonTopologicalQueriesSet(sut);
+            /*
+            super(sut, repetitions, timeoutSecs, logPath);
+            logger = Logger.getLogger(MicroNonTopologicalExperiment.class.getSimpleName());
+            queriesSet = new MicroNonTopologicalQueriesSet(sut);
+            */
+            this(sut, repetitions, timeoutSecs, null, logPath);
 	}
 
 	public MicroNonTopologicalExperiment(SystemUnderTest sut, int repetitions, int timeoutSecs, int[] queriesToRun, String logPath) {
-		super(sut, repetitions, timeoutSecs, queriesToRun, logPath);
-		logger = Logger.getLogger(MicroNonTopologicalExperiment.class.getSimpleName());
-		queriesSet = new MicroNonTopologicalQueriesSet(sut);
+            super(sut, repetitions, timeoutSecs, queriesToRun, logPath);
+            logger = Logger.getLogger(MicroNonTopologicalExperiment.class.getSimpleName());
+            queriesSet = new MicroNonTopologicalQueriesSet(sut);
 	}
 }
