@@ -224,24 +224,36 @@ public class GraphDBSUT implements SystemUnderTest {
         private final String query;
         private final GraphDB graphDB;
         private BindingSet firstBindingSet;
+        /*
         private long evaluationTime,
                 fullResultScanTime,
                 noOfResults;
+        */
+        private long[] returnValue;
 
         // --------------------- Constructors ----------------------------------
         public Executor(String query, GraphDB graphDB, int timeoutSecs) {
             this.query = query;
             this.graphDB = graphDB;
+            /*
             this.evaluationTime = timeoutSecs + 1;
             this.fullResultScanTime = timeoutSecs + 1;
             this.noOfResults = -1;
+            */
+            this.returnValue = new long[]{timeoutSecs + 1, timeoutSecs + 1, timeoutSecs + 1, -1};
         }
 
         // --------------------- Data Accessors --------------------------------
+        /*
         public long[] getExecutorResults() {
             return new long[]{evaluationTime, fullResultScanTime, evaluationTime + fullResultScanTime, noOfResults};
         }
+        */
 
+        public long[] getRetValue() {
+            return returnValue;
+        }
+        
         public BindingSet getFirstBindingSet() {
             return firstBindingSet;
         }
@@ -267,35 +279,39 @@ public class GraphDBSUT implements SystemUnderTest {
         }
 
         private void runQuery() throws MalformedQueryException, QueryEvaluationException, TupleQueryResultHandlerException, IOException {
-
-            BindingSet bindingSet;
-            
+           
             logger.info("Evaluating query...");
             TupleQuery tupleQuery = graphDB.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, query);
 
             // Evaluate and time the evaluation of the prepared query
-            noOfResults = 0;
+            // noOfResults = 0;
+            long results = 0;
+            
             long t1 = System.nanoTime();
             TupleQueryResult tupleQueryResult = tupleQuery.evaluate();
             long t2 = System.nanoTime();
 
-            logger.debug("----------------> Query Results <-----------------");
             if (tupleQueryResult.hasNext()) {
                 firstBindingSet = tupleQueryResult.next();
-                logger.debug(firstBindingSet.toString());
-                noOfResults++;
+                //noOfResults++;
+                results++;
             }
 
             while (tupleQueryResult.hasNext()) {
-                noOfResults++;
-                bindingSet = tupleQueryResult.next();
-                logger.debug(bindingSet.toString());
+                //noOfResults++;
+                results++;
+                tupleQueryResult.next();
             }
+            long t3 = System.nanoTime();
+            
+            logger.info("Query evaluated");
+
             // Calculate durations: Evaluation, Full ResultSet Scan
+            /*
             fullResultScanTime = System.nanoTime() - t2;
             evaluationTime = t2 - t1;
-
-            logger.info("Query evaluated");
+            */
+            this.returnValue = new long[]{t2 - t1, t3 - t2, t3 - t1, results};
         }
     }
 
@@ -361,9 +377,9 @@ public class GraphDBSUT implements SystemUnderTest {
         } catch (TimeoutException e) {  // the wait timed out
             isTimedout = true;
             logger.info("timed out!");
-            logger.info("Restarting Strabon...");
+            logger.info("Restarting GraphDB...");
             this.restart();
-            logger.info("Closing Strabon...");
+            logger.info("Closing GraphDB...");
             this.close();
         } finally {
             logger.debug("Future canceling...");
@@ -379,14 +395,16 @@ public class GraphDBSUT implements SystemUnderTest {
             System.gc();
         }
 
-        logger.debug("RetValue: " + runnable.getExecutorResults());
+        // logger.debug("RetValue: " + runnable.getExecutorResults());
+        logger.debug("RetValue: " + runnable.getRetValue());
 
         if (isTimedout) {
             long tt2 = System.nanoTime();
             return new long[]{tt2 - tt1, tt2 - tt1, tt2 - tt1, -1};
         } else {
             this.firstBindingSet = runnable.getFirstBindingSet();
-            return runnable.getExecutorResults();
+            //return runnable.getExecutorResults();
+            return runnable.getRetValue();
         }
     }
 
@@ -513,6 +531,7 @@ public class GraphDBSUT implements SystemUnderTest {
         String translatedQuery = null;
         translatedQuery = query;
 
+        /*
         translatedQuery = translatedQuery.replaceAll("geof:distance", "strdf:distance");
 
         if (label.matches("Get_CLC_areas")
@@ -523,6 +542,7 @@ public class GraphDBSUT implements SystemUnderTest {
                 || label.matches("Get_road_segments_affected_by_fire")) {
             translatedQuery = translatedQuery.replaceAll("<http://www.opengis.net/ont/geosparql#wktLiteral>", "strdf:WKT");
         }
+        
 
         if (label.matches("List_GeoNames_categories_per_CLC_category")
                 || label.matches("Count_GeoNames_categories_in_ContinuousUrbanFabric")) {
@@ -530,6 +550,7 @@ public class GraphDBSUT implements SystemUnderTest {
                     " } \\n	FILTER\\(geof:sfIntersects\\(\\?clcWkt, \\?fWkt\\)\\)\\. \\\n",
                     " \n	FILTER(geof:sfIntersects(?clcWkt, ?fWkt)). } \n");
         }
+        */
 
         return translatedQuery;
     }

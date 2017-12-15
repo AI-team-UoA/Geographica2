@@ -57,8 +57,14 @@ public class MacroMapSearchQueriesSet extends QueriesSet {
 	public void setCurrentPoint(String currentPoint) {
 		this.currentPoint = currentPoint;
 		
+                /* Commented out because it works only when currentPoint is in
+                   the form POINT(xxx.xx yyy.yy), but fails when the CRS URI is
+                   included!!
 		String[] temp = currentPoint.split("[( )]");
-
+                */
+ 
+                String[] temp = currentPoint.split("POINT")[1].split("[( )]");
+                
 		double x = Double.parseDouble(temp[1]);
 		double y = Double.parseDouble(temp[2]);
 		double xd=0.03;

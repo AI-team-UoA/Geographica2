@@ -350,6 +350,7 @@ public class StrabonSUT implements SystemUnderTest {
         String translatedQuery = null;
         translatedQuery = query;
 
+        /*
         translatedQuery = translatedQuery.replaceAll("geof:distance", "strdf:distance");
 
         if (label.matches("Get_CLC_areas")
@@ -367,7 +368,8 @@ public class StrabonSUT implements SystemUnderTest {
                     " } \\n	FILTER\\(geof:sfIntersects\\(\\?clcWkt, \\?fWkt\\)\\)\\. \\\n",
                     " \n	FILTER(geof:sfIntersects(?clcWkt, ?fWkt)). } \n");
         }
-
+        */
+        
         return translatedQuery;
     }
 }

@@ -54,7 +54,7 @@ public class MacroReverseGeocodingQueriesSet extends QueriesSet {
 			case 0:
 				label = "Find_Closest_Populated_Place"; 
 				query = prefixes
-					+ " \n SELECT ?f (strdf:distance(?cGeoWKT, \""+pointWKT+"\"^^geo:wktLiteral, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?distance)"
+					+ " \n SELECT ?f (geof:distance(?cGeoWKT, \""+pointWKT+"\"^^geo:wktLiteral, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?distance)"
 					+ "WHERE { \n"
 					+ " GRAPH <"+geonames+"> { \n"
 					+ "  ?f geonames:featureCode geonames:P.PPL; \n"
@@ -69,7 +69,7 @@ public class MacroReverseGeocodingQueriesSet extends QueriesSet {
 			case 1:
 				label = "Find_Closest_Motorway"; 
 				query = prefixes
-					+ " \n SELECT ?c ?type ?label (strdf:distance(?cGeoWKT, \""+pointWKT+"\"^^geo:wktLiteral, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?distance) ?cGeoWKT \n"
+					+ " \n SELECT ?c ?type ?label (geof:distance(?cGeoWKT, \""+pointWKT+"\"^^geo:wktLiteral, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?distance) ?cGeoWKT \n"
 					+ "WHERE { \n"
 					+ " GRAPH <"+lgd+"> { \n"
 					+ "  ?c rdf:type lgdo:Motorway; \n"

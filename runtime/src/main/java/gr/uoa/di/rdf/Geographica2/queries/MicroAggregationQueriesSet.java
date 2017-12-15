@@ -20,12 +20,17 @@ public class MicroAggregationQueriesSet  extends QueriesSet {
 	
 	static Logger logger = Logger.getLogger(MicroAggregationQueriesSet.class.getSimpleName());
 	
-	private String queryTemplate = prefixes 
+	private String queryTemplate1 = prefixes 
 			+ "\n select (strdf:FUNCTION(?o1) as ?ret) where {  \n"
 			+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1} \n"
 			+ "}";
 	
-	public MicroAggregationQueriesSet(SystemUnderTest sut) {
+	private String queryTemplate2 = prefixes 
+			+ "\n select (geof:FUNCTION(?o1) as ?ret) where {  \n"
+			+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1} \n"
+			+ "}";
+
+        public MicroAggregationQueriesSet(SystemUnderTest sut) {
 		super(sut);
 		queriesN = 4; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
 	}
@@ -44,7 +49,7 @@ public class MicroAggregationQueriesSet  extends QueriesSet {
 			case 0:
 				// Q2 Extension of Lines
 				label = "Extent_LGD"; 
-				query = queryTemplate;
+				query = queryTemplate1;
 				query = query.replace("GRAPH1", lgd);
 				query = query.replace("ASWKT1", lgd_asWKT);
 				query = query.replace("FUNCTION", "extent");
@@ -53,7 +58,7 @@ public class MicroAggregationQueriesSet  extends QueriesSet {
 			case 1:
 				// Q4 Extension of many simple Polygons
 				label = "Extent_CLC"; 
-				query = queryTemplate;
+				query = queryTemplate1;
 				query = query.replace("GRAPH1", clc);
 				query = query.replace("ASWKT1", clc_asWKT);
 				query = query.replace("FUNCTION", "extent");
@@ -62,7 +67,7 @@ public class MicroAggregationQueriesSet  extends QueriesSet {
 			case 2:
 				// Q2 Union of Lines
 				label = "Union_LGD"; 
-				query = queryTemplate;
+				query = queryTemplate2;
 				query = query.replace("GRAPH1", lgd);
 				query = query.replace("ASWKT1", lgd_asWKT);
 				query = query.replace("FUNCTION", "union");
@@ -71,7 +76,7 @@ public class MicroAggregationQueriesSet  extends QueriesSet {
 			case 3:
 				// Q1 Union of many simple Polygons
 				label = "Union_CLC"; 
-				query = queryTemplate;
+				query = queryTemplate2;
 				query = query.replace("GRAPH1", clc);
 				query = query.replace("ASWKT1", clc_asWKT);
 				query = query.replace("FUNCTION", "union");
