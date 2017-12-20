@@ -1,0 +1,1 @@
+-bd "/home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data" -rp syntheticperf -cr false -r 1 -l "/home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-Results" -N 32 run

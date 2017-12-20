@@ -1,1 +1,1 @@
--bd "/home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data" -rp geographica2perf -cr false -r 1 -l "/home/tioannid/NetBeansProjects/PhD/Geographica Datasets/tmp-GraphDB-Results" run
+-bd "/home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data" -rp geographica2perf -cr false -r 1 -l "/home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-Results" run
