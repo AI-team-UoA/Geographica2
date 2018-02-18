@@ -1,0 +1,1 @@
+-bd "/home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4" -rp geographica2paperWGS84 -cr false -r 1 -l "/home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results" run

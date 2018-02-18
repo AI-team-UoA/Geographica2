@@ -1,0 +1,1706 @@
+0    [main] INFO  RunSystemUnderTest  - Shared options
+1    [main] INFO  RunSystemUnderTest  - Repetitions:	1
+1    [main] INFO  RunSystemUnderTest  - Time out:	1800 seconds
+2    [main] INFO  RunSystemUnderTest  - Run time:	120 minutes
+2    [main] INFO  RunSystemUnderTest  - N:	0
+2    [main] INFO  RunSystemUnderTest  - Log Path:	/home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results
+2    [main] INFO  RunSystemUnderTest  - Queries to run:	null
+2    [main] INFO  RunGraphDB  - Excluded options
+2    [main] INFO  RunGraphDB  - BaseDir:	/home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4
+2    [main] INFO  RunGraphDB  - RepositoryID:	geographica2paperWGS84
+3    [main] INFO  RunGraphDB  - CreateRepository:	false
+81   [main] INFO  RunSystemUnderTest  - Start gr.uoa.di.rdf.Geographica2.experiments.MicroNonTopologicalExperiment
+82   [main] INFO  GraphDBSUT  - Clearing caches...
+5636 [main] INFO  GraphDBSUT  - Caches cleared
+5637 [main] INFO  MicroNonTopologicalExperiment  - Clear caches before cold runs
+5681 [main] INFO  MicroNonTopologicalExperiment  - Executing query [1800] (cold, 0, 0): 
+PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> 
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX gadm: <http://www.gadm.org/ontology#> 
+PREFIX lgdo: <http://linkedgeodata.org/ontology/> 
+PREFIX geonames: <http://www.geonames.org/ontology#> 
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> 
+PREFIX lgdp: <http://linkedgeodata.org/property/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/> 
+PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+PREFIX geo-sf: <http://www.opengis.net/ont/sf#> 
+PREFIX ext: <http://rdf.useekm.com/ext#> 
+PREFIX dbpedia: <http://dbpedia.org/property/> 
+PREFIX ns: <http://geographica.di.uoa.gr/dataset/> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> 
+
+ 
+ select (geof:boundary(?o1) as ?ret) where { 
+	GRAPH <http://geographica.di.uoa.gr/dataset/clc> {?s1 <http://geo.linkedopendata.gr/corine/ontology#asWKT> ?o1} 
+} 
+6350 [main] WARN  org.eclipse.rdf4j.sail.helpers.DirectoryLockManager  - Removing invalid lock 6592@ubuntu-vma-tioa
+8347 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Version: 8.4, revision: -1703271316
+8368 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Build date: Fri Jan 05 21:39:27 EET 2018
+8495 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Started repository geographica2paperWGS84 in READ/WRITE mode.
+8496 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'partialRDFS' to default value 'false'
+8496 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-isolation' to default value 'true'
+8496 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'checkForValidPropertiesAndClasses' to default value 'false'
+8496 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-mode' to default value 'safe'
+8497 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'entity-pool-implementation' to default value 'transactional'
+8497 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'useShutdownHooks' to default value 'true'
+8506 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for tuples: 7829
+8506 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for predicates: 1118
+8525 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.global.page.cache' to default value 'true'
+8694 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Detected unclean shutdown
+8694 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.epool.onheap' to default value 'false'
+8695 [main] INFO  com.ontotext.trree.entitypool.EntityPoolFactory  - Using entity pool implementation: transactional-disk
+8698 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'epool.connection.cache.size' to default value '2000'
+8703 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.epool.onheap' to default value 'false'
+9215 [main] INFO  com.ontotext.trree.entitypool.util.EntityPoolRestoreUtil  - Begin restoring from persistence: hashmap types array
+18809 [main] INFO  com.ontotext.trree.entitypool.util.EntityPoolRestoreUtil  - Done in 9594ms.
+18811 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'allow-system-entities-as-data' to default value 'false'
+18930 [main] INFO  com.ontotext.trree.util.lru.LimitedObjectCacheFactory  - Using LRU cache type: synch
+18931 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'enable-pool-reversecache' to default value 'true'
+18935 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'cache-ratio-so-os-cso-cos' to default value '[50, 50, 50]'
+18989 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.global.page.cache' to default value 'true'
+19040 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.page.cache.size' to default value '2.7G'
+30244 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'enable-debug-rules' to default value 'false'
+30278 [main] INFO  com.ontotext.trree.InferencerFactory  - ruleSet=rdfs, partialRdfs=false
+30279 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'virtual.repository.mode' to default value 'false'
+30308 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'filter.obj.only.hint' to default value 'true'
+30353 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'epool.journal.buffer.size' to default value '1024'
+30393 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'check.pred.stats' to default value 'false'
+30453 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'nonInterpretablePredicates' to default value 'null'
+30453 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'skip-default-plugins' to default value 'false'
+30453 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Searching for plugins available in the classpath...
+30574 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin rdfrank
+30575 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin direct
+30575 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin geospatial
+30575 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin notifications
+30575 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin expose-entity
+30576 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin literals-index
+30576 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin script
+30576 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin plugincontrol
+30576 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin magic-predicates
+30576 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'register-plugins' to default value '[]'
+30577 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Registering external plugins...
+30613 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/sparql-mm for plugins
+30740 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin sparql-mm
+30741 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene-connector for plugins
+31135 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene-connector
+31136 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/dependencies-plugin for plugins
+31168 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin dependencies-plugin
+31168 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene for plugins
+31304 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene
+31304 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/autocomplete-plugin for plugins
+31419 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin autocomplete
+31419 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/graphdb-geosparql-plugin for plugins
+31796 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin GeoSPARQL
+31796 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'disable-plugins' to default value '[]'
+31796 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugins... (DEFAULT)
+31797 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'expose-entity'
+31940 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'autocomplete'
+31941 [main] INFO  com.ontotext.trree.plugin.autocomplete.AutocompletePluginUtils  - >>>>>>>> AutocompletePlugin: No configuration file found at /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/geographica2paperWGS84/storage/autocomplete/config.properties. Assuming default options for plugin.
+31943 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'direct'
+31943 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene'
+31944 [main] INFO  com.ontotext.plugin.lucene  - No Lucene indices were found
+31944 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'plugincontrol'
+31947 [main] INFO  com.ontotext.trree.plugin.plugincontrol.PluginControlPlugin  - Plugin:plugincontrol initialized
+31947 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'script'
+31949 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'magic-predicates'
+31950 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#foreach
+31950 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#search
+31950 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#length
+31950 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#concat
+31951 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#for
+31951 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#withinDistance
+31951 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#split
+31951 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#member
+31951 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#index
+31951 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#strSplit
+31951 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'literals-index'
+32076 [main] INFO  com.ontotext.plugin.literals-index  - Literals indices restored.
+32076 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'geospatial'
+32172 [main] INFO  com.ontotext.trree.plugin.geo.GeoSpatialPlugin  - Plugin:geospatial initialized
+32172 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'sparql-mm'
+32223 [main] INFO  com.ontotext.graphdb.sparqlmm.FunctionLoader  - Registered 48 functions from package com.github.tkurz.sparqlmm.function.
+32223 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'dependencies-plugin'
+32224 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'GeoSPARQL'
+33927 [main] INFO  com.ontotext.trree.geosparql.FunctionLoader  - Registered 50 functions from package com.useekm.geosparql.
+33927 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene-connector'
+33958 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'rdfrank'
+34045 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'notifications'
+34046 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Finished initializing plugins
+34047 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.page.cache.size' to default value '2.7G'
+34168 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'do.resolve.entities' to default value 'true'
+34168 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'do.load.data' to default value 'true'
+34168 [main] INFO  com.ontotext.rio.parallel.ParallelLoader  - Data will be parsed + resolved + loaded.
+34260 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'use.parallel.file.inserts' to default value 'true'
+34286 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'custom.validation.queries.file' to default value 'null'
+34361 [pool-2-thread-1] INFO  GraphDBSUT  - Evaluating query...
+34672 [pool-2-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'deduplicate.construct' to default value 'true'
+34870 [pool-2-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'reuse.vars.in.subselects' to default value 'false'
+34905 [pool-2-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'in-clause-max-members' to default value '16'
+34905 [pool-2-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'query.convert.values.clause' to default value 'true'
+34939 [pool-2-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'hash.join' to default value 'false'
+34940 [pool-2-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'merge.join' to default value 'false'
+34942 [pool-2-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'PTO' to default value '2'
+34942 [pool-2-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'FSIPC' to default value '2'
+54523 [pool-2-thread-1] INFO  GraphDBSUT  - Query evaluated
+54625 [main] INFO  MicroNonTopologicalExperiment  - Query executed (cold, 0, 0): 335656076 + 19525006833 = 19860662909, 44834
+54625 [main] INFO  GraphDBSUT  - Closing..
+54626 [main] INFO  GraphDBSUT  - [GraphDB.close] Closing connection...
+54953 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Shutting down plugins (DEFAULT)...
+55032 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfStatements = 2065148
+55036 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfExplicitStatements = 2065148
+55036 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Shutting down entity pool
+55061 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Entity pool was shut down
+55064 [main] INFO  GraphDBSUT  - [GraphDB.close] Connection closed.
+60121 [main] INFO  GraphDBSUT  - Closed (caches not cleared)
+60121 [main] INFO  GraphDBSUT  - Clearing caches...
+66134 [main] INFO  GraphDBSUT  - Caches cleared
+66180 [main] INFO  MicroNonTopologicalExperiment  - Creating directory: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment
+66194 [main] INFO  MicroNonTopologicalExperiment  - Directory created
+66195 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/00-Boundary_CLC-cold
+66195 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/00-Boundary_CLC-cold-long
+66196 [main] INFO  MicroNonTopologicalExperiment  - Executing query [1800] (cold, 1, 0): 
+PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> 
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX gadm: <http://www.gadm.org/ontology#> 
+PREFIX lgdo: <http://linkedgeodata.org/ontology/> 
+PREFIX geonames: <http://www.geonames.org/ontology#> 
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> 
+PREFIX lgdp: <http://linkedgeodata.org/property/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/> 
+PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+PREFIX geo-sf: <http://www.opengis.net/ont/sf#> 
+PREFIX ext: <http://rdf.useekm.com/ext#> 
+PREFIX dbpedia: <http://dbpedia.org/property/> 
+PREFIX ns: <http://geographica.di.uoa.gr/dataset/> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> 
+
+ 
+ select (geof:envelope(?o1) as ?ret) where { 
+	GRAPH <http://geographica.di.uoa.gr/dataset/clc> {?s1 <http://geo.linkedopendata.gr/corine/ontology#asWKT> ?o1} 
+} 
+66212 [main] WARN  org.eclipse.rdf4j.sail.memory.MemoryStore  - Failed to lock directory: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/SYSTEM
+66242 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Version: 8.4, revision: -1703271316
+66242 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Build date: Fri Jan 05 21:39:27 EET 2018
+66258 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Started repository geographica2paperWGS84 in READ/WRITE mode.
+66258 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'partialRDFS' to default value 'false'
+66259 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-isolation' to default value 'true'
+66259 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'checkForValidPropertiesAndClasses' to default value 'false'
+66259 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-mode' to default value 'safe'
+66259 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'entity-pool-implementation' to default value 'transactional'
+66259 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'useShutdownHooks' to default value 'true'
+66259 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for tuples: 7829
+66259 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for predicates: 1118
+66259 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.global.page.cache' to default value 'true'
+66261 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.epool.onheap' to default value 'false'
+66261 [main] INFO  com.ontotext.trree.entitypool.EntityPoolFactory  - Using entity pool implementation: transactional-disk
+66273 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restoring entity hash table...
+67078 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restored 956340 entities allocating 12.0 MB
+67079 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Done in 805 ms.
+78943 [main] WARN  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Rule list configuration present, it will override all other rule sets parameters!
+78967 [main] INFO  com.ontotext.trree.InferencerFactory  - ruleSet=rdfs, partialRdfs=false
+79009 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'nonInterpretablePredicates' to default value 'null'
+79009 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'skip-default-plugins' to default value 'false'
+79009 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Searching for plugins available in the classpath...
+79021 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin rdfrank
+79022 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin direct
+79022 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin geospatial
+79022 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin notifications
+79022 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin expose-entity
+79022 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin literals-index
+79022 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin script
+79022 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin plugincontrol
+79022 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin magic-predicates
+79022 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'register-plugins' to default value '[]'
+79026 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Registering external plugins...
+79035 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/sparql-mm for plugins
+79117 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin sparql-mm
+79117 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene-connector for plugins
+79369 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene-connector
+79370 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/dependencies-plugin for plugins
+79408 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin dependencies-plugin
+79408 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene for plugins
+79496 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene
+79496 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/autocomplete-plugin for plugins
+79618 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin autocomplete
+79618 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/graphdb-geosparql-plugin for plugins
+79960 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin GeoSPARQL
+79960 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'disable-plugins' to default value '[]'
+79961 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugins... (DEFAULT)
+79961 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'expose-entity'
+79961 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'autocomplete'
+79967 [main] INFO  com.ontotext.trree.plugin.autocomplete.AutocompletePluginUtils  - >>>>>>>> AutocompletePlugin: No configuration file found at /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/geographica2paperWGS84/storage/autocomplete/config.properties. Assuming default options for plugin.
+79969 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'direct'
+79969 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene'
+79970 [main] INFO  com.ontotext.plugin.lucene  - No Lucene indices were found
+79971 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'plugincontrol'
+79971 [main] INFO  com.ontotext.trree.plugin.plugincontrol.PluginControlPlugin  - Plugin:plugincontrol initialized
+79971 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'script'
+79971 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'magic-predicates'
+79972 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#foreach
+79972 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#search
+79974 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#length
+79974 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#concat
+79974 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#for
+79975 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#withinDistance
+79975 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#split
+79975 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#member
+79986 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#index
+79986 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#strSplit
+79986 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'literals-index'
+80039 [main] INFO  com.ontotext.plugin.literals-index  - Literals indices restored.
+80039 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'geospatial'
+80078 [main] INFO  com.ontotext.trree.plugin.geo.GeoSpatialPlugin  - Plugin:geospatial initialized
+80078 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'sparql-mm'
+80117 [main] INFO  com.ontotext.graphdb.sparqlmm.FunctionLoader  - Registered 48 functions from package com.github.tkurz.sparqlmm.function.
+80117 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'dependencies-plugin'
+80117 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'GeoSPARQL'
+81057 [main] INFO  com.ontotext.trree.geosparql.FunctionLoader  - Registered 50 functions from package com.useekm.geosparql.
+81057 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene-connector'
+81119 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'rdfrank'
+81119 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'notifications'
+81120 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Finished initializing plugins
+81120 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.page.cache.size' to default value '2.7G'
+81167 [main] INFO  com.ontotext.trree.RepositoryMonitor  - Previously registered MBean for repository at RepositoryMonitor found; unregistering.
+81199 [pool-4-thread-1] INFO  GraphDBSUT  - Evaluating query...
+81216 [pool-4-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'deduplicate.construct' to default value 'true'
+81217 [pool-4-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'reuse.vars.in.subselects' to default value 'false'
+95121 [pool-4-thread-1] INFO  GraphDBSUT  - Query evaluated
+95442 [main] INFO  MicroNonTopologicalExperiment  - Query executed (cold, 1, 0): 69581589 + 13843382243 = 13912963832, 44834
+95442 [main] INFO  GraphDBSUT  - Closing..
+95442 [main] INFO  GraphDBSUT  - [GraphDB.close] Closing connection...
+95743 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Shutting down plugins (DEFAULT)...
+95789 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfStatements = 2065148
+95791 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfExplicitStatements = 2065148
+95792 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Shutting down entity pool
+95821 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Entity pool was shut down
+95821 [main] INFO  GraphDBSUT  - [GraphDB.close] Connection closed.
+100915 [main] INFO  GraphDBSUT  - Closed (caches not cleared)
+100916 [main] INFO  GraphDBSUT  - Clearing caches...
+106696 [main] INFO  GraphDBSUT  - Caches cleared
+106776 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/01-Envelope_CLC-cold
+106776 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/01-Envelope_CLC-cold-long
+106776 [main] INFO  MicroNonTopologicalExperiment  - Executing query [1800] (cold, 2, 0): 
+PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> 
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX gadm: <http://www.gadm.org/ontology#> 
+PREFIX lgdo: <http://linkedgeodata.org/ontology/> 
+PREFIX geonames: <http://www.geonames.org/ontology#> 
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> 
+PREFIX lgdp: <http://linkedgeodata.org/property/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/> 
+PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+PREFIX geo-sf: <http://www.opengis.net/ont/sf#> 
+PREFIX ext: <http://rdf.useekm.com/ext#> 
+PREFIX dbpedia: <http://dbpedia.org/property/> 
+PREFIX ns: <http://geographica.di.uoa.gr/dataset/> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> 
+
+ 
+ select (geof:convexHull(?o1) as ?ret) where { 
+	GRAPH <http://geographica.di.uoa.gr/dataset/clc> {?s1 <http://geo.linkedopendata.gr/corine/ontology#asWKT> ?o1} 
+} 
+106782 [main] WARN  org.eclipse.rdf4j.sail.memory.MemoryStore  - Failed to lock directory: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/SYSTEM
+106792 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Version: 8.4, revision: -1703271316
+106792 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Build date: Fri Jan 05 21:39:27 EET 2018
+106808 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Started repository geographica2paperWGS84 in READ/WRITE mode.
+106808 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'partialRDFS' to default value 'false'
+106808 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-isolation' to default value 'true'
+106809 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'checkForValidPropertiesAndClasses' to default value 'false'
+106809 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-mode' to default value 'safe'
+106809 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'entity-pool-implementation' to default value 'transactional'
+106809 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'useShutdownHooks' to default value 'true'
+106809 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for tuples: 7829
+106809 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for predicates: 1118
+106809 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.global.page.cache' to default value 'true'
+106810 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.epool.onheap' to default value 'false'
+106811 [main] INFO  com.ontotext.trree.entitypool.EntityPoolFactory  - Using entity pool implementation: transactional-disk
+106824 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restoring entity hash table...
+108002 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restored 956340 entities allocating 12.0 MB
+108002 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Done in 1178 ms.
+118363 [main] WARN  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Rule list configuration present, it will override all other rule sets parameters!
+118400 [main] INFO  com.ontotext.trree.InferencerFactory  - ruleSet=rdfs, partialRdfs=false
+118412 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'nonInterpretablePredicates' to default value 'null'
+118412 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'skip-default-plugins' to default value 'false'
+118412 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Searching for plugins available in the classpath...
+118453 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin rdfrank
+118453 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin direct
+118453 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin geospatial
+118453 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin notifications
+118453 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin expose-entity
+118453 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin literals-index
+118454 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin script
+118454 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin plugincontrol
+118454 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin magic-predicates
+118454 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'register-plugins' to default value '[]'
+118454 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Registering external plugins...
+118467 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/sparql-mm for plugins
+118526 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin sparql-mm
+118527 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene-connector for plugins
+118770 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene-connector
+118770 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/dependencies-plugin for plugins
+118812 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin dependencies-plugin
+118813 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene for plugins
+118906 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene
+118906 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/autocomplete-plugin for plugins
+119016 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin autocomplete
+119016 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/graphdb-geosparql-plugin for plugins
+119311 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin GeoSPARQL
+119312 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'disable-plugins' to default value '[]'
+119313 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugins... (DEFAULT)
+119313 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'expose-entity'
+119313 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'autocomplete'
+119314 [main] INFO  com.ontotext.trree.plugin.autocomplete.AutocompletePluginUtils  - >>>>>>>> AutocompletePlugin: No configuration file found at /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/geographica2paperWGS84/storage/autocomplete/config.properties. Assuming default options for plugin.
+119315 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'direct'
+119315 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene'
+119316 [main] INFO  com.ontotext.plugin.lucene  - No Lucene indices were found
+119316 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'plugincontrol'
+119316 [main] INFO  com.ontotext.trree.plugin.plugincontrol.PluginControlPlugin  - Plugin:plugincontrol initialized
+119316 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'script'
+119316 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'magic-predicates'
+119316 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#foreach
+119316 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#search
+119316 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#length
+119317 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#concat
+119317 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#for
+119317 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#withinDistance
+119317 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#split
+119317 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#member
+119317 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#index
+119317 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#strSplit
+119317 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'literals-index'
+119346 [main] INFO  com.ontotext.plugin.literals-index  - Literals indices restored.
+119347 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'geospatial'
+119378 [main] INFO  com.ontotext.trree.plugin.geo.GeoSpatialPlugin  - Plugin:geospatial initialized
+119378 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'sparql-mm'
+119416 [main] INFO  com.ontotext.graphdb.sparqlmm.FunctionLoader  - Registered 48 functions from package com.github.tkurz.sparqlmm.function.
+119417 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'dependencies-plugin'
+119417 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'GeoSPARQL'
+120335 [main] INFO  com.ontotext.trree.geosparql.FunctionLoader  - Registered 50 functions from package com.useekm.geosparql.
+120337 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene-connector'
+120372 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'rdfrank'
+120372 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'notifications'
+120373 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Finished initializing plugins
+120374 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.page.cache.size' to default value '2.7G'
+120403 [main] INFO  com.ontotext.trree.RepositoryMonitor  - Previously registered MBean for repository at RepositoryMonitor found; unregistering.
+120446 [pool-6-thread-1] INFO  GraphDBSUT  - Evaluating query...
+120494 [pool-6-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'deduplicate.construct' to default value 'true'
+120560 [pool-6-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'reuse.vars.in.subselects' to default value 'false'
+136925 [pool-6-thread-1] INFO  GraphDBSUT  - Query evaluated
+137105 [main] INFO  MicroNonTopologicalExperiment  - Query executed (cold, 2, 0): 135887663 + 16325823260 = 16461710923, 44834
+137105 [main] INFO  GraphDBSUT  - Closing..
+137105 [main] INFO  GraphDBSUT  - [GraphDB.close] Closing connection...
+137382 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Shutting down plugins (DEFAULT)...
+137399 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfStatements = 2065148
+137400 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfExplicitStatements = 2065148
+137401 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Shutting down entity pool
+137421 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Entity pool was shut down
+137471 [main] INFO  GraphDBSUT  - [GraphDB.close] Connection closed.
+142540 [main] INFO  GraphDBSUT  - Closed (caches not cleared)
+142540 [main] INFO  GraphDBSUT  - Clearing caches...
+148851 [main] INFO  GraphDBSUT  - Caches cleared
+148921 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/02-ConvexHull_CLC-cold
+148921 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/02-ConvexHull_CLC-cold-long
+148922 [main] INFO  MicroNonTopologicalExperiment  - Executing query [1800] (cold, 3, 0): 
+PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> 
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX gadm: <http://www.gadm.org/ontology#> 
+PREFIX lgdo: <http://linkedgeodata.org/ontology/> 
+PREFIX geonames: <http://www.geonames.org/ontology#> 
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> 
+PREFIX lgdp: <http://linkedgeodata.org/property/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/> 
+PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+PREFIX geo-sf: <http://www.opengis.net/ont/sf#> 
+PREFIX ext: <http://rdf.useekm.com/ext#> 
+PREFIX dbpedia: <http://dbpedia.org/property/> 
+PREFIX ns: <http://geographica.di.uoa.gr/dataset/> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> 
+
+ 
+ select (geof:buffer(?o1,4, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?ret) where {	GRAPH <http://geographica.di.uoa.gr/dataset/geonames> {?s1 <http://www.geonames.org/ontology#asWKT> ?o1}} 
+148926 [main] WARN  org.eclipse.rdf4j.sail.memory.MemoryStore  - Failed to lock directory: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/SYSTEM
+148935 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Version: 8.4, revision: -1703271316
+148935 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Build date: Fri Jan 05 21:39:27 EET 2018
+148952 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Started repository geographica2paperWGS84 in READ/WRITE mode.
+148952 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'partialRDFS' to default value 'false'
+148952 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-isolation' to default value 'true'
+148953 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'checkForValidPropertiesAndClasses' to default value 'false'
+148953 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-mode' to default value 'safe'
+148953 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'entity-pool-implementation' to default value 'transactional'
+148953 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'useShutdownHooks' to default value 'true'
+148953 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for tuples: 7829
+148953 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for predicates: 1118
+148953 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.global.page.cache' to default value 'true'
+148964 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.epool.onheap' to default value 'false'
+148964 [main] INFO  com.ontotext.trree.entitypool.EntityPoolFactory  - Using entity pool implementation: transactional-disk
+148980 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restoring entity hash table...
+150056 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restored 956340 entities allocating 12.0 MB
+150057 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Done in 1075 ms.
+160444 [main] WARN  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Rule list configuration present, it will override all other rule sets parameters!
+160483 [main] INFO  com.ontotext.trree.InferencerFactory  - ruleSet=rdfs, partialRdfs=false
+160497 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'nonInterpretablePredicates' to default value 'null'
+160497 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'skip-default-plugins' to default value 'false'
+160498 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Searching for plugins available in the classpath...
+160522 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin rdfrank
+160522 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin direct
+160522 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin geospatial
+160522 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin notifications
+160523 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin expose-entity
+160523 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin literals-index
+160523 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin script
+160523 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin plugincontrol
+160523 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin magic-predicates
+160523 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'register-plugins' to default value '[]'
+160523 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Registering external plugins...
+160538 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/sparql-mm for plugins
+160704 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin sparql-mm
+160704 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene-connector for plugins
+160949 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene-connector
+160950 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/dependencies-plugin for plugins
+160966 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin dependencies-plugin
+160966 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene for plugins
+161063 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene
+161063 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/autocomplete-plugin for plugins
+161183 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin autocomplete
+161183 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/graphdb-geosparql-plugin for plugins
+161477 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin GeoSPARQL
+161478 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'disable-plugins' to default value '[]'
+161478 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugins... (DEFAULT)
+161478 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'expose-entity'
+161478 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'autocomplete'
+161479 [main] INFO  com.ontotext.trree.plugin.autocomplete.AutocompletePluginUtils  - >>>>>>>> AutocompletePlugin: No configuration file found at /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/geographica2paperWGS84/storage/autocomplete/config.properties. Assuming default options for plugin.
+161481 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'direct'
+161481 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene'
+161482 [main] INFO  com.ontotext.plugin.lucene  - No Lucene indices were found
+161482 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'plugincontrol'
+161482 [main] INFO  com.ontotext.trree.plugin.plugincontrol.PluginControlPlugin  - Plugin:plugincontrol initialized
+161482 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'script'
+161482 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'magic-predicates'
+161483 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#foreach
+161483 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#search
+161483 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#length
+161483 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#concat
+161483 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#for
+161483 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#withinDistance
+161483 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#split
+161483 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#member
+161483 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#index
+161483 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#strSplit
+161483 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'literals-index'
+161514 [main] INFO  com.ontotext.plugin.literals-index  - Literals indices restored.
+161514 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'geospatial'
+161574 [main] INFO  com.ontotext.trree.plugin.geo.GeoSpatialPlugin  - Plugin:geospatial initialized
+161574 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'sparql-mm'
+161637 [main] INFO  com.ontotext.graphdb.sparqlmm.FunctionLoader  - Registered 48 functions from package com.github.tkurz.sparqlmm.function.
+161637 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'dependencies-plugin'
+161638 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'GeoSPARQL'
+162452 [main] INFO  com.ontotext.trree.geosparql.FunctionLoader  - Registered 50 functions from package com.useekm.geosparql.
+162453 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene-connector'
+162518 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'rdfrank'
+162520 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'notifications'
+162520 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Finished initializing plugins
+162521 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.page.cache.size' to default value '2.7G'
+162546 [main] INFO  com.ontotext.trree.RepositoryMonitor  - Previously registered MBean for repository at RepositoryMonitor found; unregistering.
+162564 [pool-8-thread-1] INFO  GraphDBSUT  - Evaluating query...
+162646 [pool-8-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'deduplicate.construct' to default value 'true'
+162646 [pool-8-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'reuse.vars.in.subselects' to default value 'false'
+162889 [pool-8-thread-1] INFO  GraphDBSUT  - Query evaluated
+162990 [main] INFO  MicroNonTopologicalExperiment  - Query executed (cold, 3, 0): 35417868 + 215113085 = 250530953, 21990
+162990 [main] INFO  GraphDBSUT  - Closing..
+162990 [main] INFO  GraphDBSUT  - [GraphDB.close] Closing connection...
+163272 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Shutting down plugins (DEFAULT)...
+163285 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfStatements = 2065148
+163285 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfExplicitStatements = 2065148
+163286 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Shutting down entity pool
+163295 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Entity pool was shut down
+163295 [main] INFO  GraphDBSUT  - [GraphDB.close] Connection closed.
+168348 [main] INFO  GraphDBSUT  - Closed (caches not cleared)
+168349 [main] INFO  GraphDBSUT  - Clearing caches...
+174547 [main] INFO  GraphDBSUT  - Caches cleared
+174634 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/03-Buffer_GeoNames_2-cold
+174634 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/03-Buffer_GeoNames_2-cold-long
+174634 [main] INFO  MicroNonTopologicalExperiment  - Executing query [1800] (cold, 4, 0): 
+PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> 
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX gadm: <http://www.gadm.org/ontology#> 
+PREFIX lgdo: <http://linkedgeodata.org/ontology/> 
+PREFIX geonames: <http://www.geonames.org/ontology#> 
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> 
+PREFIX lgdp: <http://linkedgeodata.org/property/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/> 
+PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+PREFIX geo-sf: <http://www.opengis.net/ont/sf#> 
+PREFIX ext: <http://rdf.useekm.com/ext#> 
+PREFIX dbpedia: <http://dbpedia.org/property/> 
+PREFIX ns: <http://geographica.di.uoa.gr/dataset/> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> 
+
+ 
+ select (geof:buffer(?o1,4, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?ret) where {	GRAPH <http://geographica.di.uoa.gr/dataset/lgd> {?s1 <http://linkedgeodata.org/ontology/asWKT> ?o1}} 
+174643 [main] WARN  org.eclipse.rdf4j.sail.memory.MemoryStore  - Failed to lock directory: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/SYSTEM
+174650 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Version: 8.4, revision: -1703271316
+174650 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Build date: Fri Jan 05 21:39:27 EET 2018
+174668 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Started repository geographica2paperWGS84 in READ/WRITE mode.
+174669 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'partialRDFS' to default value 'false'
+174669 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-isolation' to default value 'true'
+174669 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'checkForValidPropertiesAndClasses' to default value 'false'
+174669 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-mode' to default value 'safe'
+174669 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'entity-pool-implementation' to default value 'transactional'
+174669 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'useShutdownHooks' to default value 'true'
+174669 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for tuples: 7829
+174669 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for predicates: 1118
+174669 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.global.page.cache' to default value 'true'
+174670 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.epool.onheap' to default value 'false'
+174670 [main] INFO  com.ontotext.trree.entitypool.EntityPoolFactory  - Using entity pool implementation: transactional-disk
+174685 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restoring entity hash table...
+175463 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restored 956340 entities allocating 12.0 MB
+175463 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Done in 778 ms.
+185916 [main] WARN  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Rule list configuration present, it will override all other rule sets parameters!
+185971 [main] INFO  com.ontotext.trree.InferencerFactory  - ruleSet=rdfs, partialRdfs=false
+185979 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'nonInterpretablePredicates' to default value 'null'
+185979 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'skip-default-plugins' to default value 'false'
+185979 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Searching for plugins available in the classpath...
+185992 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin rdfrank
+185992 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin direct
+185992 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin geospatial
+185992 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin notifications
+185993 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin expose-entity
+185993 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin literals-index
+185993 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin script
+185993 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin plugincontrol
+185993 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin magic-predicates
+185993 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'register-plugins' to default value '[]'
+185993 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Registering external plugins...
+186006 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/sparql-mm for plugins
+186088 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin sparql-mm
+186089 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene-connector for plugins
+186344 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene-connector
+186344 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/dependencies-plugin for plugins
+186387 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin dependencies-plugin
+186387 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene for plugins
+186481 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene
+186481 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/autocomplete-plugin for plugins
+186588 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin autocomplete
+186588 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/graphdb-geosparql-plugin for plugins
+186884 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin GeoSPARQL
+186884 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'disable-plugins' to default value '[]'
+186884 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugins... (DEFAULT)
+186884 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'expose-entity'
+186884 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'autocomplete'
+186885 [main] INFO  com.ontotext.trree.plugin.autocomplete.AutocompletePluginUtils  - >>>>>>>> AutocompletePlugin: No configuration file found at /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/geographica2paperWGS84/storage/autocomplete/config.properties. Assuming default options for plugin.
+186886 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'direct'
+186886 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene'
+186887 [main] INFO  com.ontotext.plugin.lucene  - No Lucene indices were found
+186887 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'plugincontrol'
+186887 [main] INFO  com.ontotext.trree.plugin.plugincontrol.PluginControlPlugin  - Plugin:plugincontrol initialized
+186887 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'script'
+186887 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'magic-predicates'
+186887 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#foreach
+186887 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#search
+186887 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#length
+186887 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#concat
+186887 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#for
+186887 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#withinDistance
+186888 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#split
+186888 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#member
+186888 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#index
+186888 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#strSplit
+186888 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'literals-index'
+186908 [main] INFO  com.ontotext.plugin.literals-index  - Literals indices restored.
+186908 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'geospatial'
+186953 [main] INFO  com.ontotext.trree.plugin.geo.GeoSpatialPlugin  - Plugin:geospatial initialized
+186953 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'sparql-mm'
+186999 [main] INFO  com.ontotext.graphdb.sparqlmm.FunctionLoader  - Registered 48 functions from package com.github.tkurz.sparqlmm.function.
+186999 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'dependencies-plugin'
+186999 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'GeoSPARQL'
+187798 [main] INFO  com.ontotext.trree.geosparql.FunctionLoader  - Registered 50 functions from package com.useekm.geosparql.
+187798 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene-connector'
+187867 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'rdfrank'
+187868 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'notifications'
+187868 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Finished initializing plugins
+187868 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.page.cache.size' to default value '2.7G'
+187907 [main] INFO  com.ontotext.trree.RepositoryMonitor  - Previously registered MBean for repository at RepositoryMonitor found; unregistering.
+187940 [pool-10-thread-1] INFO  GraphDBSUT  - Evaluating query...
+187960 [pool-10-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'deduplicate.construct' to default value 'true'
+187961 [pool-10-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'reuse.vars.in.subselects' to default value 'false'
+188071 [pool-10-thread-1] INFO  GraphDBSUT  - Query evaluated
+188190 [main] INFO  MicroNonTopologicalExperiment  - Query executed (cold, 4, 0): 51713077 + 68586828 = 120299905, 12097
+188190 [main] INFO  GraphDBSUT  - Closing..
+188190 [main] INFO  GraphDBSUT  - [GraphDB.close] Closing connection...
+188465 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Shutting down plugins (DEFAULT)...
+188524 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfStatements = 2065148
+188524 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfExplicitStatements = 2065148
+188524 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Shutting down entity pool
+188533 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Entity pool was shut down
+188533 [main] INFO  GraphDBSUT  - [GraphDB.close] Connection closed.
+193600 [main] INFO  GraphDBSUT  - Closed (caches not cleared)
+193601 [main] INFO  GraphDBSUT  - Clearing caches...
+199874 [main] INFO  GraphDBSUT  - Caches cleared
+199954 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/04-Buffer_LGD_2-cold
+199956 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/04-Buffer_LGD_2-cold-long
+199956 [main] INFO  MicroNonTopologicalExperiment  - Executing query [1800] (cold, 5, 0): 
+PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> 
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX gadm: <http://www.gadm.org/ontology#> 
+PREFIX lgdo: <http://linkedgeodata.org/ontology/> 
+PREFIX geonames: <http://www.geonames.org/ontology#> 
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> 
+PREFIX lgdp: <http://linkedgeodata.org/property/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/> 
+PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+PREFIX geo-sf: <http://www.opengis.net/ont/sf#> 
+PREFIX ext: <http://rdf.useekm.com/ext#> 
+PREFIX dbpedia: <http://dbpedia.org/property/> 
+PREFIX ns: <http://geographica.di.uoa.gr/dataset/> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> 
+
+ 
+ select (strdf:area(?o1) as ?ret) where { 
+	GRAPH <http://geographica.di.uoa.gr/dataset/clc> {?s1 <http://geo.linkedopendata.gr/corine/ontology#asWKT> ?o1} 
+} 
+199971 [main] WARN  org.eclipse.rdf4j.sail.memory.MemoryStore  - Failed to lock directory: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/SYSTEM
+199999 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Version: 8.4, revision: -1703271316
+199999 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Build date: Fri Jan 05 21:39:27 EET 2018
+200007 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Started repository geographica2paperWGS84 in READ/WRITE mode.
+200007 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'partialRDFS' to default value 'false'
+200008 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-isolation' to default value 'true'
+200008 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'checkForValidPropertiesAndClasses' to default value 'false'
+200008 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-mode' to default value 'safe'
+200008 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'entity-pool-implementation' to default value 'transactional'
+200008 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'useShutdownHooks' to default value 'true'
+200009 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for tuples: 7829
+200009 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for predicates: 1118
+200009 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.global.page.cache' to default value 'true'
+200010 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.epool.onheap' to default value 'false'
+200010 [main] INFO  com.ontotext.trree.entitypool.EntityPoolFactory  - Using entity pool implementation: transactional-disk
+200022 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restoring entity hash table...
+200800 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restored 956340 entities allocating 12.0 MB
+200800 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Done in 778 ms.
+211496 [main] WARN  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Rule list configuration present, it will override all other rule sets parameters!
+211520 [main] INFO  com.ontotext.trree.InferencerFactory  - ruleSet=rdfs, partialRdfs=false
+211548 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'nonInterpretablePredicates' to default value 'null'
+211548 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'skip-default-plugins' to default value 'false'
+211548 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Searching for plugins available in the classpath...
+211566 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin rdfrank
+211566 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin direct
+211566 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin geospatial
+211567 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin notifications
+211567 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin expose-entity
+211567 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin literals-index
+211567 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin script
+211567 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin plugincontrol
+211568 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin magic-predicates
+211569 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'register-plugins' to default value '[]'
+211569 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Registering external plugins...
+211578 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/sparql-mm for plugins
+211638 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin sparql-mm
+211638 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene-connector for plugins
+211848 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene-connector
+211848 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/dependencies-plugin for plugins
+211890 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin dependencies-plugin
+211890 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene for plugins
+211984 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene
+211984 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/autocomplete-plugin for plugins
+212093 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin autocomplete
+212094 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/graphdb-geosparql-plugin for plugins
+212448 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin GeoSPARQL
+212448 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'disable-plugins' to default value '[]'
+212450 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugins... (DEFAULT)
+212450 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'expose-entity'
+212450 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'autocomplete'
+212451 [main] INFO  com.ontotext.trree.plugin.autocomplete.AutocompletePluginUtils  - >>>>>>>> AutocompletePlugin: No configuration file found at /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/geographica2paperWGS84/storage/autocomplete/config.properties. Assuming default options for plugin.
+212452 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'direct'
+212453 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene'
+212453 [main] INFO  com.ontotext.plugin.lucene  - No Lucene indices were found
+212453 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'plugincontrol'
+212453 [main] INFO  com.ontotext.trree.plugin.plugincontrol.PluginControlPlugin  - Plugin:plugincontrol initialized
+212453 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'script'
+212453 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'magic-predicates'
+212453 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#foreach
+212453 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#search
+212453 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#length
+212453 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#concat
+212454 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#for
+212454 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#withinDistance
+212454 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#split
+212454 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#member
+212454 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#index
+212454 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#strSplit
+212454 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'literals-index'
+212485 [main] INFO  com.ontotext.plugin.literals-index  - Literals indices restored.
+212485 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'geospatial'
+212553 [main] INFO  com.ontotext.trree.plugin.geo.GeoSpatialPlugin  - Plugin:geospatial initialized
+212554 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'sparql-mm'
+212626 [main] INFO  com.ontotext.graphdb.sparqlmm.FunctionLoader  - Registered 48 functions from package com.github.tkurz.sparqlmm.function.
+212626 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'dependencies-plugin'
+212627 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'GeoSPARQL'
+213521 [main] INFO  com.ontotext.trree.geosparql.FunctionLoader  - Registered 50 functions from package com.useekm.geosparql.
+213521 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene-connector'
+213532 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'rdfrank'
+213532 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'notifications'
+213532 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Finished initializing plugins
+213532 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.page.cache.size' to default value '2.7G'
+213558 [main] INFO  com.ontotext.trree.RepositoryMonitor  - Previously registered MBean for repository at RepositoryMonitor found; unregistering.
+213606 [pool-12-thread-1] INFO  GraphDBSUT  - Evaluating query...
+213615 [pool-12-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'deduplicate.construct' to default value 'true'
+213615 [pool-12-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'reuse.vars.in.subselects' to default value 'false'
+213826 [main] INFO  MicroNonTopologicalExperiment  - Query executed (cold, 5, 0): 1801 + 1801 = 1801, -1
+213826 [main] INFO  GraphDBSUT  - Closing..
+213826 [main] INFO  GraphDBSUT  - [GraphDB.close] Closing connection...
+213833 [Finalizer] WARN  com.ontotext.trree.SailConnectionImpl  - Iteration was not closed. We are going to close it in finalize
+213896 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Shutting down plugins (DEFAULT)...
+213903 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfStatements = 2065148
+213903 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfExplicitStatements = 2065148
+213904 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Shutting down entity pool
+213914 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Entity pool was shut down
+213954 [main] INFO  GraphDBSUT  - [GraphDB.close] Connection closed.
+219033 [main] INFO  GraphDBSUT  - Closed (caches not cleared)
+219033 [main] INFO  GraphDBSUT  - Clearing caches...
+225191 [main] INFO  GraphDBSUT  - Caches cleared
+225272 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/05-Area_CLC-cold
+225272 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/05-Area_CLC-cold-long
+225272 [main] INFO  GraphDBSUT  - Clearing caches...
+231424 [main] INFO  GraphDBSUT  - Caches cleared
+231491 [main] WARN  org.eclipse.rdf4j.sail.memory.MemoryStore  - Failed to lock directory: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/SYSTEM
+231508 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Version: 8.4, revision: -1703271316
+231508 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Build date: Fri Jan 05 21:39:27 EET 2018
+231524 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Started repository geographica2paperWGS84 in READ/WRITE mode.
+231525 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'partialRDFS' to default value 'false'
+231525 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-isolation' to default value 'true'
+231525 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'checkForValidPropertiesAndClasses' to default value 'false'
+231525 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-mode' to default value 'safe'
+231525 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'entity-pool-implementation' to default value 'transactional'
+231525 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'useShutdownHooks' to default value 'true'
+231525 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for tuples: 7829
+231525 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for predicates: 1118
+231525 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.global.page.cache' to default value 'true'
+231537 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.epool.onheap' to default value 'false'
+231537 [main] INFO  com.ontotext.trree.entitypool.EntityPoolFactory  - Using entity pool implementation: transactional-disk
+231550 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restoring entity hash table...
+232327 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restored 956340 entities allocating 12.0 MB
+232328 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Done in 777 ms.
+242662 [main] WARN  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Rule list configuration present, it will override all other rule sets parameters!
+242682 [main] INFO  com.ontotext.trree.InferencerFactory  - ruleSet=rdfs, partialRdfs=false
+242690 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'nonInterpretablePredicates' to default value 'null'
+242691 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'skip-default-plugins' to default value 'false'
+242691 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Searching for plugins available in the classpath...
+242705 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin rdfrank
+242706 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin direct
+242706 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin geospatial
+242706 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin notifications
+242706 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin expose-entity
+242706 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin literals-index
+242707 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin script
+242707 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin plugincontrol
+242707 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin magic-predicates
+242707 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'register-plugins' to default value '[]'
+242707 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Registering external plugins...
+242718 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/sparql-mm for plugins
+242800 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin sparql-mm
+242801 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene-connector for plugins
+243053 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene-connector
+243054 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/dependencies-plugin for plugins
+243099 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin dependencies-plugin
+243099 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene for plugins
+243225 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene
+243225 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/autocomplete-plugin for plugins
+243366 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin autocomplete
+243367 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/graphdb-geosparql-plugin for plugins
+243730 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin GeoSPARQL
+243730 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'disable-plugins' to default value '[]'
+243731 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugins... (DEFAULT)
+243731 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'expose-entity'
+243731 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'autocomplete'
+243733 [main] INFO  com.ontotext.trree.plugin.autocomplete.AutocompletePluginUtils  - >>>>>>>> AutocompletePlugin: No configuration file found at /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/geographica2paperWGS84/storage/autocomplete/config.properties. Assuming default options for plugin.
+243735 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'direct'
+243735 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene'
+243736 [main] INFO  com.ontotext.plugin.lucene  - No Lucene indices were found
+243736 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'plugincontrol'
+243737 [main] INFO  com.ontotext.trree.plugin.plugincontrol.PluginControlPlugin  - Plugin:plugincontrol initialized
+243737 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'script'
+243737 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'magic-predicates'
+243737 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#foreach
+243737 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#search
+243737 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#length
+243737 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#concat
+243737 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#for
+243738 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#withinDistance
+243738 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#split
+243738 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#member
+243738 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#index
+243738 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#strSplit
+243738 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'literals-index'
+243778 [main] INFO  com.ontotext.plugin.literals-index  - Literals indices restored.
+243778 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'geospatial'
+243816 [main] INFO  com.ontotext.trree.plugin.geo.GeoSpatialPlugin  - Plugin:geospatial initialized
+243816 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'sparql-mm'
+243868 [main] INFO  com.ontotext.graphdb.sparqlmm.FunctionLoader  - Registered 48 functions from package com.github.tkurz.sparqlmm.function.
+243868 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'dependencies-plugin'
+243868 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'GeoSPARQL'
+244970 [main] INFO  com.ontotext.trree.geosparql.FunctionLoader  - Registered 50 functions from package com.useekm.geosparql.
+244970 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene-connector'
+244990 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'rdfrank'
+244991 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'notifications'
+244991 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Finished initializing plugins
+244991 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.page.cache.size' to default value '2.7G'
+245007 [main] INFO  com.ontotext.trree.RepositoryMonitor  - Previously registered MBean for repository at RepositoryMonitor found; unregistering.
+245024 [main] INFO  MicroNonTopologicalExperiment  - Warming query (warm, 0, 0): PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> 
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX gadm: <http://www.gadm.org/ontology#> 
+PREFIX lgdo: <http://linkedgeodata.org/ontology/> 
+PREFIX geonames: <http://www.geonames.org/ontology#> 
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> 
+PREFIX lgdp: <http://linkedgeodata.org/property/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/> 
+PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+PREFIX geo-sf: <http://www.opengis.net/ont/sf#> 
+PREFIX ext: <http://rdf.useekm.com/ext#> 
+PREFIX dbpedia: <http://dbpedia.org/property/> 
+PREFIX ns: <http://geographica.di.uoa.gr/dataset/> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> 
+
+ 
+ select (geof:boundary(?o1) as ?ret) where { 
+	GRAPH <http://geographica.di.uoa.gr/dataset/clc> {?s1 <http://geo.linkedopendata.gr/corine/ontology#asWKT> ?o1} 
+} 
+245031 [pool-14-thread-1] INFO  GraphDBSUT  - Evaluating query...
+245048 [pool-14-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'deduplicate.construct' to default value 'true'
+245048 [pool-14-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'reuse.vars.in.subselects' to default value 'false'
+267161 [pool-14-thread-1] INFO  GraphDBSUT  - Query evaluated
+267258 [main] INFO  MicroNonTopologicalExperiment  - Query warmed (warm, 0,0): 72331686 + 22056276819 = 22128608505, 44834
+267258 [main] INFO  MicroNonTopologicalExperiment  - Executing query (warm, 0, 0): PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> 
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX gadm: <http://www.gadm.org/ontology#> 
+PREFIX lgdo: <http://linkedgeodata.org/ontology/> 
+PREFIX geonames: <http://www.geonames.org/ontology#> 
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> 
+PREFIX lgdp: <http://linkedgeodata.org/property/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/> 
+PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+PREFIX geo-sf: <http://www.opengis.net/ont/sf#> 
+PREFIX ext: <http://rdf.useekm.com/ext#> 
+PREFIX dbpedia: <http://dbpedia.org/property/> 
+PREFIX ns: <http://geographica.di.uoa.gr/dataset/> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> 
+
+ 
+ select (geof:boundary(?o1) as ?ret) where { 
+	GRAPH <http://geographica.di.uoa.gr/dataset/clc> {?s1 <http://geo.linkedopendata.gr/corine/ontology#asWKT> ?o1} 
+} 
+267259 [pool-15-thread-1] INFO  GraphDBSUT  - Evaluating query...
+286467 [pool-15-thread-1] INFO  GraphDBSUT  - Query evaluated
+286573 [main] INFO  MicroNonTopologicalExperiment  - Query executed (warm, 0,0): 1142406 + 19206475634 = 19207618040, 44834
+286574 [main] INFO  GraphDBSUT  - Closing..
+286574 [main] INFO  GraphDBSUT  - [GraphDB.close] Closing connection...
+286861 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Shutting down plugins (DEFAULT)...
+286868 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfStatements = 2065148
+286868 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfExplicitStatements = 2065148
+286869 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Shutting down entity pool
+286878 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Entity pool was shut down
+286878 [main] INFO  GraphDBSUT  - [GraphDB.close] Connection closed.
+291941 [main] INFO  GraphDBSUT  - Closed (caches not cleared)
+292002 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/00-Boundary_CLC-warm
+292003 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/00-Boundary_CLC-warm-long
+292003 [main] INFO  GraphDBSUT  - Clearing caches...
+298220 [main] INFO  GraphDBSUT  - Caches cleared
+298264 [main] WARN  org.eclipse.rdf4j.sail.memory.MemoryStore  - Failed to lock directory: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/SYSTEM
+298297 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Version: 8.4, revision: -1703271316
+298297 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Build date: Fri Jan 05 21:39:27 EET 2018
+298311 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Started repository geographica2paperWGS84 in READ/WRITE mode.
+298311 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'partialRDFS' to default value 'false'
+298311 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-isolation' to default value 'true'
+298311 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'checkForValidPropertiesAndClasses' to default value 'false'
+298311 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-mode' to default value 'safe'
+298312 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'entity-pool-implementation' to default value 'transactional'
+298312 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'useShutdownHooks' to default value 'true'
+298312 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for tuples: 7829
+298312 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for predicates: 1118
+298312 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.global.page.cache' to default value 'true'
+298320 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.epool.onheap' to default value 'false'
+298321 [main] INFO  com.ontotext.trree.entitypool.EntityPoolFactory  - Using entity pool implementation: transactional-disk
+298351 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restoring entity hash table...
+299125 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restored 956340 entities allocating 12.0 MB
+299125 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Done in 773 ms.
+309636 [main] WARN  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Rule list configuration present, it will override all other rule sets parameters!
+309657 [main] INFO  com.ontotext.trree.InferencerFactory  - ruleSet=rdfs, partialRdfs=false
+309667 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'nonInterpretablePredicates' to default value 'null'
+309671 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'skip-default-plugins' to default value 'false'
+309672 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Searching for plugins available in the classpath...
+309723 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin rdfrank
+309723 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin direct
+309723 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin geospatial
+309723 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin notifications
+309723 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin expose-entity
+309723 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin literals-index
+309724 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin script
+309724 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin plugincontrol
+309724 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin magic-predicates
+309724 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'register-plugins' to default value '[]'
+309724 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Registering external plugins...
+309737 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/sparql-mm for plugins
+309819 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin sparql-mm
+309819 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene-connector for plugins
+310051 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene-connector
+310051 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/dependencies-plugin for plugins
+310090 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin dependencies-plugin
+310090 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene for plugins
+310188 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene
+310189 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/autocomplete-plugin for plugins
+310318 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin autocomplete
+310319 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/graphdb-geosparql-plugin for plugins
+310604 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin GeoSPARQL
+310604 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'disable-plugins' to default value '[]'
+310604 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugins... (DEFAULT)
+310605 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'expose-entity'
+310605 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'autocomplete'
+310606 [main] INFO  com.ontotext.trree.plugin.autocomplete.AutocompletePluginUtils  - >>>>>>>> AutocompletePlugin: No configuration file found at /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/geographica2paperWGS84/storage/autocomplete/config.properties. Assuming default options for plugin.
+310608 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'direct'
+310608 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene'
+310608 [main] INFO  com.ontotext.plugin.lucene  - No Lucene indices were found
+310608 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'plugincontrol'
+310609 [main] INFO  com.ontotext.trree.plugin.plugincontrol.PluginControlPlugin  - Plugin:plugincontrol initialized
+310609 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'script'
+310609 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'magic-predicates'
+310616 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#foreach
+310617 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#search
+310617 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#length
+310617 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#concat
+310617 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#for
+310617 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#withinDistance
+310617 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#split
+310617 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#member
+310617 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#index
+310617 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#strSplit
+310617 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'literals-index'
+310639 [main] INFO  com.ontotext.plugin.literals-index  - Literals indices restored.
+310639 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'geospatial'
+310668 [main] INFO  com.ontotext.trree.plugin.geo.GeoSpatialPlugin  - Plugin:geospatial initialized
+310669 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'sparql-mm'
+310749 [main] INFO  com.ontotext.graphdb.sparqlmm.FunctionLoader  - Registered 48 functions from package com.github.tkurz.sparqlmm.function.
+310749 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'dependencies-plugin'
+310749 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'GeoSPARQL'
+311486 [main] INFO  com.ontotext.trree.geosparql.FunctionLoader  - Registered 50 functions from package com.useekm.geosparql.
+311486 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene-connector'
+311555 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'rdfrank'
+311555 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'notifications'
+311555 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Finished initializing plugins
+311555 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.page.cache.size' to default value '2.7G'
+311583 [main] INFO  com.ontotext.trree.RepositoryMonitor  - Previously registered MBean for repository at RepositoryMonitor found; unregistering.
+311596 [main] INFO  MicroNonTopologicalExperiment  - Warming query (warm, 1, 0): PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> 
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX gadm: <http://www.gadm.org/ontology#> 
+PREFIX lgdo: <http://linkedgeodata.org/ontology/> 
+PREFIX geonames: <http://www.geonames.org/ontology#> 
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> 
+PREFIX lgdp: <http://linkedgeodata.org/property/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/> 
+PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+PREFIX geo-sf: <http://www.opengis.net/ont/sf#> 
+PREFIX ext: <http://rdf.useekm.com/ext#> 
+PREFIX dbpedia: <http://dbpedia.org/property/> 
+PREFIX ns: <http://geographica.di.uoa.gr/dataset/> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> 
+
+ 
+ select (geof:envelope(?o1) as ?ret) where { 
+	GRAPH <http://geographica.di.uoa.gr/dataset/clc> {?s1 <http://geo.linkedopendata.gr/corine/ontology#asWKT> ?o1} 
+} 
+311604 [pool-17-thread-1] INFO  GraphDBSUT  - Evaluating query...
+311611 [pool-17-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'deduplicate.construct' to default value 'true'
+311611 [pool-17-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'reuse.vars.in.subselects' to default value 'false'
+325032 [pool-17-thread-1] INFO  GraphDBSUT  - Query evaluated
+325204 [main] INFO  MicroNonTopologicalExperiment  - Query warmed (warm, 1,0): 53870857 + 13373907709 = 13427778566, 44834
+325205 [main] INFO  MicroNonTopologicalExperiment  - Executing query (warm, 1, 0): PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> 
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX gadm: <http://www.gadm.org/ontology#> 
+PREFIX lgdo: <http://linkedgeodata.org/ontology/> 
+PREFIX geonames: <http://www.geonames.org/ontology#> 
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> 
+PREFIX lgdp: <http://linkedgeodata.org/property/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/> 
+PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+PREFIX geo-sf: <http://www.opengis.net/ont/sf#> 
+PREFIX ext: <http://rdf.useekm.com/ext#> 
+PREFIX dbpedia: <http://dbpedia.org/property/> 
+PREFIX ns: <http://geographica.di.uoa.gr/dataset/> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> 
+
+ 
+ select (geof:envelope(?o1) as ?ret) where { 
+	GRAPH <http://geographica.di.uoa.gr/dataset/clc> {?s1 <http://geo.linkedopendata.gr/corine/ontology#asWKT> ?o1} 
+} 
+325205 [pool-18-thread-1] INFO  GraphDBSUT  - Evaluating query...
+334938 [pool-18-thread-1] INFO  GraphDBSUT  - Query evaluated
+335089 [main] INFO  MicroNonTopologicalExperiment  - Query executed (warm, 1,0): 828227 + 9728792767 = 9729620994, 44834
+335090 [main] INFO  GraphDBSUT  - Closing..
+335090 [main] INFO  GraphDBSUT  - [GraphDB.close] Closing connection...
+335432 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Shutting down plugins (DEFAULT)...
+335442 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfStatements = 2065148
+335443 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfExplicitStatements = 2065148
+335443 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Shutting down entity pool
+335538 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Entity pool was shut down
+335593 [main] INFO  GraphDBSUT  - [GraphDB.close] Connection closed.
+340648 [main] INFO  GraphDBSUT  - Closed (caches not cleared)
+340712 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/01-Envelope_CLC-warm
+340712 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/01-Envelope_CLC-warm-long
+340712 [main] INFO  GraphDBSUT  - Clearing caches...
+346830 [main] INFO  GraphDBSUT  - Caches cleared
+346909 [main] WARN  org.eclipse.rdf4j.sail.memory.MemoryStore  - Failed to lock directory: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/SYSTEM
+346928 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Version: 8.4, revision: -1703271316
+346929 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Build date: Fri Jan 05 21:39:27 EET 2018
+346942 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Started repository geographica2paperWGS84 in READ/WRITE mode.
+346942 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'partialRDFS' to default value 'false'
+346943 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-isolation' to default value 'true'
+346943 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'checkForValidPropertiesAndClasses' to default value 'false'
+346943 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-mode' to default value 'safe'
+346943 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'entity-pool-implementation' to default value 'transactional'
+346943 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'useShutdownHooks' to default value 'true'
+346950 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for tuples: 7829
+346950 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for predicates: 1118
+346950 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.global.page.cache' to default value 'true'
+346965 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.epool.onheap' to default value 'false'
+346965 [main] INFO  com.ontotext.trree.entitypool.EntityPoolFactory  - Using entity pool implementation: transactional-disk
+346983 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restoring entity hash table...
+348265 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restored 956340 entities allocating 12.0 MB
+348265 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Done in 1282 ms.
+358776 [main] WARN  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Rule list configuration present, it will override all other rule sets parameters!
+358797 [main] INFO  com.ontotext.trree.InferencerFactory  - ruleSet=rdfs, partialRdfs=false
+358803 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'nonInterpretablePredicates' to default value 'null'
+358803 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'skip-default-plugins' to default value 'false'
+358803 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Searching for plugins available in the classpath...
+358819 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin rdfrank
+358819 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin direct
+358819 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin geospatial
+358819 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin notifications
+358819 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin expose-entity
+358819 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin literals-index
+358819 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin script
+358819 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin plugincontrol
+358819 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin magic-predicates
+358819 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'register-plugins' to default value '[]'
+358819 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Registering external plugins...
+358833 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/sparql-mm for plugins
+358926 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin sparql-mm
+358926 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene-connector for plugins
+359168 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene-connector
+359168 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/dependencies-plugin for plugins
+359210 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin dependencies-plugin
+359210 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene for plugins
+359305 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene
+359305 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/autocomplete-plugin for plugins
+359425 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin autocomplete
+359425 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/graphdb-geosparql-plugin for plugins
+359733 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin GeoSPARQL
+359733 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'disable-plugins' to default value '[]'
+359733 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugins... (DEFAULT)
+359733 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'expose-entity'
+359733 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'autocomplete'
+359734 [main] INFO  com.ontotext.trree.plugin.autocomplete.AutocompletePluginUtils  - >>>>>>>> AutocompletePlugin: No configuration file found at /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/geographica2paperWGS84/storage/autocomplete/config.properties. Assuming default options for plugin.
+359735 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'direct'
+359735 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene'
+359736 [main] INFO  com.ontotext.plugin.lucene  - No Lucene indices were found
+359736 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'plugincontrol'
+359736 [main] INFO  com.ontotext.trree.plugin.plugincontrol.PluginControlPlugin  - Plugin:plugincontrol initialized
+359736 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'script'
+359736 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'magic-predicates'
+359736 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#foreach
+359736 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#search
+359736 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#length
+359737 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#concat
+359737 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#for
+359737 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#withinDistance
+359737 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#split
+359737 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#member
+359737 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#index
+359737 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#strSplit
+359737 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'literals-index'
+359756 [main] INFO  com.ontotext.plugin.literals-index  - Literals indices restored.
+359756 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'geospatial'
+359797 [main] INFO  com.ontotext.trree.plugin.geo.GeoSpatialPlugin  - Plugin:geospatial initialized
+359798 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'sparql-mm'
+359837 [main] INFO  com.ontotext.graphdb.sparqlmm.FunctionLoader  - Registered 48 functions from package com.github.tkurz.sparqlmm.function.
+359837 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'dependencies-plugin'
+359837 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'GeoSPARQL'
+360656 [main] INFO  com.ontotext.trree.geosparql.FunctionLoader  - Registered 50 functions from package com.useekm.geosparql.
+360656 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene-connector'
+360719 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'rdfrank'
+360719 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'notifications'
+360720 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Finished initializing plugins
+360720 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.page.cache.size' to default value '2.7G'
+360747 [main] INFO  com.ontotext.trree.RepositoryMonitor  - Previously registered MBean for repository at RepositoryMonitor found; unregistering.
+360764 [main] INFO  MicroNonTopologicalExperiment  - Warming query (warm, 2, 0): PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> 
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX gadm: <http://www.gadm.org/ontology#> 
+PREFIX lgdo: <http://linkedgeodata.org/ontology/> 
+PREFIX geonames: <http://www.geonames.org/ontology#> 
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> 
+PREFIX lgdp: <http://linkedgeodata.org/property/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/> 
+PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+PREFIX geo-sf: <http://www.opengis.net/ont/sf#> 
+PREFIX ext: <http://rdf.useekm.com/ext#> 
+PREFIX dbpedia: <http://dbpedia.org/property/> 
+PREFIX ns: <http://geographica.di.uoa.gr/dataset/> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> 
+
+ 
+ select (geof:convexHull(?o1) as ?ret) where { 
+	GRAPH <http://geographica.di.uoa.gr/dataset/clc> {?s1 <http://geo.linkedopendata.gr/corine/ontology#asWKT> ?o1} 
+} 
+360765 [pool-20-thread-1] INFO  GraphDBSUT  - Evaluating query...
+360788 [pool-20-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'deduplicate.construct' to default value 'true'
+360788 [pool-20-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'reuse.vars.in.subselects' to default value 'false'
+376936 [pool-20-thread-1] INFO  GraphDBSUT  - Query evaluated
+377049 [main] INFO  MicroNonTopologicalExperiment  - Query warmed (warm, 2,0): 87400476 + 16070912063 = 16158312539, 44834
+377050 [main] INFO  MicroNonTopologicalExperiment  - Executing query (warm, 2, 0): PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> 
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX gadm: <http://www.gadm.org/ontology#> 
+PREFIX lgdo: <http://linkedgeodata.org/ontology/> 
+PREFIX geonames: <http://www.geonames.org/ontology#> 
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> 
+PREFIX lgdp: <http://linkedgeodata.org/property/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/> 
+PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+PREFIX geo-sf: <http://www.opengis.net/ont/sf#> 
+PREFIX ext: <http://rdf.useekm.com/ext#> 
+PREFIX dbpedia: <http://dbpedia.org/property/> 
+PREFIX ns: <http://geographica.di.uoa.gr/dataset/> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> 
+
+ 
+ select (geof:convexHull(?o1) as ?ret) where { 
+	GRAPH <http://geographica.di.uoa.gr/dataset/clc> {?s1 <http://geo.linkedopendata.gr/corine/ontology#asWKT> ?o1} 
+} 
+377050 [pool-21-thread-1] INFO  GraphDBSUT  - Evaluating query...
+389917 [pool-21-thread-1] INFO  GraphDBSUT  - Query evaluated
+390019 [main] INFO  MicroNonTopologicalExperiment  - Query executed (warm, 2,0): 1010622 + 12864100300 = 12865110922, 44834
+390019 [main] INFO  GraphDBSUT  - Closing..
+390019 [main] INFO  GraphDBSUT  - [GraphDB.close] Closing connection...
+390352 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Shutting down plugins (DEFAULT)...
+390359 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfStatements = 2065148
+390359 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfExplicitStatements = 2065148
+390360 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Shutting down entity pool
+390457 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Entity pool was shut down
+390458 [main] INFO  GraphDBSUT  - [GraphDB.close] Connection closed.
+395533 [main] INFO  GraphDBSUT  - Closed (caches not cleared)
+395619 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/02-ConvexHull_CLC-warm
+395619 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/02-ConvexHull_CLC-warm-long
+395619 [main] INFO  GraphDBSUT  - Clearing caches...
+401704 [main] INFO  GraphDBSUT  - Caches cleared
+401783 [main] WARN  org.eclipse.rdf4j.sail.memory.MemoryStore  - Failed to lock directory: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/SYSTEM
+401798 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Version: 8.4, revision: -1703271316
+401798 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Build date: Fri Jan 05 21:39:27 EET 2018
+401816 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Started repository geographica2paperWGS84 in READ/WRITE mode.
+401817 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'partialRDFS' to default value 'false'
+401817 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-isolation' to default value 'true'
+401817 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'checkForValidPropertiesAndClasses' to default value 'false'
+401817 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-mode' to default value 'safe'
+401817 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'entity-pool-implementation' to default value 'transactional'
+401817 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'useShutdownHooks' to default value 'true'
+401817 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for tuples: 7829
+401817 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for predicates: 1118
+401817 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.global.page.cache' to default value 'true'
+401829 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.epool.onheap' to default value 'false'
+401829 [main] INFO  com.ontotext.trree.entitypool.EntityPoolFactory  - Using entity pool implementation: transactional-disk
+401842 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restoring entity hash table...
+402619 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restored 956340 entities allocating 12.0 MB
+402619 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Done in 777 ms.
+413515 [main] WARN  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Rule list configuration present, it will override all other rule sets parameters!
+413551 [main] INFO  com.ontotext.trree.InferencerFactory  - ruleSet=rdfs, partialRdfs=false
+413567 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'nonInterpretablePredicates' to default value 'null'
+413567 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'skip-default-plugins' to default value 'false'
+413567 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Searching for plugins available in the classpath...
+413583 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin rdfrank
+413583 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin direct
+413583 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin geospatial
+413583 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin notifications
+413584 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin expose-entity
+413584 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin literals-index
+413584 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin script
+413584 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin plugincontrol
+413584 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin magic-predicates
+413584 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'register-plugins' to default value '[]'
+413584 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Registering external plugins...
+413597 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/sparql-mm for plugins
+413657 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin sparql-mm
+413657 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene-connector for plugins
+413876 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene-connector
+413877 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/dependencies-plugin for plugins
+413919 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin dependencies-plugin
+413920 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene for plugins
+414014 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene
+414015 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/autocomplete-plugin for plugins
+414123 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin autocomplete
+414123 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/graphdb-geosparql-plugin for plugins
+414430 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin GeoSPARQL
+414430 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'disable-plugins' to default value '[]'
+414431 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugins... (DEFAULT)
+414431 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'expose-entity'
+414431 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'autocomplete'
+414432 [main] INFO  com.ontotext.trree.plugin.autocomplete.AutocompletePluginUtils  - >>>>>>>> AutocompletePlugin: No configuration file found at /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/geographica2paperWGS84/storage/autocomplete/config.properties. Assuming default options for plugin.
+414433 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'direct'
+414433 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene'
+414434 [main] INFO  com.ontotext.plugin.lucene  - No Lucene indices were found
+414434 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'plugincontrol'
+414434 [main] INFO  com.ontotext.trree.plugin.plugincontrol.PluginControlPlugin  - Plugin:plugincontrol initialized
+414434 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'script'
+414434 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'magic-predicates'
+414434 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#foreach
+414434 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#search
+414434 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#length
+414434 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#concat
+414434 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#for
+414434 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#withinDistance
+414434 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#split
+414435 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#member
+414435 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#index
+414435 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#strSplit
+414435 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'literals-index'
+414467 [main] INFO  com.ontotext.plugin.literals-index  - Literals indices restored.
+414467 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'geospatial'
+414550 [main] INFO  com.ontotext.trree.plugin.geo.GeoSpatialPlugin  - Plugin:geospatial initialized
+414551 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'sparql-mm'
+414591 [main] INFO  com.ontotext.graphdb.sparqlmm.FunctionLoader  - Registered 48 functions from package com.github.tkurz.sparqlmm.function.
+414591 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'dependencies-plugin'
+414591 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'GeoSPARQL'
+415364 [main] INFO  com.ontotext.trree.geosparql.FunctionLoader  - Registered 50 functions from package com.useekm.geosparql.
+415364 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene-connector'
+415383 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'rdfrank'
+415383 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'notifications'
+415383 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Finished initializing plugins
+415384 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.page.cache.size' to default value '2.7G'
+415422 [main] INFO  com.ontotext.trree.RepositoryMonitor  - Previously registered MBean for repository at RepositoryMonitor found; unregistering.
+415432 [main] INFO  MicroNonTopologicalExperiment  - Warming query (warm, 3, 0): PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> 
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX gadm: <http://www.gadm.org/ontology#> 
+PREFIX lgdo: <http://linkedgeodata.org/ontology/> 
+PREFIX geonames: <http://www.geonames.org/ontology#> 
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> 
+PREFIX lgdp: <http://linkedgeodata.org/property/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/> 
+PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+PREFIX geo-sf: <http://www.opengis.net/ont/sf#> 
+PREFIX ext: <http://rdf.useekm.com/ext#> 
+PREFIX dbpedia: <http://dbpedia.org/property/> 
+PREFIX ns: <http://geographica.di.uoa.gr/dataset/> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> 
+
+ 
+ select (geof:buffer(?o1,4, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?ret) where {	GRAPH <http://geographica.di.uoa.gr/dataset/geonames> {?s1 <http://www.geonames.org/ontology#asWKT> ?o1}} 
+415433 [pool-23-thread-1] INFO  GraphDBSUT  - Evaluating query...
+415452 [pool-23-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'deduplicate.construct' to default value 'true'
+415453 [pool-23-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'reuse.vars.in.subselects' to default value 'false'
+415632 [pool-23-thread-1] INFO  GraphDBSUT  - Query evaluated
+415732 [main] INFO  MicroNonTopologicalExperiment  - Query warmed (warm, 3,0): 51597420 + 139172633 = 190770053, 21990
+415733 [main] INFO  MicroNonTopologicalExperiment  - Executing query (warm, 3, 0): PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> 
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX gadm: <http://www.gadm.org/ontology#> 
+PREFIX lgdo: <http://linkedgeodata.org/ontology/> 
+PREFIX geonames: <http://www.geonames.org/ontology#> 
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> 
+PREFIX lgdp: <http://linkedgeodata.org/property/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/> 
+PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+PREFIX geo-sf: <http://www.opengis.net/ont/sf#> 
+PREFIX ext: <http://rdf.useekm.com/ext#> 
+PREFIX dbpedia: <http://dbpedia.org/property/> 
+PREFIX ns: <http://geographica.di.uoa.gr/dataset/> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> 
+
+ 
+ select (geof:buffer(?o1,4, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?ret) where {	GRAPH <http://geographica.di.uoa.gr/dataset/geonames> {?s1 <http://www.geonames.org/ontology#asWKT> ?o1}} 
+415735 [pool-24-thread-1] INFO  GraphDBSUT  - Evaluating query...
+415811 [pool-24-thread-1] INFO  GraphDBSUT  - Query evaluated
+415877 [main] INFO  MicroNonTopologicalExperiment  - Query executed (warm, 3,0): 1020851 + 70580841 = 71601692, 21990
+415878 [main] INFO  GraphDBSUT  - Closing..
+415878 [main] INFO  GraphDBSUT  - [GraphDB.close] Closing connection...
+416153 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Shutting down plugins (DEFAULT)...
+416157 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfStatements = 2065148
+416158 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfExplicitStatements = 2065148
+416158 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Shutting down entity pool
+416169 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Entity pool was shut down
+416170 [main] INFO  GraphDBSUT  - [GraphDB.close] Connection closed.
+421221 [main] INFO  GraphDBSUT  - Closed (caches not cleared)
+421302 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/03-Buffer_GeoNames_2-warm
+421302 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/03-Buffer_GeoNames_2-warm-long
+421302 [main] INFO  GraphDBSUT  - Clearing caches...
+427521 [main] INFO  GraphDBSUT  - Caches cleared
+427577 [main] WARN  org.eclipse.rdf4j.sail.memory.MemoryStore  - Failed to lock directory: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/SYSTEM
+427592 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Version: 8.4, revision: -1703271316
+427592 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Build date: Fri Jan 05 21:39:27 EET 2018
+427610 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Started repository geographica2paperWGS84 in READ/WRITE mode.
+427610 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'partialRDFS' to default value 'false'
+427610 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-isolation' to default value 'true'
+427610 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'checkForValidPropertiesAndClasses' to default value 'false'
+427610 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-mode' to default value 'safe'
+427610 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'entity-pool-implementation' to default value 'transactional'
+427610 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'useShutdownHooks' to default value 'true'
+427610 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for tuples: 7829
+427611 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for predicates: 1118
+427611 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.global.page.cache' to default value 'true'
+427622 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.epool.onheap' to default value 'false'
+427622 [main] INFO  com.ontotext.trree.entitypool.EntityPoolFactory  - Using entity pool implementation: transactional-disk
+427638 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restoring entity hash table...
+428413 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restored 956340 entities allocating 12.0 MB
+428413 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Done in 775 ms.
+439211 [main] WARN  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Rule list configuration present, it will override all other rule sets parameters!
+439233 [main] INFO  com.ontotext.trree.InferencerFactory  - ruleSet=rdfs, partialRdfs=false
+439245 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'nonInterpretablePredicates' to default value 'null'
+439245 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'skip-default-plugins' to default value 'false'
+439245 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Searching for plugins available in the classpath...
+439255 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin rdfrank
+439256 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin direct
+439256 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin geospatial
+439256 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin notifications
+439256 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin expose-entity
+439256 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin literals-index
+439256 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin script
+439256 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin plugincontrol
+439256 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin magic-predicates
+439256 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'register-plugins' to default value '[]'
+439256 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Registering external plugins...
+439269 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/sparql-mm for plugins
+439351 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin sparql-mm
+439351 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene-connector for plugins
+439559 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene-connector
+439559 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/dependencies-plugin for plugins
+439612 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin dependencies-plugin
+439612 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene for plugins
+439708 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene
+439708 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/autocomplete-plugin for plugins
+439818 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin autocomplete
+439827 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/graphdb-geosparql-plugin for plugins
+440157 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin GeoSPARQL
+440157 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'disable-plugins' to default value '[]'
+440158 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugins... (DEFAULT)
+440158 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'expose-entity'
+440158 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'autocomplete'
+440159 [main] INFO  com.ontotext.trree.plugin.autocomplete.AutocompletePluginUtils  - >>>>>>>> AutocompletePlugin: No configuration file found at /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/geographica2paperWGS84/storage/autocomplete/config.properties. Assuming default options for plugin.
+440160 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'direct'
+440160 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene'
+440160 [main] INFO  com.ontotext.plugin.lucene  - No Lucene indices were found
+440160 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'plugincontrol'
+440160 [main] INFO  com.ontotext.trree.plugin.plugincontrol.PluginControlPlugin  - Plugin:plugincontrol initialized
+440160 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'script'
+440160 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'magic-predicates'
+440160 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#foreach
+440160 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#search
+440160 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#length
+440161 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#concat
+440161 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#for
+440161 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#withinDistance
+440161 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#split
+440161 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#member
+440161 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#index
+440161 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#strSplit
+440161 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'literals-index'
+440181 [main] INFO  com.ontotext.plugin.literals-index  - Literals indices restored.
+440181 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'geospatial'
+440266 [main] INFO  com.ontotext.trree.plugin.geo.GeoSpatialPlugin  - Plugin:geospatial initialized
+440266 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'sparql-mm'
+440328 [main] INFO  com.ontotext.graphdb.sparqlmm.FunctionLoader  - Registered 48 functions from package com.github.tkurz.sparqlmm.function.
+440328 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'dependencies-plugin'
+440328 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'GeoSPARQL'
+441266 [main] INFO  com.ontotext.trree.geosparql.FunctionLoader  - Registered 50 functions from package com.useekm.geosparql.
+441266 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene-connector'
+441288 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'rdfrank'
+441288 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'notifications'
+441288 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Finished initializing plugins
+441288 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.page.cache.size' to default value '2.7G'
+441302 [main] INFO  com.ontotext.trree.RepositoryMonitor  - Previously registered MBean for repository at RepositoryMonitor found; unregistering.
+441323 [main] INFO  MicroNonTopologicalExperiment  - Warming query (warm, 4, 0): PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> 
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX gadm: <http://www.gadm.org/ontology#> 
+PREFIX lgdo: <http://linkedgeodata.org/ontology/> 
+PREFIX geonames: <http://www.geonames.org/ontology#> 
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> 
+PREFIX lgdp: <http://linkedgeodata.org/property/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/> 
+PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+PREFIX geo-sf: <http://www.opengis.net/ont/sf#> 
+PREFIX ext: <http://rdf.useekm.com/ext#> 
+PREFIX dbpedia: <http://dbpedia.org/property/> 
+PREFIX ns: <http://geographica.di.uoa.gr/dataset/> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> 
+
+ 
+ select (geof:buffer(?o1,4, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?ret) where {	GRAPH <http://geographica.di.uoa.gr/dataset/lgd> {?s1 <http://linkedgeodata.org/ontology/asWKT> ?o1}} 
+441334 [pool-26-thread-1] INFO  GraphDBSUT  - Evaluating query...
+441373 [pool-26-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'deduplicate.construct' to default value 'true'
+441374 [pool-26-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'reuse.vars.in.subselects' to default value 'false'
+441541 [pool-26-thread-1] INFO  GraphDBSUT  - Query evaluated
+441661 [main] INFO  MicroNonTopologicalExperiment  - Query warmed (warm, 4,0): 86849231 + 97902362 = 184751593, 12097
+441662 [main] INFO  MicroNonTopologicalExperiment  - Executing query (warm, 4, 0): PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> 
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX gadm: <http://www.gadm.org/ontology#> 
+PREFIX lgdo: <http://linkedgeodata.org/ontology/> 
+PREFIX geonames: <http://www.geonames.org/ontology#> 
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> 
+PREFIX lgdp: <http://linkedgeodata.org/property/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/> 
+PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+PREFIX geo-sf: <http://www.opengis.net/ont/sf#> 
+PREFIX ext: <http://rdf.useekm.com/ext#> 
+PREFIX dbpedia: <http://dbpedia.org/property/> 
+PREFIX ns: <http://geographica.di.uoa.gr/dataset/> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> 
+
+ 
+ select (geof:buffer(?o1,4, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?ret) where {	GRAPH <http://geographica.di.uoa.gr/dataset/lgd> {?s1 <http://linkedgeodata.org/ontology/asWKT> ?o1}} 
+441663 [pool-27-thread-1] INFO  GraphDBSUT  - Evaluating query...
+441709 [pool-27-thread-1] INFO  GraphDBSUT  - Query evaluated
+441781 [main] INFO  MicroNonTopologicalExperiment  - Query executed (warm, 4,0): 1202873 + 40794137 = 41997010, 12097
+441782 [main] INFO  GraphDBSUT  - Closing..
+441782 [main] INFO  GraphDBSUT  - [GraphDB.close] Closing connection...
+442052 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Shutting down plugins (DEFAULT)...
+442059 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfStatements = 2065148
+442059 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfExplicitStatements = 2065148
+442059 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Shutting down entity pool
+442121 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Entity pool was shut down
+442121 [main] INFO  GraphDBSUT  - [GraphDB.close] Connection closed.
+447178 [main] INFO  GraphDBSUT  - Closed (caches not cleared)
+447272 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/04-Buffer_LGD_2-warm
+447273 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/04-Buffer_LGD_2-warm-long
+447273 [main] INFO  GraphDBSUT  - Clearing caches...
+453556 [main] INFO  GraphDBSUT  - Caches cleared
+453622 [main] WARN  org.eclipse.rdf4j.sail.memory.MemoryStore  - Failed to lock directory: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/SYSTEM
+453628 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Version: 8.4, revision: -1703271316
+453628 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Build date: Fri Jan 05 21:39:27 EET 2018
+453636 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Started repository geographica2paperWGS84 in READ/WRITE mode.
+453636 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'partialRDFS' to default value 'false'
+453636 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-isolation' to default value 'true'
+453636 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'checkForValidPropertiesAndClasses' to default value 'false'
+453636 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'transaction-mode' to default value 'safe'
+453636 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'entity-pool-implementation' to default value 'transactional'
+453636 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'useShutdownHooks' to default value 'true'
+453636 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for tuples: 7829
+453636 [main] INFO  com.ontotext.GraphDBConfigParameters  - Cache pages for predicates: 1118
+453636 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.global.page.cache' to default value 'true'
+453637 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.epool.onheap' to default value 'false'
+453637 [main] INFO  com.ontotext.trree.entitypool.EntityPoolFactory  - Using entity pool implementation: transactional-disk
+453651 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restoring entity hash table...
+454446 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Restored 956340 entities allocating 12.0 MB
+454446 [main] INFO  com.ontotext.trree.entitypool.impl.map.PersistedHashMap  - Done in 795 ms.
+464880 [main] WARN  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Rule list configuration present, it will override all other rule sets parameters!
+464918 [main] INFO  com.ontotext.trree.InferencerFactory  - ruleSet=rdfs, partialRdfs=false
+464929 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'nonInterpretablePredicates' to default value 'null'
+464929 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'skip-default-plugins' to default value 'false'
+464929 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Searching for plugins available in the classpath...
+464937 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin rdfrank
+464938 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin direct
+464938 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin geospatial
+464938 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin notifications
+464938 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin expose-entity
+464938 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin literals-index
+464938 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin script
+464938 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin plugincontrol
+464938 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin magic-predicates
+464938 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'register-plugins' to default value '[]'
+464938 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Registering external plugins...
+464952 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/sparql-mm for plugins
+465012 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin sparql-mm
+465012 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene-connector for plugins
+465253 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene-connector
+465253 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/dependencies-plugin for plugins
+465291 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin dependencies-plugin
+465291 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/lucene for plugins
+465404 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin lucene
+465404 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/autocomplete-plugin for plugins
+465511 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin autocomplete
+465511 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Scanning /home/tioannid/graphdb-free-8.4.1/lib/plugins/graphdb-geosparql-plugin for plugins
+465785 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Registering plugin GeoSPARQL
+465785 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'disable-plugins' to default value '[]'
+465785 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugins... (DEFAULT)
+465785 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'expose-entity'
+465785 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'autocomplete'
+465786 [main] INFO  com.ontotext.trree.plugin.autocomplete.AutocompletePluginUtils  - >>>>>>>> AutocompletePlugin: No configuration file found at /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/data4/repositories/geographica2paperWGS84/storage/autocomplete/config.properties. Assuming default options for plugin.
+465788 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'direct'
+465788 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene'
+465789 [main] INFO  com.ontotext.plugin.lucene  - No Lucene indices were found
+465789 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'plugincontrol'
+465789 [main] INFO  com.ontotext.trree.plugin.plugincontrol.PluginControlPlugin  - Plugin:plugincontrol initialized
+465789 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'script'
+465789 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'magic-predicates'
+465789 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#foreach
+465789 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#search
+465789 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#length
+465789 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#concat
+465790 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#for
+465790 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://www.openrdf.org/contrib/lucenesail#withinDistance
+465790 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://spinrdf.org/spif#split
+465790 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#member
+465790 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering TupleFunction: http://jena.hpl.hp.com/ARQ/list#index
+465790 [main] INFO  com.ontotext.plugin.magic-predicates  - Registering InverseMagicPredicate: http://jena.hpl.hp.com/ARQ/property#strSplit
+465790 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'literals-index'
+465820 [main] INFO  com.ontotext.plugin.literals-index  - Literals indices restored.
+465820 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'geospatial'
+465861 [main] INFO  com.ontotext.trree.plugin.geo.GeoSpatialPlugin  - Plugin:geospatial initialized
+465861 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'sparql-mm'
+465900 [main] INFO  com.ontotext.graphdb.sparqlmm.FunctionLoader  - Registered 48 functions from package com.github.tkurz.sparqlmm.function.
+465901 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'dependencies-plugin'
+465901 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'GeoSPARQL'
+466695 [main] INFO  com.ontotext.trree.geosparql.FunctionLoader  - Registered 50 functions from package com.useekm.geosparql.
+466695 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'lucene-connector'
+466758 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'rdfrank'
+466759 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Initializing plugin 'notifications'
+466759 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Finished initializing plugins
+466759 [main] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'graphdb.page.cache.size' to default value '2.7G'
+466784 [main] INFO  com.ontotext.trree.RepositoryMonitor  - Previously registered MBean for repository at RepositoryMonitor found; unregistering.
+466811 [main] INFO  MicroNonTopologicalExperiment  - Warming query (warm, 5, 0): PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> 
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX gadm: <http://www.gadm.org/ontology#> 
+PREFIX lgdo: <http://linkedgeodata.org/ontology/> 
+PREFIX geonames: <http://www.geonames.org/ontology#> 
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> 
+PREFIX lgdp: <http://linkedgeodata.org/property/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/> 
+PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+PREFIX geo-sf: <http://www.opengis.net/ont/sf#> 
+PREFIX ext: <http://rdf.useekm.com/ext#> 
+PREFIX dbpedia: <http://dbpedia.org/property/> 
+PREFIX ns: <http://geographica.di.uoa.gr/dataset/> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> 
+
+ 
+ select (strdf:area(?o1) as ?ret) where { 
+	GRAPH <http://geographica.di.uoa.gr/dataset/clc> {?s1 <http://geo.linkedopendata.gr/corine/ontology#asWKT> ?o1} 
+} 
+466811 [pool-29-thread-1] INFO  GraphDBSUT  - Evaluating query...
+466832 [pool-29-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'deduplicate.construct' to default value 'true'
+466832 [pool-29-thread-1] INFO  com.ontotext.config.AbstractParameter  - Configured parameter 'reuse.vars.in.subselects' to default value 'false'
+466996 [main] INFO  MicroNonTopologicalExperiment  - Query warmed (warm, 5,0): 1801 + 1801 = 1801, -1
+466998 [main] INFO  MicroNonTopologicalExperiment  - Executing query (warm, 5, 0): PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> 
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX gadm: <http://www.gadm.org/ontology#> 
+PREFIX lgdo: <http://linkedgeodata.org/ontology/> 
+PREFIX geonames: <http://www.geonames.org/ontology#> 
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> 
+PREFIX lgdp: <http://linkedgeodata.org/property/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/> 
+PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+PREFIX geo-sf: <http://www.opengis.net/ont/sf#> 
+PREFIX ext: <http://rdf.useekm.com/ext#> 
+PREFIX dbpedia: <http://dbpedia.org/property/> 
+PREFIX ns: <http://geographica.di.uoa.gr/dataset/> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> 
+
+ 
+ select (strdf:area(?o1) as ?ret) where { 
+	GRAPH <http://geographica.di.uoa.gr/dataset/clc> {?s1 <http://geo.linkedopendata.gr/corine/ontology#asWKT> ?o1} 
+} 
+466998 [pool-30-thread-1] INFO  GraphDBSUT  - Evaluating query...
+467003 [Finalizer] WARN  com.ontotext.trree.SailConnectionImpl  - Iteration was not closed. We are going to close it in finalize
+467080 [main] INFO  MicroNonTopologicalExperiment  - Query executed (warm, 5,0): 1801 + 1801 = 1801, -1
+467080 [main] INFO  GraphDBSUT  - Closing..
+467081 [main] INFO  GraphDBSUT  - [GraphDB.close] Closing connection...
+467080 [Finalizer] WARN  com.ontotext.trree.SailConnectionImpl  - Iteration was not closed. We are going to close it in finalize
+467352 [main] INFO  com.ontotext.trree.sdk.impl.PluginManager  - Shutting down plugins (DEFAULT)...
+467367 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfStatements = 2065148
+467367 [main] INFO  com.ontotext.trree.big.AVLRepository  - NumberOfExplicitStatements = 2065148
+467368 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Shutting down entity pool
+467404 [main] INFO  com.ontotext.trree.free.GraphDBFreeSchemaRepository  - Entity pool was shut down
+467416 [main] INFO  GraphDBSUT  - [GraphDB.close] Connection closed.
+472478 [main] INFO  GraphDBSUT  - Closed (caches not cleared)
+472546 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/05-Area_CLC-warm
+472546 [main] INFO  MicroNonTopologicalExperiment  - Statistiscs printed: /home/tioannid/NetBeansProjects/PhD/Geographica Datasets/GraphDB-4-Results/GraphDBSUT-MicroNonTopologicalExperiment/05-Area_CLC-warm-long
+472546 [main] INFO  RunSystemUnderTest  - End gr.uoa.di.rdf.Geographica2.experiments.MicroNonTopologicalExperiment
+-------------------------------
+Experiment Duration : 0 hours 7 min and 54 secs
+-------------------------------
+Host used : ubuntu-vma-tioa
+-------------------------------
+CPU Used 
+Architecture: x86_64 CPU op-mode(s): 32-bit, 64-bit Byte Order: Little Endian CPU(s): 4 On-line CPU(s) list: 0-3 Thread(s) per core: 1 Core(s) per socket: 4 Socket(s): 1 NUMA node(s): 1 Vendor ID: GenuineIntel CPU family: 6 Model: 60 Model name: Intel(R) Core(TM) i5-4670 CPU @ 3.40GHz Stepping: 3 CPU MHz: 3392.158 BogoMIPS: 6784.31 Hypervisor vendor: KVM Virtualization type: full L1d cache: 32K L1i cache: 32K L2 cache: 256K L3 cache: 6144K NUMA node0 CPU(s): 0-3 Flags: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc pni pclmulqdq ssse3 cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx rdrand hypervisor lahf_lm abm kaiser avx2
+-------------------------------
+MEMORY Info 
+MemTotal: 10755380 kB MemFree: 8334236 kB MemAvailable: 8480552 kB Buffers: 9412 kB Cached: 533672 kB SwapCached: 0 kB Active: 1845380 kB Inactive: 419644 kB Active(anon): 1728344 kB Inactive(anon): 175072 kB Active(file): 117036 kB Inactive(file): 244572 kB Unevictable: 48 kB Mlocked: 48 kB SwapTotal: 0 kB SwapFree: 0 kB Dirty: 2108 kB Writeback: 0 kB AnonPages: 1722168 kB Mapped: 384988 kB Shmem: 181288 kB Slab: 56668 kB SReclaimable: 28592 kB SUnreclaim: 28076 kB KernelStack: 8256 kB PageTables: 31536 kB NFS_Unstable: 0 kB Bounce: 0 kB WritebackTmp: 0 kB CommitLimit: 5377688 kB Committed_AS: 10314872 kB VmallocTotal: 34359738367 kB VmallocUsed: 0 kB VmallocChunk: 0 kB HardwareCorrupted: 0 kB AnonHugePages: 1304576 kB CmaTotal: 0 kB CmaFree: 0 kB HugePages_Total: 0 HugePages_Free: 0 HugePages_Rsvd: 0 HugePages_Surp: 0 Hugepagesize: 2048 kB DirectMap4k: 106432 kB DirectMap2M: 10903552 kB

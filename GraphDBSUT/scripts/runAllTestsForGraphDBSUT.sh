@@ -20,7 +20,7 @@ LOG4J_CONFIGURATION=${BASE}/../../runtime/src/main/resources/log4j.properties
 #echo "LOG4J_CONFIGURATION = $LOG4J_CONFIGURATION"
 
 # define the JVM options/parameters
-JAVA_OPTS="-Xmx6g -Dregister-external-plugins=/home/tioannid/graphdb-free-8.3.1/lib/plugins -Dlog4j.configuration=file:${LOG4J_CONFIGURATION}"
+JAVA_OPTS="-Xmx6g -Dregister-external-plugins=/home/tioannid/graphdb-free-8.4.1/lib/plugins -Dlog4j.configuration=file:${LOG4J_CONFIGURATION}"
 #echo "JAVA_OPTS = $JAVA_OPTS"
 
 # change to the ../target directory to more easily create the classpath
