@@ -5,4 +5,3 @@ MicroAggregations
 MacroMapSearch
 MacroRapidMapping
 MacroReverseGeocoding
-Synthetic

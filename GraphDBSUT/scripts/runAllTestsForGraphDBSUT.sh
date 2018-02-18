@@ -12,7 +12,7 @@ ARGS_NO_EXPERIMENT=`< $ARGS_FILE`
 #echo "ARGS_NO_EXPERIMENT = $ARGS_NO_EXPERIMENT"
 
 # retrieve the name of the file with all the experiments
-EXPERIMENT_LIST_FILE=`realpath ${2}`
+EXPERIMENT_LIST_FILE=`readlink -f ${2}`
 #echo "EXPERIMENT_LIST_FILE = $EXPERIMENT_LIST_FILE"
 
 # define the configuration file for the Apache LOG4J framework
@@ -20,7 +20,7 @@ LOG4J_CONFIGURATION=${BASE}/../../runtime/src/main/resources/log4j.properties
 #echo "LOG4J_CONFIGURATION = $LOG4J_CONFIGURATION"
 
 # define the JVM options/parameters
-JAVA_OPTS="-Xmx6g -Dregister-external-plugins=/home/tioannid/graphdb-free-8.4.1/lib/plugins -Dlog4j.configuration=file:${LOG4J_CONFIGURATION}"
+JAVA_OPTS="-Xmx20g -Dregister-external-plugins=/home/journal/graphdb-free-8.4.1/lib/plugins -Dlog4j.configuration=file:${LOG4J_CONFIGURATION}"
 #echo "JAVA_OPTS = $JAVA_OPTS"
 
 # change to the ../target directory to more easily create the classpath

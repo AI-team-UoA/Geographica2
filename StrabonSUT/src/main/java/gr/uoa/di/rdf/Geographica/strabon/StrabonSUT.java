@@ -49,9 +49,21 @@ public class StrabonSUT implements SystemUnderTest {
     ** and demands that the <sudo xxx> commands are added to
     ** /etc/sudoers for the sys user that will be running the test
     */
+    /* Set of commands for the VM of tioannidis
     static final String SYSCMD_POSTGRES_STOP = "sudo /etc/init.d/postgresql stop";
     static final String SYSCMD_POSTGRES_START = "sudo /etc/init.d/postgresql start";
     static final String SYSCMD_POSTGRES_RESTART = "sudo /etc/init.d/postgresql restart";
+    static final String SYSCMD_SYNC = "sync";
+    static final String SYSCMD_CLEARCACHE = "sudo /sbin/sysctl vm.drop_caches=3";
+    */
+    
+    /* The following commands run on TELEIOS3 UBUNTU 12.04.5LTS
+    ** and demands that the <sudo xxx> commands are added to
+    ** /etc/sudoers for the sys user that will be running the test
+    */
+    static final String SYSCMD_POSTGRES_STOP = "sudo /usr/local/pgsql/bin/pg_ctl stop -D /usr/local/pgsql/data";
+    static final String SYSCMD_POSTGRES_START = "sudo /usr/local/pgsql/bin/pg_ctl start -D /usr/local/pgsql/data -l /usr/local/pgsql/data/postgresql.log";
+    static final String SYSCMD_POSTGRES_RESTART = "sudo /usr/local/pgsql/bin/pg_ctl restart -D /usr/local/pgsql/data -l /usr/local/pgsql/data/postgresql.log";
     static final String SYSCMD_SYNC = "sync";
     static final String SYSCMD_CLEARCACHE = "sudo /sbin/sysctl vm.drop_caches=3";
 

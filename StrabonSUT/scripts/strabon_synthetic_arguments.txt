@@ -1,1 +1,1 @@
--h localhost -db synthetic -p 5432 -u postgres -P postgres -r 1 -l "/home/tioannid/NetBeansProjects/PhD/Geographica Datasets/Strabon-Results" -N 32 run
+-h localhost -db synthetic -p 5432 -u postgres -P postgres -r 3 -t 3600 -l "/home/journal/Geographica_Results/Strabon-Results" -N 512 run
