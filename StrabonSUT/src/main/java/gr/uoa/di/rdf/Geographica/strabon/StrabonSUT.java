@@ -10,11 +10,14 @@ package gr.uoa.di.rdf.Geographica.strabon;
 
 import eu.earthobservatory.runtime.postgis.Strabon;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
+import java.io.FileInputStream;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -43,29 +46,27 @@ public class StrabonSUT implements SystemUnderTest {
     static final String SYSCMD_POSTGRES_RESTART = "service postgresql restart";
     static final String SYSCMD_SYNC = "sync";
     static final String SYSCMD_CLEARCACHE = "echo 3 > /proc/sys/vm/drop_caches";
-    */
-    
-    /* The following commands run on UBUNTU 16.04LTS
+     */
+
+ /* The following commands run on UBUNTU 16.04LTS
     ** and demands that the <sudo xxx> commands are added to
     ** /etc/sudoers for the sys user that will be running the test
-    */
-    /* Set of commands for the VM of tioannidis
+     */
+ /* Set of commands for the VM of tioannidis
     static final String SYSCMD_POSTGRES_STOP = "sudo /etc/init.d/postgresql stop";
     static final String SYSCMD_POSTGRES_START = "sudo /etc/init.d/postgresql start";
     static final String SYSCMD_POSTGRES_RESTART = "sudo /etc/init.d/postgresql restart";
     static final String SYSCMD_SYNC = "sync";
     static final String SYSCMD_CLEARCACHE = "sudo /sbin/sysctl vm.drop_caches=3";
-    */
+     */
     
-    /* The following commands run on TELEIOS3 UBUNTU 12.04.5LTS
-    ** and demands that the <sudo xxx> commands are added to
-    ** /etc/sudoers for the sys user that will be running the test
-    */
-    static final String SYSCMD_POSTGRES_STOP = "sudo /usr/local/pgsql/bin/pg_ctl stop -D /usr/local/pgsql/data";
-    static final String SYSCMD_POSTGRES_START = "sudo /usr/local/pgsql/bin/pg_ctl start -D /usr/local/pgsql/data -l /usr/local/pgsql/data/postgresql.log";
-    static final String SYSCMD_POSTGRES_RESTART = "sudo /usr/local/pgsql/bin/pg_ctl restart -D /usr/local/pgsql/data -l /usr/local/pgsql/data/postgresql.log";
-    static final String SYSCMD_SYNC = "sync";
-    static final String SYSCMD_CLEARCACHE = "sudo /sbin/sysctl vm.drop_caches=3";
+    public static Properties Properties = new Properties();
+    final private static String PROPERTIES_FILE_PATH = "strabonsut.properties";
+    String SYSCMD_POSTGRES_STOP;
+    String SYSCMD_POSTGRES_START;
+    String SYSCMD_POSTGRES_RESTART;
+    String SYSCMD_SYNC;
+    String SYSCMD_CLEARCACHE;
 
     private Strabon strabon = null;
     private BindingSet firstBindingSet;
@@ -84,6 +85,16 @@ public class StrabonSUT implements SystemUnderTest {
         this.passwd = passwd;
         this.port = port;
         this.host = host;
+
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(PROPERTIES_FILE_PATH);
+         // load the properties
+        Properties.load(inputStream);
+        // read all values
+        SYSCMD_POSTGRES_STOP = Properties.getProperty("POSTGRES_STOP");
+        SYSCMD_POSTGRES_START = Properties.getProperty("POSTGRES_START");
+        SYSCMD_POSTGRES_RESTART = Properties.getProperty("POSTGRES_RESTART");
+        SYSCMD_SYNC = Properties.getProperty("SYSCMD_SYNC");
+        SYSCMD_CLEARCACHE = Properties.getProperty("SYSCMD_CLEARCACHE");
     }
 
     public BindingSet getFirstBindingSet() {
@@ -380,8 +391,7 @@ public class StrabonSUT implements SystemUnderTest {
                     " } \\n	FILTER\\(geof:sfIntersects\\(\\?clcWkt, \\?fWkt\\)\\)\\. \\\n",
                     " \n	FILTER(geof:sfIntersects(?clcWkt, ?fWkt)). } \n");
         }
-        */
-        
+         */
         return translatedQuery;
     }
 }

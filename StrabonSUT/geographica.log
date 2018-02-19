@@ -1,0 +1,39 @@
+0    [main] INFO  RunSystemUnderTest  - Shared options
+2    [main] INFO  RunSystemUnderTest  - Repetitions:	1
+2    [main] INFO  RunSystemUnderTest  - Time out:	1800 seconds
+2    [main] INFO  RunSystemUnderTest  - Run time:	120 minutes
+2    [main] INFO  RunSystemUnderTest  - N:	0
+2    [main] INFO  RunSystemUnderTest  - Log Path:	tioa
+2    [main] INFO  RunSystemUnderTest  - Queries to run:	null
+2    [main] INFO  RunStrabon  - Excluded options
+2    [main] INFO  RunStrabon  - Server:	localhost
+2    [main] INFO  RunStrabon  - Database:	geographica
+2    [main] INFO  RunStrabon  - Port:	5432
+3    [main] INFO  RunStrabon  - Username:	postgres
+3    [main] INFO  RunStrabon  - Password:	postgres
+1    [main] INFO  RunSystemUnderTest  - Shared options
+2    [main] INFO  RunSystemUnderTest  - Repetitions:	1
+2    [main] INFO  RunSystemUnderTest  - Time out:	1800 seconds
+2    [main] INFO  RunSystemUnderTest  - Run time:	120 minutes
+2    [main] INFO  RunSystemUnderTest  - N:	0
+2    [main] INFO  RunSystemUnderTest  - Log Path:	tioa
+2    [main] INFO  RunSystemUnderTest  - Queries to run:	null
+2    [main] INFO  RunStrabon  - Excluded options
+3    [main] INFO  RunStrabon  - Server:	localhost
+3    [main] INFO  RunStrabon  - Database:	geographica
+3    [main] INFO  RunStrabon  - Port:	5432
+3    [main] INFO  RunStrabon  - Username:	postgres
+4    [main] INFO  RunStrabon  - Password:	postgres
+0    [main] INFO  RunSystemUnderTest  - Shared options
+1    [main] INFO  RunSystemUnderTest  - Repetitions:	1
+1    [main] INFO  RunSystemUnderTest  - Time out:	1800 seconds
+1    [main] INFO  RunSystemUnderTest  - Run time:	120 minutes
+2    [main] INFO  RunSystemUnderTest  - N:	0
+2    [main] INFO  RunSystemUnderTest  - Log Path:	tioa
+3    [main] INFO  RunSystemUnderTest  - Queries to run:	null
+3    [main] INFO  RunStrabon  - Excluded options
+3    [main] INFO  RunStrabon  - Server:	localhost
+3    [main] INFO  RunStrabon  - Database:	geographica
+3    [main] INFO  RunStrabon  - Port:	5432
+3    [main] INFO  RunStrabon  - Username:	postgres
+3    [main] INFO  RunStrabon  - Password:	postgres
