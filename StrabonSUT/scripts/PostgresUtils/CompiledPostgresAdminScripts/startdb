@@ -1,0 +1,1 @@
+su postgres -c '/usr/local/pgsql/bin/pg_ctl start -D /usr/local/pgsql/data -l /usr/local/pgsql/data/postgresql.log'

@@ -1,7 +1,0 @@
-MicroNonTopological
-MicroSelections
-MicroJoins
-MicroAggregations
-MacroMapSearch
-MacroRapidMapping
-MacroReverseGeocoding
