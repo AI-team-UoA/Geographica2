@@ -11,12 +11,11 @@ sudo -u postgres `which psql` -c 'VACUUM ANALYZE;' ${1}
 cd ${3}/runtime/target
 export CLASS_PATH="$(for file in `ls -1 *.jar`; do myVar=$myVar./$file":"; done;echo $myVar;)"
 
-# load N-Triple files in default graph
-java -Xmx4g -cp $CLASS_PATH  eu.earthobservatory.runtime.postgis.StoreOp localhost 5432 ${1} postgres postgres "${2}/POINT.nt"
-java -Xmx4g -cp $CLASS_PATH  eu.earthobservatory.runtime.postgis.StoreOp localhost 5432 ${1} postgres postgres "${2}/LINESTRING.nt"
-java -Xmx4g -cp $CLASS_PATH  eu.earthobservatory.runtime.postgis.StoreOp localhost 5432 ${1} postgres postgres "${2}/HEXAGON_SMALL.nt"
-java -Xmx4g -cp $CLASS_PATH  eu.earthobservatory.runtime.postgis.StoreOp localhost 5432 ${1} postgres postgres "${2}/HEXAGON_LARGE.nt"
-java -Xmx4g -cp $CLASS_PATH  eu.earthobservatory.runtime.postgis.StoreOp localhost 5432 ${1} postgres postgres "${2}/HEXAGON_LARGE_CENTER.nt"
+# load any N-Triple files in the default graph
+for file in `ls -1 ${2}/*.nt`; do
+echo "Importing file $file"
+java -Xmx4g -cp $CLASS_PATH  eu.earthobservatory.runtime.postgis.StoreOp localhost 5432 ${1} postgres postgres $file;
+done;
 
 # verify that default graph has the expected number of triples
 java -Xmx4g -cp $CLASS_PATH eu.earthobservatory.runtime.postgis.QueryOp localhost 5432 ${1} postgres postgres "SELECT (count(*) as ?count) WHERE { ?s ?p ?o .}" TRUE
