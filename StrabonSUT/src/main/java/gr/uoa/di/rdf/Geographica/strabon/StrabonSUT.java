@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -106,7 +107,6 @@ public class StrabonSUT implements SystemUnderTest {
     }
 
     public void initialize() {
-
         try {
             strabon = new Strabon(db, user, passwd, port, host, true);
         } catch (Exception e) {
@@ -289,6 +289,7 @@ public class StrabonSUT implements SystemUnderTest {
             pr.waitFor();
             if (pr.exitValue() != 0) {
                 logger.error("Something went wrong while stoping postgres");
+                logger.error("... with command " + Arrays.toString(restart_postgres));
             }
 
             Thread.sleep(5000);
@@ -332,6 +333,7 @@ public class StrabonSUT implements SystemUnderTest {
 //			System.out.println(pr.exitValue());
             if (pr.exitValue() != 0) {
                 logger.error("Something went wrong while stoping postgres");
+                logger.error("... with command " + Arrays.toString(stop_postgres));
             }
 //			System.in.read();
 
@@ -355,7 +357,8 @@ public class StrabonSUT implements SystemUnderTest {
             pr.waitFor();
 //			System.out.println(pr.exitValue());
             if (pr.exitValue() != 0) {
-                logger.error("Something went wrong while clearing caches");
+                logger.error("Something went wrong while starting postgres");
+                 logger.error("... with command " + Arrays.toString(start_postgres));
             }
 
             Thread.sleep(5000);
