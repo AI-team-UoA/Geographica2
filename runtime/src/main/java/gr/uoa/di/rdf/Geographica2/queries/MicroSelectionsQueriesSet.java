@@ -156,7 +156,7 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 	
 		// -- Within buffer -- //
 		case 7:
-			label = "Intersects_GeoNames_Point_Buffer";
+			label = "Within_GeoNames_Point_Buffer";
 			query = prefixes + "\n select ?s1 where { \n"
 					+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n"
 					+ " FILTER(geof:sfWithin(?o1, geof:buffer("
@@ -168,7 +168,7 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 	
 		// -- Within distance -- //
 		case 8:
-			label = "Intersects_GeoNames_Point_Distance";
+			label = "GeoNames_Point_Distance";
 			query = prefixes + "\n select ?s1 where { \n" 
 					+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n" 
 					+ "  FILTER(geof:distance(?o1, "+ givenPoint + ", <http://www.opengis.net/def/uom/OGC/1.0/metre>) <= " + givenRadius + ").  \n" 
@@ -178,7 +178,7 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 		case 9:
 			// -- Disjoint -- //
 			// Point != GivenPolygon
-			label = "Disjoint_GeoNames_MaxPolygon";
+			label = "Disjoint_GeoNames_GivenPolygon";
 			query = queryTemplate;
 			query = query.replace("GRAPH1", geonames);
 			query = query.replace("ASWKT1", geonames_asWKT);
@@ -187,7 +187,7 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 			break;
 		case 10:
 			// Line != GivenPolygon
-			label = "Disjoint_LGD_MaxPolygon";
+			label = "Disjoint_LGD_GivenPolygon";
 			query = queryTemplate;
 			query = query.replace("GRAPH1", lgd);
 			query = query.replace("ASWKT1", lgd_asWKT);
