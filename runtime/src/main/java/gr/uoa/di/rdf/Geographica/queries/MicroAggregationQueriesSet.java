@@ -19,19 +19,19 @@ public class MicroAggregationQueriesSet  extends QueriesSet {
 	
 	static Logger logger = Logger.getLogger(MicroAggregationQueriesSet.class.getSimpleName());
 	
-	private String queryTemplate1 = prefixes 
+	private String strdfQueryTemplate = prefixes 
 			+ "\n select (strdf:FUNCTION(?o1) as ?ret) where {  \n"
 			+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1} \n"
 			+ "}";
 	
-	private String queryTemplate2 = prefixes 
+	private String geofQueryTemplate = prefixes 
 			+ "\n select (geof:FUNCTION(?o1) as ?ret) where {  \n"
 			+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1} \n"
 			+ "}";
 
 	public MicroAggregationQueriesSet(SystemUnderTest sut) {
 		super(sut);
-		queriesN = 4; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
+		queriesN = 2; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
 	}
 	
 	@Override
@@ -44,50 +44,31 @@ public class MicroAggregationQueriesSet  extends QueriesSet {
 		
 		// IMPORTANT: Add/remove queries in getQuery implies changing queriesN and changing case numbers
 		switch (queryIndex) {
-			// -- Extension -- //	
 			case 0:
-				// Q2 Extension of Lines
-				label = "Extent_LGD"; 
-				query = queryTemplate1;
-				query = query.replace("GRAPH1", lgd);
-				query = query.replace("ASWKT1", lgd_asWKT);
-				query = query.replace("FUNCTION", "extent");
-				break;
-
-			case 1:
-				// Q4 Extension of many simple Polygons
-				label = "Extent_CLC"; 
-				query = queryTemplate1;
+				// Q28 Construct the extension of all polygons of CLC
+                                //     (Extension of many simple Polygons)
+				label = "Q28_Extent_CLC"; 
+				query = strdfQueryTemplate;
 				query = query.replace("GRAPH1", clc);
 				query = query.replace("ASWKT1", clc_asWKT);
 				query = query.replace("FUNCTION", "extent");
 				break;
 				
-			case 2:
-				// Q2 Union of Lines
-				label = "Union_LGD"; 
-				query = queryTemplate2;
-				query = query.replace("GRAPH1", lgd);
-				query = query.replace("ASWKT1", lgd_asWKT);
-				query = query.replace("FUNCTION", "union");
-				break;
-
-			case 3:
-				// Q1 Union of many simple Polygons
-				label = "Union_CLC"; 
-				query = queryTemplate2;
+			case 1:
+				// Q29 Construct the union of all polygons of CLC
+                                //     (Union of many simple Polygons)
+				label = "Q29_Union_CLC"; 
+				query = geofQueryTemplate;
 				query = query.replace("GRAPH1", clc);
 				query = query.replace("ASWKT1", clc_asWKT);
 				query = query.replace("FUNCTION", "union");
 				break;
 				
 			default:
-				logger.error("No such query number exists:"+queryIndex);
-				
+				logger.error("No such query number exists:"+queryIndex);	
 		}
 		
 		String translatedQuery = sut.translateQuery(query, label);
 		return new QueryStruct(translatedQuery, label);
 	}
-	
 }

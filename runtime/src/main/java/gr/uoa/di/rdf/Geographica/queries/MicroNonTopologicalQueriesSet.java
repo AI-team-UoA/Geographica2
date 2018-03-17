@@ -22,20 +22,12 @@ public class MicroNonTopologicalQueriesSet extends QueriesSet {
 	private String queryGeosparqlTemplate = prefixes 
 			+ " \n select (geof:FUNCTION(?o1) as ?ret) where { \n"
 			+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1} \n"
-			+ "} "
-			;
+			+ "} ";
 	
 	private String queryStsparqlTemplate = prefixes 
 			+ " \n select (strdf:FUNCTION(?o1) as ?ret) where { \n"
 			+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1} \n"
-			+ "} "
-			;
-
-//	private String queryUseekmTemplate = prefixes 
-//			+ " \n select (ext:FUNCTION(?o1) as ?ret) where { \n"
-//			+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1} \n"
-//			+ "} "
-//			;
+			+ "} ";
 	
 	private String queryBufferTemplate;
 	
@@ -47,8 +39,7 @@ public class MicroNonTopologicalQueriesSet extends QueriesSet {
 		queryBufferTemplate = prefixes 
 				+ " \n select (geof:buffer(?o1,4, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?ret) where {"
 				+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1}"
-				+ "} "
-				;
+				+ "} ";
 	}
 	
 	@Override
@@ -59,8 +50,8 @@ public class MicroNonTopologicalQueriesSet extends QueriesSet {
 		// IMPORTANT: Add/remove queries in getQuery implies changing queriesN and changing case numbers
 		switch (queryIndex) {
 		case 0:		
-			// Q3 Boundary of many simple Polygons
-			label = "Boundary_CLC"; 
+			// Q1 Construct the boundary of all polygons of CLC
+			label = "Q1_Boundary_CLC"; 
 			query = queryGeosparqlTemplate;
 			query = query.replace("GRAPH1", clc);
 			query = query.replace("ASWKT1", clc_asWKT);
@@ -68,8 +59,8 @@ public class MicroNonTopologicalQueriesSet extends QueriesSet {
 			break;
 
 		case 1:
-			// Q5 Envelope many "simple" Polygons
-			label = "Envelope_CLC"; 
+			// Q2 Construct the envelope of all polygons of CLC
+			label = "Q2_Envelope_CLC"; 
 			query = queryGeosparqlTemplate;
 			query = query.replace("GRAPH1", clc);
 			query = query.replace("ASWKT1", clc_asWKT);
@@ -77,8 +68,8 @@ public class MicroNonTopologicalQueriesSet extends QueriesSet {
 			break;
 
 		case 2:
-			// Q8 ConvexHull of many "simple" Polygons
-			label = "ConvexHull_CLC"; 	
+			// Q3 Construct the convex hull of all polygons of CLC
+			label = "Q3_ConvexHull_CLC"; 	
 			query = queryGeosparqlTemplate;
 			query = query.replace("GRAPH1", clc);
 			query = query.replace("ASWKT1", clc_asWKT);
@@ -86,32 +77,30 @@ public class MicroNonTopologicalQueriesSet extends QueriesSet {
 			break;
 
 		case 3:
-			// -- Buffer -- //
-			// Q10 Buffer of Points
-			label = "Buffer_GeoNames_2"; 
+			// Q4 Construct the buffer of all points of GeoNames
+			label = "Q4_Buffer_GeoNames"; 
 			query = queryBufferTemplate;
 			query = query.replace("GRAPH1", geonames);
 			query = query.replace("ASWKT1", geonames_asWKT);
 			break;
 		
 		case 4:
-			// Q11 Buffer of Lines
-			label = "Buffer_LGD_2"; 
+			// Q5 Construct the buffer of all lines of LGD
+			label = "Q5_Buffer_LGD"; 
 			query = queryBufferTemplate;
 			query = query.replace("GRAPH1", lgd);
 			query = query.replace("ASWKT1", lgd_asWKT);
 			break;
 
 		case 5:
-			// Q12 Area of Polygons
-			label = "Area_CLC"; 
+			// Q6 Compute the area of all polygons of CLC
+			label = "Q6_Area_CLC"; 
 			query = queryStsparqlTemplate;
 			query = query.replace("FUNCTION", "area");
 			query = query.replace("GRAPH1", clc);
 			query = query.replace("ASWKT1", clc_asWKT);
 			break;
-			
-			
+				
 		default:
 			logger.error("No such query number exists:"+queryIndex);
 		}
@@ -119,5 +108,4 @@ public class MicroNonTopologicalQueriesSet extends QueriesSet {
 		String translatedQuery = sut.translateQuery(query, label);
 		return new QueryStruct(translatedQuery, label);
 	}
-	
 }

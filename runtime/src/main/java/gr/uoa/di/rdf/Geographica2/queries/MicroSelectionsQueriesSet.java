@@ -8,7 +8,6 @@
  */
 package gr.uoa.di.rdf.Geographica2.queries;
 
-import gr.uoa.di.rdf.Geographica2.queries.*;
 import gr.uoa.di.rdf.Geographica2.systemsundertest.SystemUnderTest;
 
 import java.io.BufferedReader;
@@ -83,8 +82,8 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 
 		// -- Equals -- //
 		case 0:
-			// Line = GivenLine
-			label = "Equals_LGD_GivenLine"; 
+			// Q7 Find all lines of LGD that are spatially equal with a given line
+			label = "Q7_Equals_LGD_GivenLine"; 
 			query = queryTemplate;
 			query = query.replace("GRAPH1", lgd);
 			query = query.replace("ASWKT1", lgd_asWKT);
@@ -93,8 +92,8 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 			break;
 	
 		case 1:
-			// Polygon = GivenPolygon
-			label = "Equals_GADM_GivenPolygon"; 
+			// Q8 Find all polygons of GAG that are spatially equal a given polygon
+			label = "Q8_Equals_GAG_GivenPolygon"; 
 			query = queryTemplate;
 			query = query.replace("GRAPH1", gadm);
 			query = query.replace("ASWKT1", gadm_asWKT);
@@ -102,10 +101,9 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 			query = query.replace("FUNCTION", "sfEquals");
 			break;
 	
-		// -- Intersects -- //
 		case 2:
-			// Line & GivenPolygon
-			label = "Intersects_LGD_GivenPolygon"; 
+			// Q9 Find all lines of LGD that spatially intersect with a given polygon
+			label = "Q9_Intersects_LGD_GivenPolygon"; 
 			query = queryTemplate;
 			query = query.replace("GRAPH1", lgd);
 			query = query.replace("ASWKT1", lgd_asWKT);
@@ -114,8 +112,8 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 			break;
 	
 		case 3:
-			// Polygon & GivenLine
-			label = "Intersects_CLC_GivenLine"; 
+			// Q10 Find all polygons of CLC that spatially intersect with a given line
+			label = "Q10_Intersects_CLC_GivenLine"; 
 			query = queryTemplate;
 			query = query.replace("GRAPH1", clc);
 			query = query.replace("ASWKT1", clc_asWKT);
@@ -123,20 +121,19 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 			query = query.replace("FUNCTION", "sfIntersects");
 			break;
 	
-		// -- Overlaps -- //
 		case 4:
-			label = "Overlaps_CLC_GivenPolygon"; 
+                        // Q11 Find all polygons of CLC that spatially overlap with a given polygon
+			label = "Q11_Overlaps_CLC_GivenPolygon"; 
 			query = queryTemplate;
 			query = query.replace("GRAPH1", clc);
 			query = query.replace("ASWKT1", clc_asWKT);
 			query = query.replace("GIVEN_SPATIAL_LITERAL", givenPolygon);
 			query = query.replace("FUNCTION", "sfOverlaps");
 			break;
-	
-
-		// -- Crosses -- //
+                        
 		case 5:
-			label = "Crosses_LGD_GivenLine"; 
+                        // Q12 Find all lines of LGD that spatially cross a given line
+			label = "Q12_Crosses_LGD_GivenLine"; 
 			query = queryTemplate;
 			query = query.replace("GRAPH1", lgd);
 			query = query.replace("ASWKT1", lgd_asWKT);
@@ -144,9 +141,9 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 			query = query.replace("FUNCTION", "sfCrosses");
 			break;
 			
-		// -- Within -- //
 		case 6:
-			label = "Within_GeoNames_GivenPolygon";// times = 345699520 + 840787868 = 1186487388, 136
+                        // Q13 Find all points of GeoNames that are contained in a given polygon
+			label = "Q13_Within_GeoNames_GivenPolygon";// times = 345699520 + 840787868 = 1186487388, 136
 			query = queryTemplate;
 			query = query.replace("GRAPH1", geonames);
 			query = query.replace("ASWKT1", geonames_asWKT);
@@ -154,31 +151,28 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 			query = query.replace("FUNCTION", "sfWithin");
 			break;
 	
-		// -- Within buffer -- //
 		case 7:
-			label = "Within_GeoNames_Point_Buffer";
+                        // Q14 Find all points of GeoNames that are contained in the buffer of a given point
+			label = "Q14_Within_GeoNames_Point_Buffer";
 			query = prefixes + "\n select ?s1 where { \n"
 					+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n"
 					+ " FILTER(geof:sfWithin(?o1, geof:buffer("
 					+ givenPoint + ", " + givenRadius + ", <http://www.opengis.net/def/uom/OGC/1.0/metre>"
 					+ "))).  \n" 
-					+ "} "
-					;
+					+ "} ";
 			break;
 	
-		// -- Within distance -- //
 		case 8:
-			label = "GeoNames_Point_Distance";
+                        // Q15 Find all points of GeoNames that are within specific distance from a given point
+			label = "Q15_GeoNames_Point_Distance";
 			query = prefixes + "\n select ?s1 where { \n" 
 					+ "	GRAPH <" + geonames	+ "> {?s1 "+geonames_asWKT+" ?o1} \n" 
 					+ "  FILTER(geof:distance(?o1, "+ givenPoint + ", <http://www.opengis.net/def/uom/OGC/1.0/metre>) <= " + givenRadius + ").  \n" 
-					+ "} "
-					;
+					+ "} ";
 			break;
 		case 9:
-			// -- Disjoint -- //
-			// Point != GivenPolygon
-			label = "Disjoint_GeoNames_GivenPolygon";
+			// Q16 Find all points of GeoNames that are spatially disjoint of a given polygon
+			label = "Q16_Disjoint_GeoNames_GivenPolygon";
 			query = queryTemplate;
 			query = query.replace("GRAPH1", geonames);
 			query = query.replace("ASWKT1", geonames_asWKT);
@@ -186,8 +180,8 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 			query = query.replace("FUNCTION", "sfDisjoint");
 			break;
 		case 10:
-			// Line != GivenPolygon
-			label = "Disjoint_LGD_GivenPolygon";
+			// Q17 Find all lines of LGD that are spatially disjoint of a given polygon
+			label = "Q17_Disjoint_LGD_GivenPolygon";
 			query = queryTemplate;
 			query = query.replace("GRAPH1", lgd);
 			query = query.replace("ASWKT1", lgd_asWKT);
@@ -202,5 +196,4 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 		String translatedQuery = sut.translateQuery(query, label);
 		return new QueryStruct(translatedQuery, label);
 	}
-
 }

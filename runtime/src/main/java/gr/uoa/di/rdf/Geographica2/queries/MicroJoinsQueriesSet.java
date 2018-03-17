@@ -8,7 +8,6 @@
  */
 package gr.uoa.di.rdf.Geographica2.queries;
 
-import gr.uoa.di.rdf.Geographica2.queries.*;
 import gr.uoa.di.rdf.Geographica2.systemsundertest.SystemUnderTest;
 
 import org.apache.log4j.Logger;
@@ -22,7 +21,7 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 		
 	public  MicroJoinsQueriesSet(SystemUnderTest sut) {
 		super(sut);
-		queriesN = 11; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
+		queriesN = 10; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
 	}
 
 	@Override
@@ -33,8 +32,7 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 			+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1} \n"
 			+ "	GRAPH <GRAPH2> {?s2 ASWKT2 ?o2} \n"
 			+ "  FILTER(geof:FUNCTION(?o1, ?o2)).  \n"
-			+ "} \n"
-			;
+			+ "} \n";
 	
 	private String queryTemplate2 = prefixes 
 			+ "\n select ?s1 ?s2 where { \n"
@@ -42,8 +40,7 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 			+ "	GRAPH <GRAPH2> {?s2 ASWKT2 ?o2} \n"
 			+ " FILTER(?s1 != ?s2).  \n"
 			+ " FILTER(geof:FUNCTION(?o1, ?o2)).  \n"
-			+ "} \n"
-			;
+			+ "} \n";
 
 	@Override
 	public QueryStruct getQuery(int queryIndex, int repetition) {
@@ -54,21 +51,20 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 		switch (queryIndex) {
 			// -- Equals -- //
 			case 0:			
-				// Q1 Find equal points in GeoNames & DBPedia
-				label = "Equals_GeoNames_DBPedia";
+				// Q18 Find all points of GeoNames that are spatially equal with a point of DBpedia
+				label = "Q18_Equals_GeoNames_DBPedia";
 				query = queryTemplate;
 				query = query.replace("GRAPH1", geonames);
 				query = query.replace("ASWKT1", geonames_asWKT);
 				query = query.replace("GRAPH2", dbpedia);
 				query = query.replace("ASWKT2", dbpedia_asWKT);
 				query = query.replace("FUNCTION", "sfEquals");
-				
 				break;
 
-			// -- Intersects -- //
 			case 1:
-				// Q2 POIS of GeoNames reached by road
-				label = "Intersects_GeoNames_LGD"; 
+				// Q19 Find all points of GeoNames that spatially intersect a line of LGD
+                                //     (POIS of GeoNames reached by road)
+				label = "Q19_Intersects_GeoNames_LGD"; 
 				query = queryTemplate;
 				query = query.replace("GRAPH1", geonames);
 				query = query.replace("ASWKT1", geonames_asWKT);
@@ -78,8 +74,9 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 				break;
 
 			case 2:
-				// Q5 POIS of GeoNames in an area
-				label = "Intersects_GeoNames_GADM"; 
+				// Q20 Find all points of GeoNames that spatially intersect a polygon of GAG
+                                //     (POIS of GeoNames in an area)
+				label = "Q20_Intersects_GeoNames_GAG"; 
 				query = queryTemplate;
 				query = query.replace("GRAPH1", geonames);
 				query = query.replace("ASWKT1", geonames_asWKT);
@@ -89,8 +86,9 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 				break;
 				
 			case 3:
-				// Q6 Roads of an area
-				label = "Intersects_LGD_GADM"; 
+				// Q21 Find all lines of LGD that spatially intersect a polygon of GAG
+                                //     (Roads of an area)
+				label = "Q21_Intersects_LGD_GAG"; 
 				query = queryTemplate;
 				query = query.replace("GRAPH1", lgd);
 				query = query.replace("ASWKT1", lgd_asWKT);
@@ -99,10 +97,10 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 				query = query.replace("FUNCTION", "sfIntersects");
 				break;
 				
-			// -- Within -- //
 			case 4:
-				// Q5 POIS of GeoNames inside an area
-				label = "Within_GeoNames_GADM"; 
+				// Q22 Find all points of GeoNames that are within a polygon of GAG
+                                //     (POIS of GeoNames inside an area)
+				label = "Q22_Within_GeoNames_GAG"; 
 				query = queryTemplate;
 				query = query.replace("GRAPH1", geonames);
 				query = query.replace("ASWKT1", geonames_asWKT);
@@ -112,8 +110,9 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 				break;
 	
 			case 5:
-				// Q8 Roads within an area
-				label = "Within_LGD_GADM"; 
+				// Q23 Find all lines of LGD that are within a polygon of GAG
+                                //     (Roads within an area)
+				label = "Q23_Within_LGD_GAG"; 
 				query = queryTemplate;
 				query = query.replace("GRAPH1", lgd);
 				query = query.replace("ASWKT1", lgd_asWKT);
@@ -123,8 +122,9 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 				break;
 				
 			case 6:
-				// Q13 Areas contained in a country
-				label = "Within_CLC_GADM";
+				// Q24 Find all polygons of CLC that are within a polygon of GAG
+                                //     (Areas contained in a country)
+				label = "Q24_Within_CLC_GAG";
 				query = queryTemplate;
 				query = query.replace("GRAPH1", clc);
 				query = query.replace("ASWKT1", clc_asWKT);
@@ -133,10 +133,10 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 				query = query.replace("FUNCTION", "sfWithin");
 				break;
 				
-			// -- Crosses -- //
 			case 7:
-				// Q7 Roads leaving/reaching an area
-				label = "Crosses_LGD_GADM"; 
+				// Q25 Find all lines of LGD that spatially cross a polygon of GAG
+                                //     (Roads leaving/reaching an area)
+				label = "Q25_Crosses_LGD_GAG"; 
 				query = queryTemplate;
 				query = query.replace("GRAPH1", lgd);
 				query = query.replace("ASWKT1", lgd_asWKT);
@@ -146,21 +146,9 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 				break;
 			
 			case 8:
-				// Q9 Intercrossing roads
-				label = "Crosses_LGD_LGD"; 
-				query = queryTemplate2;
-				query = query.replace("GRAPH1", lgd);
-				query = query.replace("ASWKT1", lgd_asWKT);
-				query = query.replace("GRAPH2", lgd);
-				query = query.replace("ASWKT2", lgd_asWKT);
-				query = query.replace("FUNCTION", "sfCrosses");
-				break;
-				
-				
-			// -- Touches -- //
-			case 9:
-				// Q11 Countries with sharing borders
-				label = "Touches_GADM_GADM"; 
+				// Q26 Find all polygons of GAG that spatially touch other polygons of GAG
+                                //     (Countries with sharing borders)
+				label = "Q26_Touches_GAG_GAG"; 
 				query = queryTemplate2;
 				query = query.replace("GRAPH1", gadm);
 				query = query.replace("ASWKT1", gadm_asWKT);
@@ -169,10 +157,10 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 				query = query.replace("FUNCTION", "sfTouches");
 				break;
 			
-			// -- Overlaps -- //
-			case 10:
-				// Q12 Areas overlaping countries
-				label = "Overlaps_GADM_CLC"; 
+			case 9:
+				// Q27 Find all polygons of CLC that spatially overlap polygons of GAG
+                                //     (Areas overlaping countries)
+				label = "Q27_Overlaps_GAG_CLC"; 
 				query = queryTemplate;
 				query = query.replace("GRAPH1", gadm);
 				query = query.replace("ASWKT1", gadm_asWKT);
@@ -188,5 +176,4 @@ public class MicroJoinsQueriesSet extends QueriesSet {
 		String translatedQuery = sut.translateQuery(query, label);
 		return new QueryStruct(translatedQuery, label);
 	}
-	
 }

@@ -377,6 +377,7 @@ public class StrabonSUT implements SystemUnderTest {
         String translatedQuery = null;
         translatedQuery = query;
 
+        translatedQuery = translatedQuery.replaceAll("geof:union", "strdf:union");
         /*
         translatedQuery = translatedQuery.replaceAll("geof:distance", "strdf:distance");
 
