@@ -10,11 +10,13 @@ package gr.uoa.di.rdf.Geographica.strabon;
 
 import eu.earthobservatory.runtime.postgis.Strabon;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -89,8 +91,11 @@ public class StrabonSUT implements SystemUnderTest {
         this.port = port;
         this.host = host;
        
+        InputStream is = getClass().getResourceAsStream("/" + PROPERTIES_FILE_NAME);
+	BufferedReader in = new BufferedReader(new InputStreamReader(is));
+        Properties.load(in);
          // load the properties
-        Properties.load(new FileInputStream(USERDIR + PROPERTIES_FILE_NAME));
+        // Properties.load(new FileInputStream(USERDIR + PROPERTIES_FILE_NAME));
         // read all values
         SYSCMD_POSTGRES_STOP = Properties.getProperty("POSTGRES_STOP");
         SYSCMD_POSTGRES_START = Properties.getProperty("POSTGRES_START");
