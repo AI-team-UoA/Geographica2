@@ -11,8 +11,6 @@ package gr.uoa.di.rdf.Geographica.strabon;
 import eu.earthobservatory.runtime.postgis.Strabon;
 import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
 import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,12 +64,11 @@ public class StrabonSUT implements SystemUnderTest {
     
     public static Properties Properties = new Properties();
     final private static String PROPERTIES_FILE_NAME = "strabonsut.properties";
-    private static final String USERDIR = System.getProperty("user.dir") + "//";
-    String SYSCMD_POSTGRES_STOP;
-    String SYSCMD_POSTGRES_START;
-    String SYSCMD_POSTGRES_RESTART;
-    String SYSCMD_SYNC;
-    String SYSCMD_CLEARCACHE;
+    static String SYSCMD_POSTGRES_STOP;
+    static String SYSCMD_POSTGRES_START;
+    static String SYSCMD_POSTGRES_RESTART;
+    static String SYSCMD_SYNC;
+    static String SYSCMD_CLEARCACHE;
 
     private Strabon strabon = null;
     private BindingSet firstBindingSet;
@@ -81,6 +78,24 @@ public class StrabonSUT implements SystemUnderTest {
     String passwd = null;
     Integer port = null;
     String host = null;
+    
+    static {
+        InputStream is = StrabonSUT.class.getResourceAsStream("/" + PROPERTIES_FILE_NAME);
+        logger.info("Reading StrabonSUT properties from file : " + StrabonSUT.class.getResource("/" + PROPERTIES_FILE_NAME));
+	BufferedReader in = new BufferedReader(new InputStreamReader(is));
+        // load the properties
+        try {
+            Properties.load(in);
+        } catch (IOException ex) {
+            logger.fatal("Exception during static initialization of " + StrabonSUT.class.getSimpleName());
+        }
+        // read all values
+        SYSCMD_POSTGRES_STOP = Properties.getProperty("POSTGRES_STOP");
+        SYSCMD_POSTGRES_START = Properties.getProperty("POSTGRES_START");
+        SYSCMD_POSTGRES_RESTART = Properties.getProperty("POSTGRES_RESTART");
+        SYSCMD_SYNC = Properties.getProperty("SYSCMD_SYNC");
+        SYSCMD_CLEARCACHE = Properties.getProperty("SYSCMD_CLEARCACHE");        
+    }
 
     public StrabonSUT(String db, String user, String passwd, Integer port,
             String host) throws Exception {
@@ -90,18 +105,6 @@ public class StrabonSUT implements SystemUnderTest {
         this.passwd = passwd;
         this.port = port;
         this.host = host;
-       
-        InputStream is = getClass().getResourceAsStream("/" + PROPERTIES_FILE_NAME);
-	BufferedReader in = new BufferedReader(new InputStreamReader(is));
-        Properties.load(in);
-         // load the properties
-        // Properties.load(new FileInputStream(USERDIR + PROPERTIES_FILE_NAME));
-        // read all values
-        SYSCMD_POSTGRES_STOP = Properties.getProperty("POSTGRES_STOP");
-        SYSCMD_POSTGRES_START = Properties.getProperty("POSTGRES_START");
-        SYSCMD_POSTGRES_RESTART = Properties.getProperty("POSTGRES_RESTART");
-        SYSCMD_SYNC = Properties.getProperty("SYSCMD_SYNC");
-        SYSCMD_CLEARCACHE = Properties.getProperty("SYSCMD_CLEARCACHE");
     }
 
     public BindingSet getFirstBindingSet() {
