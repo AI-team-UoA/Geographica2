@@ -28,6 +28,8 @@ JAVA_OPTS="${3} -Dlog4j.configuration=file:${LOG4J_CONFIGURATION}"
 cd ${BASE}/../../target
 # define the class path
 CLASS_PATH="$(for file in `ls -1 *.jar`; do myVar=$myVar./$file":"; done;echo $myVar;)runtime/src/main/resources/timestamps.txt"
+# add to the class path any additional resources such as configuration files
+CLASS_PATH="./classes:${CLASS_PATH}"
 
 # define the executing-main class
 MAIN_CLASS="gr.uoa.di.rdf.Geographica.strabon.RunStrabon"
