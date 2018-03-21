@@ -45,22 +45,22 @@ public class MicroAggregationQueriesSet  extends QueriesSet {
 		// IMPORTANT: Add/remove queries in getQuery implies changing queriesN and changing case numbers
 		switch (queryIndex) {
 			case 0:
-				// Q28 Construct the extension of all polygons of CLC
+				// Q28 Construct the extension of all polygons of GAG
                                 //     (Extension of many simple Polygons)
-				label = "Q28_Extent_CLC"; 
+				label = "Q28_Extent_GAG"; 
 				query = strdfQueryTemplate;
-				query = query.replace("GRAPH1", clc);
-				query = query.replace("ASWKT1", clc_asWKT);
+				query = query.replace("GRAPH1", gadm);
+				query = query.replace("ASWKT1", gadm_asWKT);
 				query = query.replace("FUNCTION", "extent");
 				break;
 
 			case 1:
-				// Q29 Construct the union of all polygons of CLC
+				// Q29 Construct the union of all polygons of GAG
                                 //     (Union of many simple Polygons)
-				label = "Q29_Union_CLC"; 
+				label = "Q29_Union_GAG"; 
 				query = geofQueryTemplate;
-				query = query.replace("GRAPH1", clc);
-				query = query.replace("ASWKT1", clc_asWKT);
+				query = query.replace("GRAPH1", gadm);
+				query = query.replace("ASWKT1", gadm_asWKT);
 				query = query.replace("FUNCTION", "union");
 				break;
 				
