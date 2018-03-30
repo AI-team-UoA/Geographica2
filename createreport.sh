@@ -13,7 +13,7 @@ for dir in `ls -1d *Experiment`; do
 	# set experiment report file name
 	EXPERIMENT_REPORT_FILE="../${dir}.csv"
 
-    # delete experiment report file if it exists
+        # delete experiment report file if it exists
 	if [ -f $EXPERIMENT_REPORT_FILE ]; then
 		rm $EXPERIMENT_REPORT_FILE
 	fi
@@ -28,8 +28,9 @@ for dir in `ls -1d *Experiment`; do
 		#     the corresponding short.. file from which retrieve the median value
 		# and find the correct result line in the long.. file based on the median value
 		for file in `ls -1 *long`; do 		
-			QUERY_NO=`echo $file | cut -d '-' -f 1`
-			QUERY_NAME=`echo $file | cut -d '-' -f 2`
+			QUERY_RELNO=`echo $file | cut -d '-' -f 1`
+			QUERY_NO=`echo $file | cut -d '-' -f 2 | cut -d '_' -f 1`
+			QUERY_NAME=`echo $file | cut -d '-' -f 2 | cut -d '_' -f 2,3`
 			QUERY_TYPE=`echo $file | cut -d '-' -f 3`
 			SHORT_FILE=`echo $file | cut -d '-' -f 1,2,3`
 			MEDIAN_VALUE=`cut $SHORT_FILE -d ' ' -f 2`
@@ -37,7 +38,7 @@ for dir in `ls -1d *Experiment`; do
 			QUERY_RESULTS=`grep -m 1 -e $MEDIAN_VALUE $file`
 			# ==> QUERY_RESULTS=`cut -d ' ' -f 1,2,3,4 $file`
 			# display contents
-			echo -e "$QUERY_NO $QUERY_NAME $QUERY_TYPE $QUERY_RESULTS" >> $EXPERIMENT_REPORT_FILE
+			echo -e "$QUERY_RELNO $QUERY_NO $QUERY_NAME $QUERY_TYPE $QUERY_RESULTS" >> $EXPERIMENT_REPORT_FILE
 		done
 
 	elif [[ "$EXPERIMENT_NAME" =~ ^(MacroMapSearch)$ ]]; then

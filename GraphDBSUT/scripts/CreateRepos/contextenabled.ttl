@@ -8,7 +8,7 @@
 @prefix owlim: <http://www.ontotext.com/trree/owlim#>.
 
 [] a rep:Repository ;
-    rep:repositoryID "realworld_test" ;
+    rep:repositoryID "realworld" ;
     rdfs:label "" ;
     rep:repositoryImpl [
         rep:repositoryType "graphdb:FreeSailRepository" ;

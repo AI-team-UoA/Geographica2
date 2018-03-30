@@ -1,4 +1,4 @@
-GraphDBBaseDir=~/graphdb-free-8.4.1
+GraphDBBaseDir=${1}
 # Real World dataset
 ./createGraphDBRepo.sh contextenabled.ttl ~/NetBeansProjects/PhD/Geographica_Misc/Datasets/RealWorldWorkload/RealWorldWorkloadGeographica2_WGS84 $GraphDBBaseDir
 # Synthetic dataset

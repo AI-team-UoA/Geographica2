@@ -1,1 +1,1 @@
--bd "/home/journal/graphdb-free-8.4.1/data" -rp geographica2paperWGS84 -cr false -r 3 -t 3600 -m 60 -l "/home/journal/Geographica_Results/GraphDB-Results" run
+-bd "/home/journal/graphdb-free-8.5.0/data" -rp realworld -cr false -r 3 -t 3600 -m 60 -l "/home/journal/Results40/GraphDB" run

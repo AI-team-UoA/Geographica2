@@ -46,10 +46,10 @@ for dir in "${dirs[@]}"; do
 done
 
 # STEP 2: Assess whether the script's preconditions are met
-#      2.1: check whether the $GraphDBBaseDir/bin/loadrdf exists
-LoadRDF_Exe="${GraphDBBaseDir}/bin/loadrdf"
-if [ ! -e "$LoadRDF_Exe" ]; then
-	echo "File $LoadRDF_Exe does not exist!"
+#      2.1: check whether the $GraphDBBaseDir/bin/preload exists
+PreLoad_Exe="${GraphDBBaseDir}/bin/preload"
+if [ ! -e "$PreLoad_Exe" ]; then
+	echo "File $PreLoad_Exe does not exist!"
 	exit 3
 fi
 
@@ -101,6 +101,6 @@ for i in *.nt; do
 done
 
 # STEP 5: Create $RepoName repository with config file $RepoConfig and load TRIG files while measuring the elapsed time
-time $LoadRDF_Exe -m parallel -c $RepoConfig *.trig
+time $PreLoad_Exe -c $RepoConfig *.trig
 exit 0
 

@@ -1,1 +1,1 @@
--bd "/home/journal/graphdb-free-8.4.1/data" -rp syntheticpaper -cr false -r 3 -t 3600 -l "/home/journal/Geographica_Results/GraphDB-Results" -N 512 run
+-bd "/home/journal/graphdb-free-8.5.0/data" -rp synthetic -cr false -r 3 -t 3600 -l "/home/journal/Results40/GraphDB" -N 512 run
