@@ -551,6 +551,8 @@ public class GraphDBSUT implements SystemUnderTest {
                     " \n	FILTER(geof:sfIntersects(?clcWkt, ?fWkt)). } \n");
         }
         */
+        if (label.matches("Q6_Area_CLC"))
+            translatedQuery = translatedQuery.replaceAll("strdf:area", "ext:area");
 
         return translatedQuery;
     }

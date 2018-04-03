@@ -30,7 +30,7 @@ for dir in `ls -1d *Experiment`; do
 		for file in `ls -1 *long`; do 		
 			QUERY_RELNO=`echo $file | cut -d '-' -f 1`
 			QUERY_NO=`echo $file | cut -d '-' -f 2 | cut -d '_' -f 1`
-			QUERY_NAME=`echo $file | cut -d '-' -f 2 | cut -d '_' -f 2,3`
+			QUERY_NAME=`echo $file | cut -d '-' -f 2 | cut -d '_' -f 2-`
 			QUERY_TYPE=`echo $file | cut -d '-' -f 3`
 			SHORT_FILE=`echo $file | cut -d '-' -f 1,2,3`
 			MEDIAN_VALUE=`cut $SHORT_FILE -d ' ' -f 2`
