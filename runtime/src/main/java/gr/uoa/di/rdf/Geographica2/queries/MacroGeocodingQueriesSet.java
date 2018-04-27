@@ -8,7 +8,6 @@
  */
 package gr.uoa.di.rdf.Geographica2.queries;
 
-import gr.uoa.di.rdf.Geographica2.queries.*;
 import gr.uoa.di.rdf.Geographica2.systemsundertest.SystemUnderTest;
 
 import java.io.BufferedReader;

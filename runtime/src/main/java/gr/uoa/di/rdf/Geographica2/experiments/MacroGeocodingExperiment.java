@@ -22,10 +22,7 @@ public class MacroGeocodingExperiment extends MacroExperiment {
 	
 	public MacroGeocodingExperiment(SystemUnderTest sut, int repetitions,
 			int timeoutSecs, int runTimeInMinutes, String logPath) throws IOException {
-		super(sut, repetitions, timeoutSecs, runTimeInMinutes, logPath);
-		logger = Logger.getLogger(MacroGeocodingExperiment.class.getSimpleName());
-		queriesSet = new MacroGeocodingQueriesSet(sut);
-		this.runTimeInMinutes = runTimeInMinutes;
+		this(sut, repetitions, timeoutSecs, runTimeInMinutes, null, logPath);
 	}
 	
 	public MacroGeocodingExperiment(SystemUnderTest sut, int repetitions,
