@@ -81,15 +81,15 @@ public class GraphDBSUT implements SystemUnderTest {
         public GraphDB(String baseDir, String repositoryId) {
             this(baseDir, repositoryId, false);
         }
-        
+
         // Constructor 2: Creates a new EMPTY repository <repositoryId> in <baseDir>
         public GraphDB(String baseDir, String repositoryId, boolean createRepository) {
             this(baseDir, repositoryId, createRepository, EMPTY_TEMPLATE_TTL);
         }
-        
+
         /* Constructor 3: Creates/Opens a repository <repositoryId> in <baseDir>
         **        following the template <templateTTL>
-        */
+         */
         public GraphDB(String baseDir, String repositoryId, boolean createRepository, String templateTTL) {
             // check if baseDir exists, otherwise throw exception
             File dir = new File(baseDir);
@@ -228,7 +228,7 @@ public class GraphDBSUT implements SystemUnderTest {
         private long evaluationTime,
                 fullResultScanTime,
                 noOfResults;
-        */
+         */
         private long[] returnValue;
 
         // --------------------- Constructors ----------------------------------
@@ -239,7 +239,7 @@ public class GraphDBSUT implements SystemUnderTest {
             this.evaluationTime = timeoutSecs + 1;
             this.fullResultScanTime = timeoutSecs + 1;
             this.noOfResults = -1;
-            */
+             */
             this.returnValue = new long[]{timeoutSecs + 1, timeoutSecs + 1, timeoutSecs + 1, -1};
         }
 
@@ -248,12 +248,11 @@ public class GraphDBSUT implements SystemUnderTest {
         public long[] getExecutorResults() {
             return new long[]{evaluationTime, fullResultScanTime, evaluationTime + fullResultScanTime, noOfResults};
         }
-        */
-
+         */
         public long[] getRetValue() {
             return returnValue;
         }
-        
+
         public BindingSet getFirstBindingSet() {
             return firstBindingSet;
         }
@@ -279,14 +278,14 @@ public class GraphDBSUT implements SystemUnderTest {
         }
 
         private void runQuery() throws MalformedQueryException, QueryEvaluationException, TupleQueryResultHandlerException, IOException {
-           
+
             logger.info("Evaluating query...");
             TupleQuery tupleQuery = graphDB.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, query);
 
             // Evaluate and time the evaluation of the prepared query
             // noOfResults = 0;
             long results = 0;
-            
+
             long t1 = System.nanoTime();
             TupleQueryResult tupleQueryResult = tupleQuery.evaluate();
             long t2 = System.nanoTime();
@@ -303,14 +302,14 @@ public class GraphDBSUT implements SystemUnderTest {
                 tupleQueryResult.next();
             }
             long t3 = System.nanoTime();
-            
+
             logger.info("Query evaluated");
 
             // Calculate durations: Evaluation, Full ResultSet Scan
             /*
             fullResultScanTime = System.nanoTime() - t2;
             evaluationTime = t2 - t1;
-            */
+             */
             this.returnValue = new long[]{t2 - t1, t3 - t2, t3 - t1, results};
         }
     }
@@ -531,28 +530,14 @@ public class GraphDBSUT implements SystemUnderTest {
         String translatedQuery = null;
         translatedQuery = query;
 
-        /*
-        translatedQuery = translatedQuery.replaceAll("geof:distance", "strdf:distance");
-
-        if (label.matches("Get_CLC_areas")
-                || label.matches("Get_highways")
-                || label.matches("Get_municipalities")
-                || label.matches("Get_hotspots")
-                || label.matches("Get_coniferous_forests_in_fire")
-                || label.matches("Get_road_segments_affected_by_fire")) {
-            translatedQuery = translatedQuery.replaceAll("<http://www.opengis.net/ont/geosparql#wktLiteral>", "strdf:WKT");
-        }
-        
-
-        if (label.matches("List_GeoNames_categories_per_CLC_category")
-                || label.matches("Count_GeoNames_categories_in_ContinuousUrbanFabric")) {
-            translatedQuery = translatedQuery.replaceAll(
-                    " } \\n	FILTER\\(geof:sfIntersects\\(\\?clcWkt, \\?fWkt\\)\\)\\. \\\n",
-                    " \n	FILTER(geof:sfIntersects(?clcWkt, ?fWkt)). } \n");
-        }
-        */
-        if (label.matches("Q6_Area_CLC"))
+        if (label.matches("Q14_Within_GeoNames_Point_Buffer")) {
+            translatedQuery = translatedQuery.replaceAll("3000, <http://www.opengis.net/def/uom/OGC/1.0/metre>", "0.03");
+        } else if (label.matches("Q4_Buffer_GeoNames")
+                || label.matches("Q5_Buffer_LGD")) {
+            translatedQuery = translatedQuery.replaceAll("4, <http://www.opengis.net/def/uom/OGC/1.0/metre>", "0.04");
+        } else if (label.matches("Q6_Area_CLC")) {
             translatedQuery = translatedQuery.replaceAll("strdf:area", "ext:area");
+        }
 
         return translatedQuery;
     }

@@ -10,7 +10,6 @@ package gr.uoa.di.rdf.Geographica2.queries;
 
 import gr.uoa.di.rdf.Geographica.generators.SyntheticGenerator;
 
-import gr.uoa.di.rdf.Geographica2.queries.*;
 import gr.uoa.di.rdf.Geographica2.systemsundertest.SystemUnderTest;
 
 import java.io.IOException;
@@ -52,9 +51,7 @@ public class SyntheticOnlyPointsQueriesSet extends QueriesSet {
 		if (queryIndex >= 0 && queryIndex < selectivities.length*2) {
 			label = "Synthetic_Selection_Distance_" + ((queryIndex%2 == 0) ? "1" : this.generator.returnMaxTagValue().toString()) + "_" + selectivities[queryIndex/2];
 			query = selections[queryIndex];
-		} 
-		
-		else if (queryIndex == selectivities.length*2) {
+		} else if (queryIndex == selectivities.length*2) {
 			label = "Synthetic_Join_Distance_1_1"; query = joins[0]; 
 		} else if (queryIndex == selectivities.length*2 + 1) {
 			label = "Synthetic_Join_Distance_1_" + this.generator.returnMaxTagValue() + ""; query = joins[1]; 

@@ -19,6 +19,8 @@ MAP_CONTEXTS_FILE="map_to_contexts.txt"
 # STEP 0: Find the directory where the script is located in
 BASE="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+MAP_CONTEXTS_FILE=$BASE/$MAP_CONTEXTS_FILE
+
 # STEP 1: Validate the script's syntax
 #      1.1: check number of arguments and assign them to variables
 if (( $# != 3 )); then

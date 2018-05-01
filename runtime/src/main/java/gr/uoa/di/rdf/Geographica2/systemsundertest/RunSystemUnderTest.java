@@ -11,6 +11,7 @@ import gr.uoa.di.rdf.Geographica2.experiments.MicroJoinsExperiment;
 import gr.uoa.di.rdf.Geographica2.experiments.MicroNonTopologicalExperiment;
 import gr.uoa.di.rdf.Geographica2.experiments.MicroSelectionsExperiment;
 import gr.uoa.di.rdf.Geographica2.experiments.SyntheticExperiment;
+import gr.uoa.di.rdf.Geographica2.experiments.SyntheticOnlyPointsExperiment;
 import gr.uoa.di.rdf.Geographica2.queries.QueriesSet;
 
 import java.io.IOException;
@@ -33,7 +34,7 @@ public abstract class RunSystemUnderTest  {
 	protected SystemUnderTest sut = null;
 
 	protected void printHelp() {
-		System.err.println("Usage: "+this.getClass().getSimpleName()+" [options] (run|print) (MicroNonTopological|MicroSelections|MicroJoins|MicroAggregations|MacroGeocoding|MacroMapSearch|MacroRapidMapping|MacroReverseGeocoding|Synthetic)+");
+		System.err.println("Usage: "+this.getClass().getSimpleName()+" [options] (run|print) (MicroNonTopological|MicroSelections|MicroJoins|MicroAggregations|MacroGeocoding|MacroMapSearch|MacroRapidMapping|MacroReverseGeocoding|Synthetic|SyntheticPOIs)+");
 		HelpFormatter formatter = new HelpFormatter();
 		formatter.printHelp(this.getClass().getSimpleName(), options );		
 	}
@@ -154,6 +155,11 @@ public abstract class RunSystemUnderTest  {
 					System.err.println("For synthetic data experiments parameter N>0 is obligatory");
 				}
 				experiment = new SyntheticExperiment(sut, repetitions, timeoutSecs, syntheticN, queriesToRun, logPath);
+			} else if ( args[i].equalsIgnoreCase("SyntheticPOIs") ) {
+				if (syntheticN == 0) {
+					System.err.println("For synthetic data experiments parameter N>0 is obligatory");
+				}
+				experiment = new SyntheticOnlyPointsExperiment(sut, repetitions, timeoutSecs, syntheticN, queriesToRun, logPath);
 			} 
 			else {
 				System.err.println("Error: "+args[i]+" is not recognized.");
