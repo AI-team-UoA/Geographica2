@@ -586,8 +586,8 @@ public class SyntheticGenerator {
 			distanceInMeters = JTS.orthodromicDistance(start.getCoordinate(), end.getCoordinate(), CRS.decode("EPSG:4326"));
 //			distanceInMeters = JTS.orthodromicDistance(start.getCoordinate(), end.getCoordinate(), CRS.decode("EPSG:3857"));
 		
-			System.out.println("Start = "+start.toText()+" End = "+end.toText());
-		    System.out.println("Distance = " + distanceInMeters + "m ");
+//			System.out.println("Start = "+start.toText()+" End = "+end.toText());
+//		    System.out.println("Distance = " + distanceInMeters + "m ");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -763,15 +763,15 @@ public class SyntheticGenerator {
 //			sb.append("))");
 //			System.out.println("Rectangle: "+sb);
 			double area = (x2-x1)*(y3-y2);
-			System.out.println("Area: "+area);
+//			System.out.println("Area: "+area);
 			double radius = Math.sqrt(area/Math.PI);
 			ret[0]=null;
 			if (radius > 45) {
-				System.out.println("Real Radius(degrees): "+radius);
+//				System.out.println("Real Radius(degrees): "+radius);
 				radius = 45;
 				ret[0] = "64";
 			}
-			System.out.println("Radius(degrees): "+radius);
+//			System.out.println("Radius(degrees): "+radius);
 			
 			// done!
 			// Compute distance between (midX, midY) and (x3, y3)
@@ -786,25 +786,25 @@ public class SyntheticGenerator {
 				Geometry end = wktReader.read("POINT( "+(midX+radius)+" "+midY+")");
 				double distanceInMeterEast = JTS.orthodromicDistance(start.getCoordinate(), end.getCoordinate(), CRS.decode("EPSG:4326"));
 //				distanceInMeters = JTS.orthodromicDistance(start.getCoordinate(), end.getCoordinate(), CRS.decode("EPSG:3857"));
-				System.out.println("Radius east(meters): "+distanceInMeterEast);
+//				System.out.println("Radius east(meters): "+distanceInMeterEast);
 				// Radius west
 				end = wktReader.read("POINT( "+(midX-radius)+" "+midY+")");
 				double distanceInMeterWest = JTS.orthodromicDistance(start.getCoordinate(), end.getCoordinate(), CRS.decode("EPSG:4326"));
 //				distanceInMeters = JTS.orthodromicDistance(start.getCoordinate(), end.getCoordinate(), CRS.decode("EPSG:3857"));
-				System.out.println("Radius west(meters): "+distanceInMeterWest);
+//				System.out.println("Radius west(meters): "+distanceInMeterWest);
 				// Radius north
 				end = wktReader.read("POINT( "+midX+" "+(midY+radius)+")");
 				double distanceInMeterNorth = JTS.orthodromicDistance(start.getCoordinate(), end.getCoordinate(), CRS.decode("EPSG:4326"));
 //				distanceInMeters = JTS.orthodromicDistance(start.getCoordinate(), end.getCoordinate(), CRS.decode("EPSG:3857"));
-				System.out.println("Radius north(meters): "+distanceInMeterNorth);
+//				System.out.println("Radius north(meters): "+distanceInMeterNorth);
 				// Radius south
 				end = wktReader.read("POINT( "+midX+" "+(midY-radius)+")");
 				double distanceInMeterSouth = JTS.orthodromicDistance(start.getCoordinate(), end.getCoordinate(), CRS.decode("EPSG:4326"));
 //				distanceInMeters = JTS.orthodromicDistance(start.getCoordinate(), end.getCoordinate(), CRS.decode("EPSG:3857"));
-				System.out.println("Radius south(meters): "+distanceInMeterSouth);
+//				System.out.println("Radius south(meters): "+distanceInMeterSouth);
 			
 				double distanceInMeter = (distanceInMeterEast+distanceInMeterWest+distanceInMeterNorth+distanceInMeterSouth)/4;
-				System.out.println("Radius mean(meters): "+distanceInMeter);
+//				System.out.println("Radius mean(meters): "+distanceInMeter);
 				
 				if (ret[0] == null) {
 					ret[0] = String.format("%f",radius);
