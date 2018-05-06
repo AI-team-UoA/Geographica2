@@ -34,7 +34,7 @@ public abstract class RunSystemUnderTest  {
 	protected SystemUnderTest	sut = null;
 
 	protected void printHelp() {
-		System.err.println("Usage: "+this.getClass().getSimpleName()+" [options] (run|print) (MicroNonTopological|MicroSelections|MicroJoins|MicroAggregations|MacroGeocoding|MacroMapSearch|MacroRapidMapping|MacroReverseGeocoding|Synthetic|SyntheticPOIs)+");
+		System.err.println("Usage: "+this.getClass().getSimpleName()+" [options] (run|print) (MicroNonTopological|MicroSelections|MicroJoins|MicroAggregations|MacroGeocoding|MacroMapSearch|MacroRapidMapping|MacroReverseGeocoding|MacroComputeStatistics|Synthetic|SyntheticPOIs)+");
 		HelpFormatter formatter = new HelpFormatter();
 		formatter.printHelp(this.getClass().getSimpleName(), options );		
 	}
