@@ -14,6 +14,7 @@
         <module>runtime</module>
         <module>StrabonSUT</module>
         <module>GraphDBSUT</module>
+        <module>RDF4JSUT</module>
     </modules>
 	
     <properties>

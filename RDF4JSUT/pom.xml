@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>gr.uoa.di.rdf</groupId>
+        <artifactId>Geographica</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <!-- <groupId>gr.uoa.di.rdf</groupId> -->
+    <artifactId>RDF4JSUT</artifactId>
+    <name>RDF4JSUT</name>
+    <description>A client SUT for RDF4J</description>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <developers>
+        <developer>
+            <id>1</id>
+            <name>Ioannidis Theofilos</name>
+            <email>tioannid@di.uoa.gr</email>
+            <organization>Kapodistrian University of Athens</organization>
+        </developer>
+    </developers>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <slf4j.version>1.8.0-beta2</slf4j.version>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <!-- setup BOM (Bill Of Materials) to avoid version mismatch and
+                duplication of libraries in the classpath -->
+                <groupId>org.eclipse.rdf4j</groupId>
+                <artifactId>rdf4j-bom</artifactId>
+                <version>2.3.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>    
+    </dependencyManagement>
+    <dependencies>
+        <!-- 1. RDF4J Dependencies -->
+        <dependency>
+            <!-- the RDF4J core framework -->
+            <groupId>org.eclipse.rdf4j</groupId>
+            <artifactId>rdf4j-runtime</artifactId>
+        </dependency>
+        <dependency>
+            <!-- ability to query RDF with the RDF4J framework -->
+            <groupId>org.eclipse.rdf4j</groupId>
+            <artifactId>rdf4j-repository-sail</artifactId>
+        </dependency>
+        <dependency>
+            <!-- in-memory storage backend module of RDF4J -->
+            <groupId>org.eclipse.rdf4j</groupId>
+            <artifactId>rdf4j-sail-memory</artifactId>
+        </dependency>
+        <dependency>
+            <!-- persistent/native storage backend module of RDF4J -->
+            <groupId>org.eclipse.rdf4j</groupId>
+            <artifactId>rdf4j-sail-nativerdf</artifactId>
+        </dependency>
+        <dependency>
+            <!-- Lucene backend module of RDF4J - Apache Lucene 5 searchIndex implementation -->
+            <groupId>org.eclipse.rdf4j</groupId>
+            <artifactId>rdf4j-sail-lucene</artifactId>
+        </dependency>
+        <dependency>
+            <!-- Turtle module of the RDF4J RIO parser -->
+            <groupId>org.eclipse.rdf4j</groupId>
+            <artifactId>rdf4j-rio-turtle</artifactId>
+        </dependency>
+        <dependency>
+            <!-- N-Triples module of the RDF4J RIO parser -->
+            <groupId>org.eclipse.rdf4j</groupId>
+            <artifactId>rdf4j-rio-ntriples</artifactId>
+        </dependency>
+        <dependency>
+            <!-- TRIG module of the RDF4J RIO parser -->
+            <groupId>org.eclipse.rdf4j</groupId>
+            <artifactId>rdf4j-rio-trig</artifactId>
+        </dependency>
+        <dependency>
+            <!-- GeoSparql support for RDF4J RIO parser -->
+            <groupId>org.eclipse.rdf4j</groupId>
+            <artifactId>rdf4j-queryalgebra-geosparql</artifactId>
+        </dependency>
+        <!-- 2. SLF4J Dependencies -->
+        <dependency> 
+            <!-- use log4j base api -->
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>        
+        <dependency> 
+            <!-- use log4j as the underlying logging framework -->
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>gr.uoa.di.rdf</groupId>
+            <artifactId>runtime</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies> 
+</project>
