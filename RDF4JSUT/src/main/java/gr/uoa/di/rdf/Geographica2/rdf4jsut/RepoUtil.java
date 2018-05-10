@@ -22,7 +22,7 @@ public abstract class RepoUtil {
         if (args[0].equalsIgnoreCase("create")) {
             System.out.println("RDF4J created repo \"" + args[1] + "\" in " + Rdf4jSUT.RDF4J.createNativeRepo(args[1], (args.length==2)?"":args[2]) + " msecs");
         } else if (args[0].equalsIgnoreCase("query")) {
-            System.out.println("RDF4J queried repo \"" + args[1] + "\" in " + Rdf4jSUT.RDF4J.queryRecordCountInNativeRepo(Integer.parseInt(args[1]), args[2]) + " msecs");
+            System.out.println("RDF4J queried repo \"" + args[2] + "\" in " + Rdf4jSUT.RDF4J.queryRecordCountInNativeRepo(Integer.parseInt(args[1]), args[2]) + " msecs");
         } else if (args[0].equalsIgnoreCase("load")) {
             System.out.println("RDF4J loaded file \"" + args[3] + "\" in repo \"" + args[1] + "\" in " + Rdf4jSUT.RDF4J.loadTRIGInNativeRepo(args[3], args[2], args[1]) + " msecs");
         } else if (args[0].equalsIgnoreCase("dirload")) {

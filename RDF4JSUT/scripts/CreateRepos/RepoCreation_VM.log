@@ -1,0 +1,14 @@
+Πεμ 10 Μάι 2018 02:38:09 μμ EEST
+
+RDF4J created repo "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/repoRealWorld" in 421 msecs
+RDF4J loaded all files from "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/Datasets/RealWorldWorkload/WGS84/RealWorld" in repo "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/repoRealWorld" in 73843 msecs
+RDF4J repository "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/repoRealWorld" has size: 629MB
+RDF4J created repo "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/repoSynthetic" in 468 msecs
+RDF4J loaded all files from "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/Datasets/SyntheticWorkload/Synthetic" in repo "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/repoSynthetic" in 149210 msecs
+RDF4J repository "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/repoSynthetic" has size: 632MB
+RDF4J created repo "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/repoRealWorld_Points" in 397 msecs
+RDF4J loaded all files from "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/Datasets/RealWorldWorkload/WGS84/RealWorld_Points" in repo "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/repoRealWorld_Points" in 23649 msecs
+RDF4J repository "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/repoRealWorld_Points" has size: 123MB
+RDF4J created repo "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/repoSynthetic_POIs" in 408 msecs
+RDF4J loaded all files from "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/Datasets/SyntheticWorkload/Synthetic_POIs" in repo "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/repoSynthetic_POIs" in 292475 msecs
+RDF4J repository "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/repoSynthetic_POIs" has size: 1031MB

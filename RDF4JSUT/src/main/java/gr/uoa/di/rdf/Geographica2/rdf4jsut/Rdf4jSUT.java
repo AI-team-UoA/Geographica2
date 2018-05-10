@@ -22,7 +22,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import org.apache.log4j.Logger;
-import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.MalformedQueryException;
 import org.eclipse.rdf4j.query.QueryEvaluationException;
@@ -69,7 +68,7 @@ public class Rdf4jSUT implements SystemUnderTest {
             File dataDir = new File(repoDir);
             NativeStore ns = null;
             if ("".equals(indexes)) {
-                ns = new NativeStore(dataDir);
+                ns = new NativeStore(dataDir, "spoc,posc");
             } else {
                 ns = new NativeStore(dataDir, indexes);
             }
@@ -187,12 +186,11 @@ public class Rdf4jSUT implements SystemUnderTest {
 
                     // process results
                     List<String> bindings = result.getBindingNames();
-                    System.out.println("QUERY RESULTS");
                     String labelsTitle = "\t";
                     for (String label : bindings) {
                         labelsTitle += (label + "\t\t");
                     }
-                    System.out.println(labelsTitle + "\n------------------------------------");
+                    System.out.println(labelsTitle + "\n------------------------------------>");
                     BindingSet binding;
                     String bindingLine = "";
                     while (result.hasNext()) {
@@ -203,6 +201,7 @@ public class Rdf4jSUT implements SystemUnderTest {
                         }
                         System.out.println(bindingLine);
                     }
+                    System.out.println("<------------------------------------");
                 }
             } finally {
                 // before our program exits, make sure the database is properly shut down.
