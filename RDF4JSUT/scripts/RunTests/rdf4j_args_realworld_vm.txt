@@ -1,0 +1,1 @@
+-rd "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/repoRealWorld" -r 1 -t 3600 -m 60 -l "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/TestResults/DEVNULL" run

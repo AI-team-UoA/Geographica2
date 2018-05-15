@@ -21,7 +21,7 @@ public class RunRdf4J extends RunSystemUnderTest {
     protected void addOptions() {
         super.addOptions();
 
-        options.addOption("bd", "basedir", true, "BaseDir");
+        options.addOption("rd", "repodir", true, "RepoDir");
     }
 
     @Override
@@ -29,13 +29,13 @@ public class RunRdf4J extends RunSystemUnderTest {
         super.logOptions();
 
         logger.info("Excluded options");
-        logger.info("BaseDir:\t" + cmd.getOptionValue("basedir"));
+        logger.info("RepoDir:\t" + cmd.getOptionValue("repodir"));
     }
     
     @Override
     protected void initSystemUnderTest() throws Exception {
-        String basedir = (cmd.getOptionValue("basedir") != null ? cmd.getOptionValue("basedir") : "");
-        sut = new Rdf4jSUT(basedir);
+        String repodir = (cmd.getOptionValue("repodir") != null ? cmd.getOptionValue("repodir") : "");
+        sut = new Rdf4jSUT(repodir);
     }
 
     public static void main(String[] args) throws Exception  {

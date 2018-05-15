@@ -56,12 +56,125 @@ public class Rdf4jSUT implements SystemUnderTest {
     static final String SYSCMD_SYNC = "sync";
     static final String SYSCMD_CLEARCACHE = "sudo /sbin/sysctl vm.drop_caches=3";
 
-    /* Utility static nested class GraphDBSUT.GraphDB
-    ** Similar to Strabon, encapsulates key objects of GraphDB
+    /* Utility static nested class Rdf4jSUT.RDF4J
+    ** Similar to GraphDB, encapsulates key objects of RDF4J
      */
     public static class RDF4J {
 
         // ---------------- Static Mmebers & Methods ---------------------------
+        private static String[] validationQueries = new String[]{
+            "SELECT (count(*) as ?count) WHERE { ?x ?p ?y . } ",
+            "SELECT ?g (count(*) as ?count) WHERE { GRAPH ?g { ?x ?p ?y . } } GROUP BY ?g ORDER BY DESC(?count) ",
+            "PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> \n"
+            + "PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> \n"
+            + "PREFIX gadm: <http://www.gadm.org/ontology#> \n"
+            + "PREFIX lgdo: <http://linkedgeodata.org/ontology/> \n"
+            + "PREFIX geonames: <http://www.geonames.org/ontology#> \n"
+            + "PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> \n"
+            + "PREFIX lgdp: <http://linkedgeodata.org/property/> \n"
+            + "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n"
+            + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
+            + "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+            + "PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> \n"
+            + "PREFIX geof: <http://www.opengis.net/def/function/geosparql/> \n"
+            + "PREFIX geo: <http://www.opengis.net/ont/geosparql#> \n"
+            + "PREFIX geo-sf: <http://www.opengis.net/ont/sf#> \n"
+            + "PREFIX ext: <http://rdf.useekm.com/ext#> \n"
+            + "PREFIX dbpedia: <http://dbpedia.org/property/> \n"
+            + "PREFIX ns: <http://geographica.di.uoa.gr/dataset/> \n"
+            + "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
+            + "PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> \n"
+            + "\n"
+            + " \n"
+            + " select (geof:boundary(?o1) as ?ret) where { \n"
+            + "	GRAPH <http://geographica.di.uoa.gr/dataset/clc> {?s1 <http://geo.linkedopendata.gr/corine/ontology#asWKT> ?o1} \n"
+            + "} LIMIT 5",
+            "PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> \n"
+            + "PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> \n"
+            + "PREFIX gadm: <http://www.gadm.org/ontology#> \n"
+            + "PREFIX lgdo: <http://linkedgeodata.org/ontology/> \n"
+            + "PREFIX geonames: <http://www.geonames.org/ontology#> \n"
+            + "PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> \n"
+            + "PREFIX lgdp: <http://linkedgeodata.org/property/> \n"
+            + "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n"
+            + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
+            + "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+            + "PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> \n"
+            + "PREFIX geof: <http://www.opengis.net/def/function/geosparql/> \n"
+            + "PREFIX geo: <http://www.opengis.net/ont/geosparql#> \n"
+            + "PREFIX geo-sf: <http://www.opengis.net/ont/sf#> \n"
+            + "PREFIX ext: <http://rdf.useekm.com/ext#> \n"
+            + "PREFIX dbpedia: <http://dbpedia.org/property/> \n"
+            + "PREFIX ns: <http://geographica.di.uoa.gr/dataset/> \n"
+            + "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
+            + "PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> \n"
+            + "PREFIX gn: <http://www.geonames.org/ontology#>\n"
+            + "PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>\n"
+            + "\n"
+            + "select (geof:SRID(?wkt1) as ?srid)\n"
+            + "where { \n"
+            + "    GRAPH <http://geographica.di.uoa.gr/dataset/geonames> {\n"
+            + "        ?s1  rdf:type geo-sf:Point .\n"
+            + "        ?s1  gn:asWKT ?wkt1 .\n"
+            + "    }     \n"
+            + "} \n"
+            + "LIMIT 5",
+            "PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> \n"
+            + "PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> \n"
+            + "PREFIX gadm: <http://www.gadm.org/ontology#> \n"
+            + "PREFIX lgdo: <http://linkedgeodata.org/ontology/> \n"
+            + "PREFIX geonames: <http://www.geonames.org/ontology#> \n"
+            + "PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> \n"
+            + "PREFIX lgdp: <http://linkedgeodata.org/property/> \n"
+            + "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n"
+            + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
+            + "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+            + "PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> \n"
+            + "PREFIX geof: <http://www.opengis.net/def/function/geosparql/> \n"
+            + "PREFIX geo: <http://www.opengis.net/ont/geosparql#> \n"
+            + "PREFIX geo-sf: <http://www.opengis.net/ont/sf#> \n"
+            + "PREFIX ext: <http://rdf.useekm.com/ext#> \n"
+            + "PREFIX dbpedia: <http://dbpedia.org/property/> \n"
+            + "PREFIX ns: <http://geographica.di.uoa.gr/dataset/> \n"
+            + "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
+            + "PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> \n"
+            + "\n"
+            + " \n"
+            + " select ?o1 (geof:boundary(?o1) as ?ret) where { \n"
+            + "	GRAPH <http://geographica.di.uoa.gr/dataset/clc> {?s1 <http://geo.linkedopendata.gr/corine/ontology#asWKT> ?o1} \n"
+            + "} LIMIT 3",
+            "prefix geo: http://www.opengis.net/ont/geosparql#\n"
+            + "prefix geof: http://www.opengis.net/def/function/geosparql/\n"
+            + "prefix wkt: http://www.opengis.net/ont/geosparql#\n"
+            + "\n"
+            + "select *\n"
+            + "{\n"
+            + "bind(\n"
+            + "geof:distance(\"POINT (48.8582 2.2945)\"^^wkt:wktLiteral, \"POINT (48.8738 2.2950)\"^^wkt:wktLiteral, http://www.opengis.net/def/uom/OGC/1.0/metre)\n"
+            + "as ?d)\n"
+            + "}",
+            "PREFIX geof: <http://www.opengis.net/def/function/geosparql/>\n"
+            + "select ?w1 ?w2 (geof:distance(?w1, ?w2, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?dist)\n"
+            + "where { ?s1 <http://www.opengis.net/ont/geosparql#asWKT> ?w1 .\n"
+            + " ?s2 <http://www.opengis.net/ont/geosparql#asWKT> ?w2 FILTER (?s1 != ?s2)}",
+            "PREFIX geof: <http://www.opengis.net/def/function/geosparql/>\n"
+            + "PREFIX geo: <http://www.opengis.net/ont/geosparql#> \n"
+            + "PREFIX geo-sf: <http://www.opengis.net/ont/sf#> \n"
+            + "PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>\n"
+            + "select ?w1 (geof:buffer(?w1,4000, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?buf)\n"
+            + "where { ?s1 <http://www.opengis.net/ont/geosparql#asWKT> ?w1 }",
+            "PREFIX geof: <http://www.opengis.net/def/function/geosparql/>\n"
+            + "PREFIX geo: <http://www.opengis.net/ont/geosparql#> \n"
+            + "PREFIX geo-sf: <http://www.opengis.net/ont/sf#> \n"
+            + "select ?w1 (geof:convexHull(?w1) as ?conv)\n"
+            + "where { ?s1 <http://www.opengis.net/ont/geosparql#asWKT> ?w1 }",
+            "PREFIX geof: <http://www.opengis.net/def/function/geosparql/>\n"
+            + "PREFIX geo: <http://www.opengis.net/ont/geosparql#> \n"
+            + "PREFIX geo-sf: <http://www.opengis.net/ont/sf#> \n"
+            + "select ?w1 (geof:intersection(\"<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon ((-83.4 34.0, -83.1 34.0, -83.1 34.2, -83.4 34.2, -83.4 34.0))\"^^geo:wktLiteral, ?w1) as ?conv)\n"
+            + "where { ?s1 <http://www.opengis.net/ont/geosparql#asWKT> ?w1 }"
+        };
+
         // Creating a Native RDF Repository in <repoDir>
         public static long createNativeRepo(String repoDir, String indexes) {
             long start = System.currentTimeMillis();
@@ -75,7 +188,14 @@ public class Rdf4jSUT implements SystemUnderTest {
             LuceneSail lucenesail = new LuceneSail();
             // set any parameters
             // ... this one stores the Lucene index files into memory
-            lucenesail.setParameter(LuceneSail.WKT_FIELDS, "true");
+            lucenesail.setParameter(LuceneSail.WKT_FIELDS,
+                    "http://www.opengis.net/ont/geosparql#asWKT "
+                    + "http://geographica.di.uoa.gr/dataset/clc#asWKT "
+                    + "http://geographica.di.uoa.gr/dataset/gag#asWKT "
+                    + "http://geographica.di.uoa.gr/dataset/geonames#asWKT "
+                    + "http://geographica.di.uoa.gr/dataset/hotspots#asWKT "
+                    + "http://geographica.di.uoa.gr/dataset/lgd#asWKT "
+                    + "http://geographica.di.uoa.gr/dataset/dbpedia#asWKT");
             // ... this one stores the Lucene index files into memory
             lucenesail.setParameter(LuceneSail.LUCENE_RAMDIR_KEY, "true");
             // wrap base sail
@@ -172,9 +292,7 @@ public class Rdf4jSUT implements SystemUnderTest {
 
         // Query Native RDF Repository in <repoDir> for total records or records per graph 
         public static long queryRecordCountInNativeRepo(int queryNo, String repoDir) {
-            String query1String = "SELECT (count(*) as ?count) WHERE { ?x ?p ?y . } ";
-            String query2String = "SELECT ?g (count(*) as ?count) WHERE { GRAPH ?g { ?x ?p ?y . } } GROUP BY ?g ORDER BY DESC(?count) ";
-            String queryString = (queryNo == 1) ? query1String : query2String;
+            String queryString = validationQueries[(queryNo <= validationQueries.length) ? queryNo - 1 : 0];
             long start = System.currentTimeMillis();
             File dataDir = new File(repoDir);
             Repository repo = new SailRepository(new NativeStore(dataDir));
@@ -182,6 +300,7 @@ public class Rdf4jSUT implements SystemUnderTest {
             // Open a connection to the database
             try (RepositoryConnection conn = repo.getConnection()) {
                 TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+                System.out.println(queryString + "\n");
                 try (TupleQueryResult result = tupleQuery.evaluate()) {
 
                     // process results
