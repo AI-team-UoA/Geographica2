@@ -21,7 +21,9 @@ public class RunRdf4J extends RunSystemUnderTest {
     protected void addOptions() {
         super.addOptions();
 
-        options.addOption("rd", "repodir", true, "RepoDir");
+        options.addOption("bd", "basedir", true, "BaseDir");
+        options.addOption("rp", "repository", true, "RepositoryID");
+        options.addOption("cr", "create", true, "CreateRepository");
     }
 
     @Override
@@ -29,13 +31,17 @@ public class RunRdf4J extends RunSystemUnderTest {
         super.logOptions();
 
         logger.info("Excluded options");
-        logger.info("RepoDir:\t" + cmd.getOptionValue("repodir"));
+        logger.info("BaseDir:\t" + cmd.getOptionValue("basedir"));
+        logger.info("RepositoryID:\t" + cmd.getOptionValue("repository"));
+        logger.info("CreateRepository:\t" + cmd.getOptionValue("create"));
     }
     
     @Override
     protected void initSystemUnderTest() throws Exception {
-        String repodir = (cmd.getOptionValue("repodir") != null ? cmd.getOptionValue("repodir") : "");
-        sut = new Rdf4jSUT(repodir);
+        String basedir = (cmd.getOptionValue("basedir") != null ? cmd.getOptionValue("basedir") : "");
+        String repository = cmd.getOptionValue("repository");
+        boolean create = Boolean.parseBoolean(cmd.getOptionValue("create"));
+        sut = new Rdf4jSUT(basedir, repository, create);
     }
 
     public static void main(String[] args) throws Exception  {

@@ -94,11 +94,14 @@
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-rio-trig</artifactId>
         </dependency>
+        <!--
         <dependency>
-            <!-- GeoSparql support for RDF4J RIO parser -->
+            # GeoSparql support for RDF4J RIO parser 
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-queryalgebra-geosparql</artifactId>
         </dependency>
+        -->
+        
         <!-- 2. SLF4J Dependencies -->
         <dependency> 
             <!-- use log4j base api -->

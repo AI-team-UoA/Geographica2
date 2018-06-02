@@ -34,11 +34,18 @@ import org.eclipse.rdf4j.query.UpdateExecutionException;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
 import org.eclipse.rdf4j.repository.RepositoryException;
 import org.eclipse.rdf4j.repository.Repository;
+import org.eclipse.rdf4j.repository.config.RepositoryConfig;
+import org.eclipse.rdf4j.repository.config.RepositoryConfigException;
+import org.eclipse.rdf4j.repository.config.RepositoryImplConfig;
+import org.eclipse.rdf4j.repository.manager.LocalRepositoryManager;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
+import org.eclipse.rdf4j.repository.sail.config.SailRepositoryConfig;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.RDFParseException;
+import org.eclipse.rdf4j.sail.config.SailImplConfig;
 import org.eclipse.rdf4j.sail.lucene.LuceneSail;
 import org.eclipse.rdf4j.sail.nativerdf.NativeStore;
+import org.eclipse.rdf4j.sail.nativerdf.config.NativeStoreConfig;
 
 /**
  *
@@ -65,114 +72,15 @@ public class Rdf4jSUT implements SystemUnderTest {
         private static String[] validationQueries = new String[]{
             "SELECT (count(*) as ?count) WHERE { ?x ?p ?y . } ",
             "SELECT ?g (count(*) as ?count) WHERE { GRAPH ?g { ?x ?p ?y . } } GROUP BY ?g ORDER BY DESC(?count) ",
-            "PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> \n"
-            + "PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> \n"
-            + "PREFIX gadm: <http://www.gadm.org/ontology#> \n"
-            + "PREFIX lgdo: <http://linkedgeodata.org/ontology/> \n"
-            + "PREFIX geonames: <http://www.geonames.org/ontology#> \n"
-            + "PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> \n"
-            + "PREFIX lgdp: <http://linkedgeodata.org/property/> \n"
-            + "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n"
-            + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
-            + "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
-            + "PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> \n"
-            + "PREFIX geof: <http://www.opengis.net/def/function/geosparql/> \n"
-            + "PREFIX geo: <http://www.opengis.net/ont/geosparql#> \n"
-            + "PREFIX geo-sf: <http://www.opengis.net/ont/sf#> \n"
-            + "PREFIX ext: <http://rdf.useekm.com/ext#> \n"
-            + "PREFIX dbpedia: <http://dbpedia.org/property/> \n"
-            + "PREFIX ns: <http://geographica.di.uoa.gr/dataset/> \n"
-            + "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
-            + "PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> \n"
+            "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"
+            + "prefix geo: <http://www.opengis.net/ont/geosparql#>\n"
+            + "prefix geof: <http://www.opengis.net/def/function/geosparql/>\n"
             + "\n"
-            + " \n"
-            + " select (geof:boundary(?o1) as ?ret) where { \n"
-            + "	GRAPH <http://geographica.di.uoa.gr/dataset/clc> {?s1 <http://geo.linkedopendata.gr/corine/ontology#asWKT> ?o1} \n"
-            + "} LIMIT 5",
-            "PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> \n"
-            + "PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> \n"
-            + "PREFIX gadm: <http://www.gadm.org/ontology#> \n"
-            + "PREFIX lgdo: <http://linkedgeodata.org/ontology/> \n"
-            + "PREFIX geonames: <http://www.geonames.org/ontology#> \n"
-            + "PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> \n"
-            + "PREFIX lgdp: <http://linkedgeodata.org/property/> \n"
-            + "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n"
-            + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
-            + "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
-            + "PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> \n"
-            + "PREFIX geof: <http://www.opengis.net/def/function/geosparql/> \n"
-            + "PREFIX geo: <http://www.opengis.net/ont/geosparql#> \n"
-            + "PREFIX geo-sf: <http://www.opengis.net/ont/sf#> \n"
-            + "PREFIX ext: <http://rdf.useekm.com/ext#> \n"
-            + "PREFIX dbpedia: <http://dbpedia.org/property/> \n"
-            + "PREFIX ns: <http://geographica.di.uoa.gr/dataset/> \n"
-            + "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
-            + "PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> \n"
-            + "PREFIX gn: <http://www.geonames.org/ontology#>\n"
-            + "PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>\n"
-            + "\n"
-            + "select (geof:SRID(?wkt1) as ?srid)\n"
-            + "where { \n"
-            + "    GRAPH <http://geographica.di.uoa.gr/dataset/geonames> {\n"
-            + "        ?s1  rdf:type geo-sf:Point .\n"
-            + "        ?s1  gn:asWKT ?wkt1 .\n"
-            + "    }     \n"
-            + "} \n"
-            + "LIMIT 5",
-            "PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#> \n"
-            + "PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> \n"
-            + "PREFIX gadm: <http://www.gadm.org/ontology#> \n"
-            + "PREFIX lgdo: <http://linkedgeodata.org/ontology/> \n"
-            + "PREFIX geonames: <http://www.geonames.org/ontology#> \n"
-            + "PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> \n"
-            + "PREFIX lgdp: <http://linkedgeodata.org/property/> \n"
-            + "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n"
-            + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
-            + "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
-            + "PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> \n"
-            + "PREFIX geof: <http://www.opengis.net/def/function/geosparql/> \n"
-            + "PREFIX geo: <http://www.opengis.net/ont/geosparql#> \n"
-            + "PREFIX geo-sf: <http://www.opengis.net/ont/sf#> \n"
-            + "PREFIX ext: <http://rdf.useekm.com/ext#> \n"
-            + "PREFIX dbpedia: <http://dbpedia.org/property/> \n"
-            + "PREFIX ns: <http://geographica.di.uoa.gr/dataset/> \n"
-            + "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
-            + "PREFIX census: <http://geographica.di.uoa.gr/cencus/ontology#> \n"
-            + "\n"
-            + " \n"
-            + " select ?o1 (geof:boundary(?o1) as ?ret) where { \n"
-            + "	GRAPH <http://geographica.di.uoa.gr/dataset/clc> {?s1 <http://geo.linkedopendata.gr/corine/ontology#asWKT> ?o1} \n"
-            + "} LIMIT 3",
-            "prefix geo: http://www.opengis.net/ont/geosparql#\n"
-            + "prefix geof: http://www.opengis.net/def/function/geosparql/\n"
-            + "prefix wkt: http://www.opengis.net/ont/geosparql#\n"
-            + "\n"
-            + "select *\n"
-            + "{\n"
-            + "bind(\n"
-            + "geof:distance(\"POINT (48.8582 2.2945)\"^^wkt:wktLiteral, \"POINT (48.8738 2.2950)\"^^wkt:wktLiteral, http://www.opengis.net/def/uom/OGC/1.0/metre)\n"
-            + "as ?d)\n"
-            + "}",
-            "PREFIX geof: <http://www.opengis.net/def/function/geosparql/>\n"
-            + "select ?w1 ?w2 (geof:distance(?w1, ?w2, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?dist)\n"
-            + "where { ?s1 <http://www.opengis.net/ont/geosparql#asWKT> ?w1 .\n"
-            + " ?s2 <http://www.opengis.net/ont/geosparql#asWKT> ?w2 FILTER (?s1 != ?s2)}",
-            "PREFIX geof: <http://www.opengis.net/def/function/geosparql/>\n"
-            + "PREFIX geo: <http://www.opengis.net/ont/geosparql#> \n"
-            + "PREFIX geo-sf: <http://www.opengis.net/ont/sf#> \n"
-            + "PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>\n"
-            + "select ?w1 (geof:buffer(?w1,4000, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?buf)\n"
-            + "where { ?s1 <http://www.opengis.net/ont/geosparql#asWKT> ?w1 }",
-            "PREFIX geof: <http://www.opengis.net/def/function/geosparql/>\n"
-            + "PREFIX geo: <http://www.opengis.net/ont/geosparql#> \n"
-            + "PREFIX geo-sf: <http://www.opengis.net/ont/sf#> \n"
-            + "select ?w1 (geof:convexHull(?w1) as ?conv)\n"
-            + "where { ?s1 <http://www.opengis.net/ont/geosparql#asWKT> ?w1 }",
-            "PREFIX geof: <http://www.opengis.net/def/function/geosparql/>\n"
-            + "PREFIX geo: <http://www.opengis.net/ont/geosparql#> \n"
-            + "PREFIX geo-sf: <http://www.opengis.net/ont/sf#> \n"
-            + "select ?w1 (geof:intersection(\"<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon ((-83.4 34.0, -83.1 34.0, -83.1 34.2, -83.4 34.2, -83.4 34.0))\"^^geo:wktLiteral, ?w1) as ?conv)\n"
-            + "where { ?s1 <http://www.opengis.net/ont/geosparql#asWKT> ?w1 }"
+            + "select distinct (geof:union(?xGeom, ?yGeom) as ?s)\n"
+            + "where {\n"
+            + "	?x geo:asWKT ?xGeom.\n"
+            + "	?y geo:asWKT ?yGeom.\n"
+            + "}"
         };
 
         // Creating a Native RDF Repository in <repoDir>
@@ -190,18 +98,50 @@ public class Rdf4jSUT implements SystemUnderTest {
             // ... this one stores the Lucene index files into memory
             lucenesail.setParameter(LuceneSail.WKT_FIELDS,
                     "http://www.opengis.net/ont/geosparql#asWKT "
-                    + "http://geographica.di.uoa.gr/dataset/clc#asWKT "
-                    + "http://geographica.di.uoa.gr/dataset/gag#asWKT "
-                    + "http://geographica.di.uoa.gr/dataset/geonames#asWKT "
-                    + "http://geographica.di.uoa.gr/dataset/hotspots#asWKT "
-                    + "http://geographica.di.uoa.gr/dataset/lgd#asWKT "
-                    + "http://geographica.di.uoa.gr/dataset/dbpedia#asWKT");
+                    + "http://geo.linkedopendata.gr/corine/ontology#asWKT "
+                    + "http://dbpedia.org/property/asWKT "
+                    + "http://geo.linkedopendata.gr/gag/ontology/asWKT "
+                    + "http://www.geonames.org/ontology#asWKT "
+                    + "http://teleios.di.uoa.gr/ontologies/noaOntology.owl#asWKT "
+                    + "http://linkedgeodata.org/ontology/asWKT");
             // ... this one stores the Lucene index files into memory
             lucenesail.setParameter(LuceneSail.LUCENE_RAMDIR_KEY, "true");
             // wrap base sail
             lucenesail.setBaseSail(ns);
             Repository repo = new SailRepository(lucenesail);
             repo.initialize();
+            return (System.currentTimeMillis() - start);
+        }
+
+        // Creating a Native RDF Repository in <repoDir>
+        public static long createNativeRepoWithManager(String baseDirString, String repoId, boolean removeExisting, String indexes) {
+            long start = System.currentTimeMillis();
+            // create a new LocalRepositoryManager in <baseDirString>
+            File baseDir = new File(baseDirString);
+            LocalRepositoryManager manager = new LocalRepositoryManager(baseDir);
+            manager.initialize();
+            // if necessary remove existing repository
+            if (removeExisting) {
+                if (manager.hasRepositoryConfig(repoId)) {
+                    if (!manager.removeRepository(repoId)) {
+                        return -1; // signals ERROR
+                    }
+                }
+            }
+            // create a configuration for the SAIL stack
+            if ("".equals(indexes)) {
+                indexes = "spoc,posc";
+            }
+            SailImplConfig backendConfig = new NativeStoreConfig(indexes);
+            // stack an inferencer config on top of our backend-config
+            //backendConfig = new ForwardChainingRDFSInferencerConfig(backendConfig);
+            // create a configuration for the repository implementation
+            RepositoryImplConfig repositoryTypeSpec = new SailRepositoryConfig(backendConfig);
+            // create a new RepositoryConfig object for <repoId>
+            RepositoryConfig repConfig = new RepositoryConfig(repoId, repositoryTypeSpec);
+            manager.addRepositoryConfig(repConfig);
+            Repository repository = manager.getRepository(repoId);
+            repository.initialize();
             return (System.currentTimeMillis() - start);
         }
 
@@ -214,14 +154,47 @@ public class Rdf4jSUT implements SystemUnderTest {
                 rdffmt = RDFFormat.NTRIPLES;
             } else if (rdfFormatString.equalsIgnoreCase(RDFFormat.TRIG.getName())) { // TRIG
                 rdffmt = RDFFormat.TRIG;
+            } else if (rdfFormatString.equalsIgnoreCase(RDFFormat.TURTLE.getName())) { // TRIG
+                rdffmt = RDFFormat.TURTLE;
             } else {
                 rdffmt = RDFFormat.NTRIPLES;        // default is N-Triples
             };
             return rdffmt;
         }
 
+        // Load a rdf file in a Native RDF Repository in <repoDir>
+        public static long loadInNativeRepoWithManager(String baseDirString, String repoId, String rdfFormatString, String file) {
+            RDFFormat rdffmt = stringToRDFFormat(rdfFormatString);
+            long start = System.currentTimeMillis();
+            // create a new LocalRepositoryManager in <baseDirString>
+            File baseDir = new File(baseDirString);
+            LocalRepositoryManager manager = new LocalRepositoryManager(baseDir);
+            manager.initialize();
+            // request the repository <repoId> back from the LocalRepositoryManager
+            Repository repository = manager.getRepository(repoId);
+            repository.initialize();
+            // Open a connection to the database
+            try (RepositoryConnection conn = repository.getConnection()) {
+                try (InputStream input
+                        = new FileInputStream(file)) {
+                    // add the RDF data from the inputstream directly to our database
+                    conn.add(input, "", rdffmt);
+                } catch (IOException ex) {
+                    java.util.logging.Logger.getLogger(Rdf4jSUT.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RDFParseException ex) {
+                    java.util.logging.Logger.getLogger(Rdf4jSUT.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RepositoryException ex) {
+                    java.util.logging.Logger.getLogger(Rdf4jSUT.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } finally {
+                // before our program exits, make sure the database is properly shut down.
+                repository.shutDown();
+            }
+            return (System.currentTimeMillis() - start);
+        }
+
         // Load a TRIG file in a Native RDF Repository in <repoDir>
-        public static long loadTRIGInNativeRepo(String file, String rdfFormatString, String repoDir) {
+        public static long loadInNativeRepo(String repoDir, String rdfFormatString, String file) {
             RDFFormat rdffmt = stringToRDFFormat(rdfFormatString);
             long start = System.currentTimeMillis();
             File dataDir = new File(repoDir);
@@ -248,7 +221,7 @@ public class Rdf4jSUT implements SystemUnderTest {
         }
 
         // Load a TRIG file in a Native RDF Repository in <repoDir>
-        public static long loadTRIGDirInNativeRepo(String trigFileDir, String rdfFormatString, String repoDir, boolean printFlag) {
+        public static long loadDirInNativeRepo(String repoDir, String rdfFormatString, String trigFileDir, boolean printFlag) {
             RDFFormat rdffmt = stringToRDFFormat(rdfFormatString);
             long start = System.currentTimeMillis();
             long t1 = 0;
@@ -286,6 +259,53 @@ public class Rdf4jSUT implements SystemUnderTest {
             } finally {
                 // before our program exits, make sure the database is properly shut down.
                 repo.shutDown();
+            }
+            return (System.currentTimeMillis() - start);
+        }
+
+        // Load a TRIG file in a Native RDF Repository in <repoDir>
+        public static long loadDirInNativeRepoWithManager(String baseDirString, String repoId, String rdfFormatString, String trigFileDir, boolean printFlag) {
+            RDFFormat rdffmt = stringToRDFFormat(rdfFormatString);
+            long start = System.currentTimeMillis();
+            long t1 = 0;
+            // create a new LocalRepositoryManager in <baseDirString>
+            File baseDir = new File(baseDirString);
+            LocalRepositoryManager manager = new LocalRepositoryManager(baseDir);
+            manager.initialize();
+            // request the repository <repoId> back from the LocalRepositoryManager
+            Repository repository = manager.getRepository(repoId);
+            repository.initialize();
+            // Open a connection to the database
+            try (RepositoryConnection conn = repository.getConnection()) {
+                File dir = new File(trigFileDir);
+                File[] files = dir.listFiles(new FilenameFilter() {
+                    @Override
+                    public boolean accept(File dir, String name) {
+                        return name.toLowerCase().endsWith("." + rdffmt.getDefaultFileExtension());
+                    }
+                });
+                for (File file : files) {
+                    try (InputStream input
+                            = new FileInputStream(file)) {
+                        if (printFlag) {
+                            logger.info("Loading file " + file.getName() + " ...");
+                            t1 = System.currentTimeMillis();
+                        }
+                        conn.add(input, "", rdffmt);
+                        if (printFlag) {
+                            logger.info("Finished loading file " + file.getName() + " in " + (System.currentTimeMillis() - t1) + " msecs");
+                        }
+                    } catch (IOException ex) {
+                        java.util.logging.Logger.getLogger(Rdf4jSUT.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (RDFParseException ex) {
+                        java.util.logging.Logger.getLogger(Rdf4jSUT.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (RepositoryException ex) {
+                        java.util.logging.Logger.getLogger(Rdf4jSUT.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            } finally {
+                // before our program exits, make sure the database is properly shut down.
+                repository.shutDown();
             }
             return (System.currentTimeMillis() - start);
         }
@@ -329,11 +349,57 @@ public class Rdf4jSUT implements SystemUnderTest {
             return (System.currentTimeMillis() - start);
         }
 
+        // Query Native RDF Repository in <repoDir> for total records or records per graph 
+        public static long queryNativeRepoWithManager(String baseDirString, String repoId, int queryNo) {
+            String queryString = validationQueries[(queryNo <= validationQueries.length) ? queryNo - 1 : 0];
+            long start = System.currentTimeMillis();
+            // create a new LocalRepositoryManager in <baseDirString>
+            File baseDir = new File(baseDirString);
+            LocalRepositoryManager manager = new LocalRepositoryManager(baseDir);
+            manager.initialize();
+            // request the repository <repoId> back from the LocalRepositoryManager
+            Repository repository = manager.getRepository(repoId);
+            repository.initialize();
+            // Open a connection to the database
+            try (RepositoryConnection conn = repository.getConnection()) {
+                TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+                System.out.println(queryString + "\n");
+                try (TupleQueryResult result = tupleQuery.evaluate()) {
+
+                    // process results
+                    List<String> bindings = result.getBindingNames();
+                    String labelsTitle = "\t";
+                    for (String label : bindings) {
+                        labelsTitle += (label + "\t\t");
+                    }
+                    System.out.println(labelsTitle + "\n------------------------------------>");
+                    BindingSet binding;
+                    String bindingLine = "";
+                    while (result.hasNext()) {
+                        binding = result.next();
+                        bindingLine = "";
+                        for (String label : bindings) {
+                            bindingLine += (binding.getValue(label) + "\t");
+                        }
+                        System.out.println(bindingLine);
+                    }
+                    System.out.println("<------------------------------------");
+                }
+            } finally {
+                // before our program exits, make sure the database is properly shut down.
+                repository.shutDown();
+            }
+            return (System.currentTimeMillis() - start);
+        }
+
+        // --------------------- Data Members ----------------------------------
         // --------------------- Data Members ----------------------------------
         private final String baseDir;     // base directory for repository manager
-        private Repository repo;        // repo
-        private String indexes;         // indexes upon repo construction
+        private final LocalRepositoryManager repositoryManager;   // repository manager
+        private final String repositoryId;    // repository Id
+        private Repository repository;  // repository
         private RepositoryConnection connection;    // repository connection
+        private String indexes;
 
         // --------------------- Constructors ----------------------------------
         // Constructor 1: Connects to a repository <baseDir> using default indexes
@@ -342,7 +408,39 @@ public class Rdf4jSUT implements SystemUnderTest {
         }
 
         // Constructor 2: Connects to a repository <baseDir> using <indexes>
-        public RDF4J(String baseDir, String indexes) {
+        public RDF4J(String repoDir, String indexes) {
+            repositoryManager = null;
+            repositoryId = "";
+            this.indexes = indexes;
+            // check if repoDir exists, otherwise throw exception
+            File dir = new File(repoDir);
+            if (!dir.exists()) {
+                throw new RuntimeException("Directory " + repoDir + " does not exist.");
+            } else {
+                this.baseDir = repoDir;
+            }
+            NativeStore ns;
+            if (indexes != null) { // if present use explicitly provided indexes
+                ns = new NativeStore(dir, indexes);
+            } else {    // otherwise use the default indexes provided by NativeStore
+                ns = new NativeStore(dir);
+            }
+            this.repository = new SailRepository(ns);
+            this.repository.initialize();
+
+            // create a repository connection, otherwise throw exception
+            try {
+                this.connection = this.repository.getConnection();
+            } catch (Exception e) {
+                logger.error(e.toString());
+            }
+            if (this.connection == null) {
+                throw new RuntimeException("Could not establish connection to RDF4J repository in directory " + this.baseDir);
+            }
+        }
+
+        // Constructor 3: Connects to a repository <baseDir> using <indexes>
+        public RDF4J(String baseDir, String repositoryId, boolean createRepository) {
             // check if baseDir exists, otherwise throw exception
             File dir = new File(baseDir);
             if (!dir.exists()) {
@@ -350,24 +448,44 @@ public class Rdf4jSUT implements SystemUnderTest {
             } else {
                 this.baseDir = baseDir;
             }
-            NativeStore ns = null;
-            if (indexes != null) { // if present use explicitly provided indexes
-                ns = new NativeStore(dir, indexes);
-            } else {    // otherwise use the default indexes provided by NativeStore
-                ns = new NativeStore(dir);
+            // create a new embedded instance of RDF4J in baseDir
+            repositoryManager = new LocalRepositoryManager(dir);
+            repositoryManager.initialize();
+            // if repository does not exist check what the user requested
+            if (!repositoryManager.hasRepositoryConfig(repositoryId)) {
+                if (!createRepository) {    // do not create new repository
+                    throw new RuntimeException("Repository " + repositoryId + " does not exist. Cannot proceed unless a new repository is created!");
+                } else { // create a new repository
+                    createNativeRepoWithManager(baseDir, repositoryId, true, "");
+                }
             }
-            this.repo = new SailRepository(ns);
-            this.repo.initialize();
-            this.indexes = ns.getTripleIndexes();
-
-            // create a repository connection, otherwise throw exception
+            // repository exists
+            this.repositoryId = repositoryId;
+            // open the repository configuration to check if it OK
             try {
-                this.connection = this.repo.getConnection();
-            } catch (Exception e) {
-                logger.error(e.toString());
+                RepositoryConfig repconfig = repositoryManager.getRepositoryConfig(repositoryId);
+            } catch (RepositoryConfigException e) {
+                logger.error("RDF4J repository configuration exception " + e.toString());
+                throw new RuntimeException("Error retrieving repository " + repositoryId + " configuration");
+            } catch (RepositoryException e) {
+                logger.error("RDF4J repository exception " + e.toString());
+                throw new RuntimeException("Generic error with repository " + repositoryId + " configuration");
             }
-            if (this.connection == null) {
-                throw new RuntimeException("Could not establish connection to RDF4J repository in directory " + this.baseDir);
+
+            // retrieve the repository
+            try {
+                repository = repositoryManager.getRepository(repositoryId);
+            } catch (RepositoryConfigException e) {
+                logger.error("RDF4J repository configuration exception " + e.toString());
+                throw new RuntimeException("Error retrieving repository " + repositoryId);
+            } catch (RepositoryException e) {
+                logger.error("RDF4J repository exception " + e.toString());
+                throw new RuntimeException("Generic error with repository " + repositoryId);
+            }
+            // create a repository connection, otherwise throw exception
+            connection = repository.getConnection();
+            if (connection == null) {
+                throw new RuntimeException("Could not establish connection to repository " + repositoryId);
             }
         }
 
@@ -381,11 +499,11 @@ public class Rdf4jSUT implements SystemUnderTest {
         }
 
         public Repository getRepo() {
-            return repo;
+            return this.repository;
         }
 
         public String getIndexes() {
-            return indexes;
+            return this.indexes;
         }
 
         // --------------------- Methods --------------------------------   
@@ -399,7 +517,7 @@ public class Rdf4jSUT implements SystemUnderTest {
             } finally {
                 try {
                     connection.close();
-                    repo.shutDown();
+                    this.repository.shutDown();
                 } catch (RepositoryException e) {
                     logger.error("[RDF4J.close]", e);
                 }
@@ -444,7 +562,8 @@ public class Rdf4jSUT implements SystemUnderTest {
         @Override
         public void run() {
             try {
-                runQuery();
+                //runQuery();
+                runQueryPrintLimit(3);
             } catch (MalformedQueryException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -490,23 +609,73 @@ public class Rdf4jSUT implements SystemUnderTest {
 
             this.returnValue = new long[]{t2 - t1, t3 - t2, t3 - t1, results};
         }
+
+        private void runQueryPrintLimit(int limit) throws MalformedQueryException, QueryEvaluationException, TupleQueryResultHandlerException, IOException {
+
+            logger.info("Evaluating query...");
+            TupleQuery tupleQuery = rdf4j.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, query);
+
+            // Evaluate and time the evaluation of the prepared query
+            // noOfResults = 0;
+            long results = 0;
+
+            long t1 = System.nanoTime();
+            TupleQueryResult tupleQueryResult = tupleQuery.evaluate();
+            long t2 = System.nanoTime();
+
+            // process results
+            List<String> bindings = tupleQueryResult.getBindingNames();
+            String labelsTitle = "\t";
+            for (String label : bindings) {
+                labelsTitle += (label + "\t\t");
+            }
+            logger.info(labelsTitle + "\n------------------------------------>");
+            String bindingLine = "";
+            int printedrow = 0;
+            if (tupleQueryResult.hasNext()) {
+                firstBindingSet = tupleQueryResult.next();
+                if (printedrow < limit) {
+                    bindingLine = "";
+                    for (String label : bindings) {
+                        bindingLine += (firstBindingSet.getValue(label) + "\t");
+                    }
+                    logger.info(bindingLine);
+                    printedrow++;
+                }
+                //noOfResults++;
+                results++;
+            }
+            logger.info("\t<-----------\n\n");
+
+            while (tupleQueryResult.hasNext()) {
+                //noOfResults++;
+                results++;
+                tupleQueryResult.next();
+            }
+            long t3 = System.nanoTime();
+
+            logger.info("Query evaluated");
+
+            this.returnValue = new long[]{t2 - t1, t3 - t2, t3 - t1, results};
+        }
+
     }
 
     // --------------------- Data Members ----------------------------------
     private String baseDir;     // base directory for repository manager
+    private String repositoryId;    // repository Id
+    private boolean createRepository;
     private RDF4J rdf4j;
     private BindingSet firstBindingSet;
 
     // --------------------- Constructors ----------------------------------
-    public Rdf4jSUT(String baseDir) {
+    public Rdf4jSUT(String baseDir, String repositoryId, boolean createRepository) {
         this.baseDir = baseDir;
+        this.repositoryId = repositoryId;
+        this.createRepository = createRepository;
     }
 
     // --------------------- Data Accessors --------------------------------
-    public String getBaseDir() {
-        return rdf4j.getBaseDir();
-    }
-
     @Override
     public BindingSet getFirstBindingSet() {
         return firstBindingSet;
@@ -521,7 +690,7 @@ public class Rdf4jSUT implements SystemUnderTest {
     @Override
     public void initialize() {
         try {
-            rdf4j = new RDF4J(baseDir);
+            rdf4j = new RDF4J(baseDir, repositoryId, createRepository);
         } catch (RuntimeException e) {
             logger.fatal("Cannot initialize RDF4J(\"" + baseDir + "\")");
             StringWriter sw = new StringWriter();
@@ -707,14 +876,12 @@ public class Rdf4jSUT implements SystemUnderTest {
     public String translateQuery(String query, String label) {
         String translatedQuery = null;
         translatedQuery = query;
-        /*
+
         if (label.matches("Q14_Within_GeoNames_Point_Buffer")) {
             translatedQuery = translatedQuery.replaceAll("3000, <http://www.opengis.net/def/uom/OGC/1.0/metre>", "0.03");
         } else if (label.matches("Q4_Buffer_GeoNames")
                 || label.matches("Q5_Buffer_LGD")) {
             translatedQuery = translatedQuery.replaceAll("4, <http://www.opengis.net/def/uom/OGC/1.0/metre>", "0.04");
-        } else if (label.matches("Q6_Area_CLC")) {
-            translatedQuery = translatedQuery.replaceAll("strdf:area", "ext:area");
         } else if (label.indexOf("Synthetic_Selection_Distance") != -1) {
             // convert this: FILTER ( bif:st_within(?geo1, bif:st_point(45, 45), 5000.000000)) 
             // .....to this: FILTER ( geof:sfWithin(?geo1, geof:buffer("POINT(23.71622 37.97945)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>, 5000, <http://www.opengis.net/def/uom/OGC/1.0/metre>)))
@@ -733,10 +900,11 @@ public class Rdf4jSUT implements SystemUnderTest {
             // 5. create the new filter using the desired format
             String newFilter = String.format("FILTER(geof:sfWithin(%s, geof:buffer(\"POINT(45 45)\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>, %d))).\n}\n", cGeom, cRadious);
             // 6. replace old with new filter
-            translatedQuery = translatedQuery.substring(0, translatedQuery.indexOf("FILTER")) + newFilter;
+            //translatedQuery = translatedQuery.substring(0, translatedQuery.indexOf("FILTER")) + newFilter;
+            translatedQuery = translatedQuery.substring(0, translatedQuery.indexOf("FILTER")) + "\n}\n";
 
         }
-         */
+
         return translatedQuery;
     }
 
