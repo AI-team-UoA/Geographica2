@@ -21,7 +21,7 @@ import java.io.StringWriter;
 import org.apache.log4j.Logger;
 
 /**
- * @author George Garbis <ggarbis@di.uoa.gr>
+ * @author Theofilos Ioannidis <tioannid@di.uoa.gr>
  */
 public abstract class MacroExperiment extends Experiment {
 

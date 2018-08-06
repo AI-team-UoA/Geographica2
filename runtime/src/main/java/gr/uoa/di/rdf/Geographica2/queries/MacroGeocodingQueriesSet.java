@@ -24,7 +24,7 @@ import org.eclipse.rdf4j.query.QueryEvaluationException;
 import org.eclipse.rdf4j.query.TupleQueryResultHandlerException;
 
 /**
- * @author George Garbis <ggarbis@di.uoa.gr>
+ * @author Theofilos Ioannidis <tioannid@di.uoa.gr>
  */
 public class MacroGeocodingQueriesSet extends QueriesSet {
 

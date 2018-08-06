@@ -8,7 +8,6 @@
  */
 package gr.uoa.di.rdf.Geographica2.queries;
 
-import gr.uoa.di.rdf.Geographica2.queries.*;
 import java.io.IOException;
 import org.eclipse.rdf4j.query.MalformedQueryException;
 import org.eclipse.rdf4j.query.QueryEvaluationException;
@@ -16,7 +15,7 @@ import org.eclipse.rdf4j.query.TupleQueryResultHandlerException;
 import gr.uoa.di.rdf.Geographica2.systemsundertest.SystemUnderTest;
 
 /**
- * @author George Garbis <ggarbis@di.uoa.gr>
+ * @author Theofilos Ioannidis <tioannid@di.uoa.gr>
  */
 public abstract class QueriesSet {
 
@@ -31,13 +30,13 @@ public abstract class QueriesSet {
 	public static String clc_asWKT;
 	public static String dbpedia_asWKT;
 	// gadm for gag
-	public static String gadm_asWKT;
-	public static String geonames_asWKT;
-	public static String hotspots_asWKT;
-	public static String lgd_asWKT;
+	public static String gadm_asWKT, geonames_asWKT, hotspots_asWKT,
+                            lgd_asWKT, default_asWKT;
 
-	public static String clc_hasGeometry, dbpedia_hasGeometry, gadm_hasGeometry,
-			  geonames_hasGeometry, hotspots_hasGeometry, lgd_hasGeometry;
+	public static String clc_hasGeometry, dbpedia_hasGeometry, 
+                        gadm_hasGeometry, geonames_hasGeometry, 
+                        hotspots_hasGeometry, lgd_hasGeometry,
+                        default_hasGeometry;
 	
 	public String prefixes;
 	protected SystemUnderTest sut;
@@ -78,6 +77,7 @@ public abstract class QueriesSet {
 		geonames_asWKT = "<http://www.geonames.org/ontology#asWKT>";
 		hotspots_asWKT = "<http://teleios.di.uoa.gr/ontologies/noaOntology.owl#asWKT>";
 		lgd_asWKT = "<http://linkedgeodata.org/ontology/asWKT>";
+                default_asWKT = "<http://www.opengis.net/ont/geosparql#asWKT>";
 
 		clc_hasGeometry = "<http://geo.linkedopendata.gr/corine/ontology#hasGeometry>";
 		dbpedia_hasGeometry = "<http://dbpedia.org/property/hasGeometry>";
@@ -86,6 +86,7 @@ public abstract class QueriesSet {
 		geonames_hasGeometry = "<http://www.geonames.org/ontology#hasGeometry>";
 		hotspots_hasGeometry = "<http://teleios.di.uoa.gr/ontologies/noaOntology.owl#hasGeometry>";
 		lgd_hasGeometry = "<http://linkedgeodata.org/ontology/hasGeometry>";
+                default_hasGeometry = "<http://www.opengis.net/ont/geosparql#hasGeometry>";
 	}
 	
 	public abstract QueryStruct getQuery(int queryIndex, int repetition) throws MalformedQueryException, QueryEvaluationException, TupleQueryResultHandlerException, IOException;

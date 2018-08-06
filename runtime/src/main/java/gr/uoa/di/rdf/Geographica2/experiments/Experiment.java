@@ -8,7 +8,6 @@
  */
 package gr.uoa.di.rdf.Geographica2.experiments;
 
-import gr.uoa.di.rdf.Geographica2.experiments.*;
 import gr.uoa.di.rdf.Geographica2.queries.QueriesSet;
 import gr.uoa.di.rdf.Geographica2.queries.QueriesSet.QueryStruct;
 import gr.uoa.di.rdf.Geographica2.systemsundertest.SystemUnderTest;
@@ -26,7 +25,7 @@ import java.util.TreeSet;
 import org.apache.log4j.Logger;
 
 /**
- * @author George Garbis <ggarbis@di.uoa.gr>
+ * @author Theofilos Ioannidis <tioannid@di.uoa.gr>
  */
 public abstract class Experiment {
 

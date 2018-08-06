@@ -21,7 +21,7 @@ import org.eclipse.rdf4j.query.Binding;
 import org.eclipse.rdf4j.query.BindingSet;
 
 /**
- * @author George Garbis <ggarbis@di.uoa.gr>
+ * @author Theofilos Ioannidis <tioannid@di.uoa.gr>
  */
 public class MacroMapSearchExperiment extends MacroExperiment {
 	

@@ -16,7 +16,7 @@ import java.util.Random;
 import org.apache.log4j.Logger;
 
 /**
- * @author George Garbis <ggarbis@di.uoa.gr>
+ * @author Theofilos Ioannidis <tioannid@di.uoa.gr>
  */
 public class MacroReverseGeocodingQueriesSet extends QueriesSet {
 

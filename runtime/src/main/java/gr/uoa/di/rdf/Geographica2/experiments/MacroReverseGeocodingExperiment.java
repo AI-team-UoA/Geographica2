@@ -16,7 +16,7 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 
 /**
- * @author George Garbis <ggarbis@di.uoa.gr>
+ * @author Theofilos Ioannidis <tioannid@di.uoa.gr>
  */
 public class MacroReverseGeocodingExperiment extends MacroExperiment {
 

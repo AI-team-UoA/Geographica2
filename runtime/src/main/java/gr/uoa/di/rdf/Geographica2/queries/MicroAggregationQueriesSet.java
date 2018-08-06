@@ -13,7 +13,7 @@ import gr.uoa.di.rdf.Geographica2.systemsundertest.SystemUnderTest;
 import org.apache.log4j.Logger;
 
 /**
- * @author George Garbis <ggarbis@di.uoa.gr>
+ * @author Theofilos Ioannidis <tioannid@di.uoa.gr>
  */
 public class MicroAggregationQueriesSet  extends QueriesSet {	
 	
