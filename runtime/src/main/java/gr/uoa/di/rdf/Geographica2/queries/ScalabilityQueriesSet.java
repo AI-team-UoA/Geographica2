@@ -25,16 +25,18 @@ public class ScalabilityQueriesSet extends QueriesSet {
     static Logger logger = Logger.getLogger(ScalabilityQueriesSet.class.getSimpleName());
 
     // Template to create spatial selection queries
-    private final String spatialSelectionQryTemplate = prefixes
-            + "\n select ?s1 ?o1 where { \n"
-            + " ?s1 ASWKT1 ?o1 . \n"
+    private String spatialSelectionQryTemplate = 
+              "\n SELECT ?s1 ?o1 WHERE { \n"
+            + " ?s1 geo:asWKT ?o1 . \n"
             + "  FILTER(geof:FUNCTION(?o1, GIVEN_SPATIAL_LITERAL)). "
             + "}  \n";
 
-    private String spatialJoinQryTemplate = prefixes
-            + "\n select ?s1 ?s2 where { \n"
-            + " ?s1 ASWKT1 ?o1 . \n"
-            + " ?s2 ASWKT2 ?o2} . \n"
+    private String spatialJoinQryTemplate = 
+              "\n SELECT ?s1 ?s2 WHERE { \n"
+            + " ?s1 coront:hasLandUse coront:discontinuousUrbanFabric ; \n"
+            + "     geo:hasGeometry [ geo:asWKT ?o1 ] . \n"
+            + " ?s2 coront:hasLandUse coront:airports ; \n"
+            + "     geo:hasGeometry [ geo:asWKT ?o2 ] . \n"
             + " FILTER(?s1 != ?s2). \n"
             + " FILTER(geof:FUNCTION(?o1, ?o2)). \n"
             + "} \n";
@@ -50,6 +52,7 @@ public class ScalabilityQueriesSet extends QueriesSet {
         prefixes = "PREFIX geof: <http://www.opengis.net/def/function/geosparql/> \n"
                 + "PREFIX geo: <http://www.opengis.net/ont/geosparql#> \n"
                 + "PREFIX ext: <http://rdf.useekm.com/ext#> \n"
+                + "PREFIX coront: <http://www.app-lab.eu/corine/ontology#> \n"
                 + "\n";
         queriesN = 2; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
 
@@ -76,7 +79,7 @@ public class ScalabilityQueriesSet extends QueriesSet {
                 // SC1 - Find all polygons of CORINE_2012 that spatially intersect with a given point
                 label = "SC1_Intersects_Corine_GivenPoint";
                 query = spatialSelectionQryTemplate;
-                query = query.replace("ASWKT1", default_asWKT);
+                // query = query.replace("ASWKT1", default_asWKT);
                 query = query.replace("GIVEN_SPATIAL_LITERAL", givenPoint);
                 query = query.replace("FUNCTION", "sfIntersects");
                 break;
@@ -85,8 +88,8 @@ public class ScalabilityQueriesSet extends QueriesSet {
                 // SC2 - Find all polygons of CORINE_2012 that spatially intersect with a given line
                 label = "SC2_Corine_Polygons_Intersect";
                 query = spatialJoinQryTemplate;
-                query = query.replace("ASWKT1", default_asWKT);
-                query = query.replace("ASWKT2", default_asWKT);
+                // query = query.replace("ASWKT1", default_asWKT);
+                // query = query.replace("ASWKT2", default_asWKT);
                 query = query.replace("FUNCTION", "sfIntersects");
                 break;
 
@@ -95,6 +98,6 @@ public class ScalabilityQueriesSet extends QueriesSet {
         }
 
         String translatedQuery = sut.translateQuery(query, label);
-        return new QueryStruct(translatedQuery, label);
+        return new QueryStruct(prefixes + translatedQuery, label);
     }
 }

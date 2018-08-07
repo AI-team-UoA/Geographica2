@@ -104,5 +104,9 @@ done
 
 # STEP 5: Create $RepoName repository with config file $RepoConfig and load TRIG files while measuring the elapsed time
 time $PreLoad_Exe -c $RepoConfig *.trig
+
+# STEP 6: Remove TRIG file to avoid allocating space
+rm *.trig
+
 exit 0
 

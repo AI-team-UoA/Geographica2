@@ -1,22 +1,41 @@
-GraphDBBaseDir=${1}
+# SYNTAX :
+#    <script> RepoBaseDir DatasetBaseDir JVM_Xmx
+SCRIPT_NAME=`basename "$0"`
+SYNTAX="
+SYNTAX: $SCRIPT_NAME <DatasetBaseDir> <GraphDBBaseDir>
+\t<DatasetBaseDir>\t:\tbase directory under which RDF dataset triple files are stored in various subdirectories,
+\t<GraphDBBaseDir>\t:\tGraphDB base installation directory"
+
+# STEP 1: Validate the script's syntax
+#      1.1: check number of arguments
+if (( $# != 2 )); then
+    echo -e "Illegal number of parameters $SYNTAX"
+	exit 1
+fi
+
+DatasetBaseDir=${1}
+GraphDBBaseDir=${2}
+
+echo -e "`date`\n"
+
 # Real World dataset
-./createGraphDBRepo.sh realworld.ttl ~/NetBeansProjects/PhD/Geographica_Misc/Datasets/RealWorldWorkload/WGS84/RealWorld $GraphDBBaseDir
+#./createGraphDBRepo.sh realworld.ttl ${DatasetBaseDir}/RealWorldWorkload/WGS84/RealWorld $GraphDBBaseDir
 # Synthetic dataset
-./createGraphDBRepo.sh synthetic.ttl ~/NetBeansProjects/PhD/Geographica_Misc/Datasets/SyntheticWorkload/Synthetic $GraphDBBaseDir
+#./createGraphDBRepo.sh synthetic.ttl ${DatasetBaseDir}/SyntheticWorkload/Synthetic $GraphDBBaseDir
 # Real World dataset - Points only!
-./createGraphDBRepo.sh realworld_points.ttl ~/NetBeansProjects/PhD/Geographica_Misc/Datasets/RealWorldWorkload/WGS84/RealWorld_Points $GraphDBBaseDir
+#./createGraphDBRepo.sh realworld_points.ttl ${DatasetBaseDir}/RealWorldWorkload/WGS84/RealWorld_Points $GraphDBBaseDir
 # Synthetic dataset - Points Of Interest only!
-./createGraphDBRepo.sh synthetic_pois.ttl ~/NetBeansProjects/PhD/Geographica_Misc/Datasets/SyntheticWorkload/Synthetic_POIs $GraphDBBaseDir
+#./createGraphDBRepo.sh synthetic_pois.ttl ${DatasetBaseDir}/SyntheticWorkload/Synthetic_POIs $GraphDBBaseDir
 
 # CORINE2012+OSM dataset - Scalability 10K
-./createGraphDBRepo.sh scalability_10K.ttl ~/NetBeansProjects/PhD/Geographica_Misc/Datasets/Scalability/10K $GraphDBBaseDir
+./createGraphDBRepo.sh scalability_10K.ttl ${DatasetBaseDir}/Scalability/10K $GraphDBBaseDir
 # CORINE2012+OSM dataset - Scalability 100K
-./createGraphDBRepo.sh scalability_100K.ttl ~/NetBeansProjects/PhD/Geographica_Misc/Datasets/Scalability/100K $GraphDBBaseDir
+./createGraphDBRepo.sh scalability_100K.ttl ${DatasetBaseDir}/Scalability/100K $GraphDBBaseDir
 # CORINE2012+OSM dataset - Scalability 1M
-./createGraphDBRepo.sh scalability_1M.ttl ~/NetBeansProjects/PhD/Geographica_Misc/Datasets/Scalability/1M $GraphDBBaseDir
+./createGraphDBRepo.sh scalability_1M.ttl ${DatasetBaseDir}/Scalability/1M $GraphDBBaseDir
 # CORINE2012+OSM dataset - Scalability 10M
-./createGraphDBRepo.sh scalability_10M.ttl ~/NetBeansProjects/PhD/Geographica_Misc/Datasets/Scalability/10M $GraphDBBaseDir
+./createGraphDBRepo.sh scalability_10M.ttl ${DatasetBaseDir}/Scalability/10M $GraphDBBaseDir
 # CORINE2012+OSM dataset - Scalability 100M
-./createGraphDBRepo.sh scalability_100M.ttl ~/NetBeansProjects/PhD/Geographica_Misc/Datasets/Scalability/100M $GraphDBBaseDir
+./createGraphDBRepo.sh scalability_100M.ttl ${DatasetBaseDir}/Scalability/100M $GraphDBBaseDir
 # CORINE2012+OSM dataset - Scalability 500M
-./createGraphDBRepo.sh scalability_500M.ttl ~/NetBeansProjects/PhD/Geographica_Misc/Datasets/Scalability/500M $GraphDBBaseDir
+./createGraphDBRepo.sh scalability_500M.ttl ${DatasetBaseDir}/Scalability/500M $GraphDBBaseDir

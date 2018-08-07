@@ -10,7 +10,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Xmx8g -Dregister-external-plugins=/home/tioannid/graphdb-free-8.5.0/lib/plugins -classpath %classpath gr.uoa.di.rdf.Geographica2.graphdbsut.RunGraphDB -bd "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/data5" -rp realworld -cr false -r 1 -l "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/TestResults/DEVNULL/" print MacroComputeStatistics</exec.args>
+                <exec.args>-Xmx8g -Dregister-external-plugins=/home/tioannid/graphdb-free-8.5.0/lib/plugins -classpath %classpath gr.uoa.di.rdf.Geographica2.graphdbsut.RunGraphDB -bd "/media/sf_VM_Shared/PHD/GraphDB_Repos" -rp scalability_10K -cr false -r 1 -t 3600 -m 60 -l "/media/sf_VM_Shared/PHD/Results_Store/DEVNULL" run Scalability</exec.args>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
@@ -24,7 +24,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -Xmx8g -Dregister-external-plugins=/home/tioannid/graphdb-free-8.5.0/lib/plugins -classpath %classpath gr.uoa.di.rdf.Geographica2.graphdbsut.RunGraphDB -bd "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/data5" -rp realworld -cr false -r 1 -l "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/TestResults/DEVNULL/" print MacroComputeStatistics</exec.args>
+                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -Xmx8g -Dregister-external-plugins=/home/tioannid/graphdb-free-8.5.0/lib/plugins -classpath %classpath gr.uoa.di.rdf.Geographica2.graphdbsut.RunGraphDB -bd "/media/sf_VM_Shared/PHD/GraphDB_Repos" -rp scalability_10K -cr false -r 1 -t 3600 -m 60 -l "/media/sf_VM_Shared/PHD/Results_Store/DEVNULL" run Scalability</exec.args>
                 <exec.executable>java</exec.executable>
                 <jpda.listen>true</jpda.listen>
             </properties>
@@ -39,7 +39,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Xmx8g -Dregister-external-plugins=/home/tioannid/graphdb-free-8.5.0/lib/plugins -classpath %classpath gr.uoa.di.rdf.Geographica2.graphdbsut.RunGraphDB -bd "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/data5" -rp realworld -cr false -r 1 -l "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/TestResults/DEVNULL/" print MacroComputeStatistics</exec.args>
+                <exec.args>-Xmx8g -Dregister-external-plugins=/home/tioannid/graphdb-free-8.5.0/lib/plugins -classpath %classpath gr.uoa.di.rdf.Geographica2.graphdbsut.RunGraphDB -bd "/media/sf_VM_Shared/PHD/GraphDB_Repos" -rp scalability_10K -cr false -r 1 -t 3600 -m 60 -l "/media/sf_VM_Shared/PHD/Results_Store/DEVNULL" run Scalability</exec.args>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
