@@ -19,23 +19,23 @@ GraphDBBaseDir=${2}
 echo -e "`date`\n"
 
 # Real World dataset
-#./createGraphDBRepo.sh realworld.ttl ${DatasetBaseDir}/RealWorldWorkload/WGS84/RealWorld $GraphDBBaseDir
+./createGraphDBRepo.sh realworld.ttl ${DatasetBaseDir}/RealWorldWorkload/WGS84/RealWorld TRIG $GraphDBBaseDir
 # Synthetic dataset
-#./createGraphDBRepo.sh synthetic.ttl ${DatasetBaseDir}/SyntheticWorkload/Synthetic $GraphDBBaseDir
+./createGraphDBRepo.sh synthetic.ttl ${DatasetBaseDir}/SyntheticWorkload/Synthetic N-TRIPLES $GraphDBBaseDir
 # Real World dataset - Points only!
-#./createGraphDBRepo.sh realworld_points.ttl ${DatasetBaseDir}/RealWorldWorkload/WGS84/RealWorld_Points $GraphDBBaseDir
+./createGraphDBRepo.sh realworld_points.ttl ${DatasetBaseDir}/RealWorldWorkload/WGS84/RealWorld_Points N-TRIPLES $GraphDBBaseDir
 # Synthetic dataset - Points Of Interest only!
-#./createGraphDBRepo.sh synthetic_pois.ttl ${DatasetBaseDir}/SyntheticWorkload/Synthetic_POIs $GraphDBBaseDir
+./createGraphDBRepo.sh synthetic_pois.ttl ${DatasetBaseDir}/SyntheticWorkload/Synthetic_POIs N-TRIPLES $GraphDBBaseDir
 
 # CORINE2012+OSM dataset - Scalability 10K
-./createGraphDBRepo.sh scalability_10K.ttl ${DatasetBaseDir}/Scalability/10K $GraphDBBaseDir
+./createGraphDBRepo.sh scalability_10K.ttl ${DatasetBaseDir}/Scalability/10K N-TRIPLES $GraphDBBaseDir
 # CORINE2012+OSM dataset - Scalability 100K
-./createGraphDBRepo.sh scalability_100K.ttl ${DatasetBaseDir}/Scalability/100K $GraphDBBaseDir
+./createGraphDBRepo.sh scalability_100K.ttl ${DatasetBaseDir}/Scalability/100K N-TRIPLES $GraphDBBaseDir
 # CORINE2012+OSM dataset - Scalability 1M
-./createGraphDBRepo.sh scalability_1M.ttl ${DatasetBaseDir}/Scalability/1M $GraphDBBaseDir
+./createGraphDBRepo.sh scalability_1M.ttl ${DatasetBaseDir}/Scalability/1M N-TRIPLES $GraphDBBaseDir
 # CORINE2012+OSM dataset - Scalability 10M
-./createGraphDBRepo.sh scalability_10M.ttl ${DatasetBaseDir}/Scalability/10M $GraphDBBaseDir
+./createGraphDBRepo.sh scalability_10M.ttl ${DatasetBaseDir}/Scalability/10M N-TRIPLES $GraphDBBaseDir
 # CORINE2012+OSM dataset - Scalability 100M
-./createGraphDBRepo.sh scalability_100M.ttl ${DatasetBaseDir}/Scalability/100M $GraphDBBaseDir
+./createGraphDBRepo.sh scalability_100M.ttl ${DatasetBaseDir}/Scalability/100M N-TRIPLES $GraphDBBaseDir
 # CORINE2012+OSM dataset - Scalability 500M
-./createGraphDBRepo.sh scalability_500M.ttl ${DatasetBaseDir}/Scalability/500M $GraphDBBaseDir
+./createGraphDBRepo.sh scalability_500M.ttl ${DatasetBaseDir}/Scalability/500M N-TRIPLES $GraphDBBaseDir
