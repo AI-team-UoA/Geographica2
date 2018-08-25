@@ -124,7 +124,7 @@ public abstract class Experiment {
 					}
 					
 					logger.info("Executing query ["+timeoutSecs+"] (cold, "
-							+ queryI + ", " + repetitionI + "): "
+							+ queryI + ", " + repetitionI + "): \n"
 							+ queryStruct.getQuery());
 
 					sut.initialize();
@@ -236,7 +236,7 @@ public abstract class Experiment {
 				for (repetitionI = 0; repetitionI < repetitions; repetitionI++) {
 				
 					logger.info("Executing query (warm, "
-							+ queryI + ", " + repetitionI + "): "
+							+ queryI + ", " + repetitionI + "): \n"
 							+ queryStruct.getQuery());
 
 					// measure times

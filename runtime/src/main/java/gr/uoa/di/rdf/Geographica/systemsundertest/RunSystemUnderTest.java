@@ -10,9 +10,10 @@ import gr.uoa.di.rdf.Geographica.experiments.MicroAggregationsExperiment;
 import gr.uoa.di.rdf.Geographica.experiments.MicroJoinsExperiment;
 import gr.uoa.di.rdf.Geographica.experiments.MicroNonTopologicalExperiment;
 import gr.uoa.di.rdf.Geographica.experiments.MicroSelectionsExperiment;
+import gr.uoa.di.rdf.Geographica.experiments.ScalabilityExperiment;
 import gr.uoa.di.rdf.Geographica.experiments.SyntheticExperiment;
-import gr.uoa.di.rdf.Geographica.queries.QueriesSet;
 import gr.uoa.di.rdf.Geographica.experiments.SyntheticOnlyPointsExperiment;
+import gr.uoa.di.rdf.Geographica.queries.QueriesSet;
 
 import java.io.IOException;
 
@@ -34,7 +35,7 @@ public abstract class RunSystemUnderTest  {
 	protected SystemUnderTest	sut = null;
 
 	protected void printHelp() {
-		System.err.println("Usage: "+this.getClass().getSimpleName()+" [options] (run|print) (MicroNonTopological|MicroSelections|MicroJoins|MicroAggregations|MacroGeocoding|MacroMapSearch|MacroRapidMapping|MacroReverseGeocoding|MacroComputeStatistics|Synthetic|SyntheticPOIs)+");
+		System.err.println("Usage: "+this.getClass().getSimpleName()+" [options] (run|print) (MicroNonTopological|MicroSelections|MicroJoins|MicroAggregations|MacroGeocoding|MacroMapSearch|MacroRapidMapping|MacroReverseGeocoding|MacroComputeStatistics|Synthetic|SyntheticPOIs|Scalability)+");
 		HelpFormatter formatter = new HelpFormatter();
 		formatter.printHelp(this.getClass().getSimpleName(), options );		
 	}
@@ -45,8 +46,7 @@ public abstract class RunSystemUnderTest  {
 		options.addOption("q", "queries", true, "List of queries to run");
 		options.addOption("r", "repetitions", true, "Repetitions for experiments (default: 5)");
 		options.addOption("t", "timeout", true, "Timeout (seconds) for experiments (default 30mins)");
-		options.addOption("m", "runtime", true, "Run time (minutes) for experiments (Macro scenarios) (default: 2hours)");
-		
+		options.addOption("m", "runtime", true, "Run time (minutes) for experiments (Macro scenarios) (default: 2hours)");	
 		options.addOption("N", "syntheticN", true, "Parameter for synthetic experiments");
 		options.addOption("l", "logpath", true, "Log path");
 	}
@@ -70,7 +70,6 @@ public abstract class RunSystemUnderTest  {
 		logger.info("N:\t"+syntheticN);
 		logger.info("Log Path:\t"+cmd.getOptionValue("logpath"));
 		logger.info("Queries to run:\t"+cmd.getOptionValue("queries"));
-
 	}
 	
 	protected abstract void initSystemUnderTest() throws Exception; 
@@ -109,8 +108,7 @@ public abstract class RunSystemUnderTest  {
 
 		int repetitions = Integer.parseInt((cmd.getOptionValue("r")!=null?cmd.getOptionValue("r"):"5"));
 		int timeoutSecs = (cmd.getOptionValue("t")!=null?Integer.parseInt(cmd.getOptionValue("t")):30*60); // 30 mins
-		int runTimeInMinutes = (cmd.getOptionValue("m")!=null?Integer.parseInt(cmd.getOptionValue("runtime")):2*60); // 2 hours
-		 			
+		int runTimeInMinutes = (cmd.getOptionValue("m")!=null?Integer.parseInt(cmd.getOptionValue("runtime")):2*60); // 2 hours	 			
 		int syntheticN = Integer.parseInt((cmd.getOptionValue("N")!=null?cmd.getOptionValue("N"):"0"));
 		String logPath = cmd.getOptionValue("l");			
 		
@@ -160,10 +158,13 @@ public abstract class RunSystemUnderTest  {
 					System.err.println("For synthetic data experiments parameter N>0 is obligatory");
 				}
 				experiment = new SyntheticOnlyPointsExperiment(sut, repetitions, timeoutSecs, syntheticN, queriesToRun, logPath);
-			} 
+			// Scalability
+			} else if ( args[i].equalsIgnoreCase("Scalability") ) {
+				experiment = new ScalabilityExperiment(sut, repetitions, timeoutSecs, queriesToRun, logPath);
+			}    
 			else {
 				System.err.println("Error: "+args[i]+" is not recognized.");
-				System.err.println("Only MicroNonTopological, MicroSelections, MicroJoins, MicroAggreagations.");
+				System.err.println("Only MicroNonTopological, MicroSelections, MicroJoins, MicroAggreagations,etc.");
 				System.exit(-1);
 			}
 

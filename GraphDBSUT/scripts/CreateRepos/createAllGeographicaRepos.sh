@@ -1,5 +1,5 @@
 # SYNTAX :
-#    <script> RepoBaseDir DatasetBaseDir JVM_Xmx
+#    <script> RepoBaseDir DatasetBaseDir
 SCRIPT_NAME=`basename "$0"`
 SYNTAX="
 SYNTAX: $SCRIPT_NAME <DatasetBaseDir> <GraphDBBaseDir>
@@ -19,13 +19,13 @@ GraphDBBaseDir=${2}
 echo -e "`date`\n"
 
 # Real World dataset
-./createGraphDBRepo.sh realworld.ttl ${DatasetBaseDir}/RealWorldWorkload/WGS84/RealWorld TRIG $GraphDBBaseDir
+#./createGraphDBRepo.sh realworld.ttl ${DatasetBaseDir}/RealWorldWorkload/WGS84/RealWorld TRIG $GraphDBBaseDir
 # Synthetic dataset
-./createGraphDBRepo.sh synthetic.ttl ${DatasetBaseDir}/SyntheticWorkload/Synthetic N-TRIPLES $GraphDBBaseDir
+#./createGraphDBRepo.sh synthetic.ttl ${DatasetBaseDir}/SyntheticWorkload/Synthetic N-TRIPLES $GraphDBBaseDir
 # Real World dataset - Points only!
-./createGraphDBRepo.sh realworld_points.ttl ${DatasetBaseDir}/RealWorldWorkload/WGS84/RealWorld_Points N-TRIPLES $GraphDBBaseDir
+#./createGraphDBRepo.sh realworld_points.ttl ${DatasetBaseDir}/RealWorldWorkload/WGS84/RealWorld_Points N-TRIPLES $GraphDBBaseDir
 # Synthetic dataset - Points Of Interest only!
-./createGraphDBRepo.sh synthetic_pois.ttl ${DatasetBaseDir}/SyntheticWorkload/Synthetic_POIs N-TRIPLES $GraphDBBaseDir
+#./createGraphDBRepo.sh synthetic_pois.ttl ${DatasetBaseDir}/SyntheticWorkload/Synthetic_POIs N-TRIPLES $GraphDBBaseDir
 
 # CORINE2012+OSM dataset - Scalability 10K
 ./createGraphDBRepo.sh scalability_10K.ttl ${DatasetBaseDir}/Scalability/10K N-TRIPLES $GraphDBBaseDir

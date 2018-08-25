@@ -111,7 +111,6 @@ public abstract class RunSystemUnderTest  {
 		int runTimeInMinutes = (cmd.getOptionValue("m")!=null?Integer.parseInt(cmd.getOptionValue("runtime")):2*60); // 2 hours		 			
 		int syntheticN = Integer.parseInt((cmd.getOptionValue("N")!=null?cmd.getOptionValue("N"):"0"));
 		String logPath = cmd.getOptionValue("l");
-                int scalabilityN = Integer.parseInt((cmd.getOptionValue("scN")!=null?cmd.getOptionValue("scN"):"0")); // 0 triples for repository
 		
 		// List of queries to run
 		String queriesToRunString = cmd.getOptionValue("q");

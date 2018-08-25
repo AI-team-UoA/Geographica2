@@ -12,7 +12,6 @@ import gr.uoa.di.rdf.Geographica2.queries.QueriesSet;
 import gr.uoa.di.rdf.Geographica2.queries.QueriesSet.QueryStruct;
 import gr.uoa.di.rdf.Geographica2.systemsundertest.SystemUnderTest;
 
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -237,7 +236,7 @@ public abstract class Experiment {
 				for (repetitionI = 0; repetitionI < repetitions; repetitionI++) {
 				
 					logger.info("Executing query (warm, "
-							+ queryI + ", " + repetitionI + "): "
+							+ queryI + ", " + repetitionI + "): \n"
 							+ queryStruct.getQuery());
 
 					// measure times

@@ -1,0 +1,1 @@
+-h localhost -db scalability_10K -p 5432 -u postgres -P postgres -r 3 -t 3600 -m 60 -l "/media/sf_VM_Shared/PHD/Results_Store/DEVNULL" run

@@ -22,7 +22,7 @@ for dir in `ls -1d *Experiment`; do
 	EXPERIMENT_NAME=`echo ${dir} | cut -d '-' -f 2`
 	EXPERIMENT_NAME=`echo $EXPERIMENT_NAME | sed 's/Experiment//' -`
 
-	if [[ "$EXPERIMENT_NAME" =~ ^(MicroNonTopological|MicroSelections|MicroJoins|MicroAggregations|Synthetic)$ ]]; then
+	if [[ "$EXPERIMENT_NAME" =~ ^(MicroNonTopological|MicroSelections|MicroJoins|MicroAggregations|Synthetic|Scalability)$ ]]; then
 		# list the long.. files only and for each one of them find:
 		#     the query number, name and type
 		#     the corresponding short.. file from which retrieve the median value
