@@ -33,9 +33,11 @@ public class ScalabilityQueriesSet extends QueriesSet {
 
     private String spatialJoinQryTemplate = 
               "\n SELECT ?s1 ?s2 WHERE { \n"
-            + " ?s1 coront:hasLandUse coront:discontinuousUrbanFabric ; \n"
+            + " ?s1 coront:hasLandUse coront:waterCourses ; \n"
+            + "     coront:codeLevel1 \"5\"^^xsd:integer ; \n"
             + "     geo:hasGeometry [ geo:asWKT ?o1 ] . \n"
-            + " ?s2 coront:hasLandUse coront:airports ; \n"
+            + " ?s2 coront:hasLandUse coront:estuaries ; \n"
+            + "     coront:codeLevel1 \"5\"^^xsd:integer ; \n"
             + "     geo:hasGeometry [ geo:asWKT ?o2 ] . \n"
             + " FILTER(?s1 != ?s2). \n"
             + " FILTER(geof:FUNCTION(?o1, ?o2)). \n"
@@ -53,6 +55,7 @@ public class ScalabilityQueriesSet extends QueriesSet {
                 + "PREFIX geo: <http://www.opengis.net/ont/geosparql#> \n"
                 + "PREFIX ext: <http://rdf.useekm.com/ext#> \n"
                 + "PREFIX coront: <http://www.app-lab.eu/corine/ontology#> \n"
+                + "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n"
                 + "\n";
         queriesN = 2; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
 
