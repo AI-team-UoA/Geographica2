@@ -1,1 +1,0 @@
--bd "/home/journal/graphdb-free-8.5.0/data" -rp scalability_10K -cr false -r 3 -t 3600 -m 60 -l "/home/journal/Results52/GraphDBSUT/Scalability/10K" run

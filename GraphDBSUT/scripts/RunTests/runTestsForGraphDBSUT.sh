@@ -9,7 +9,7 @@ ARGS_FILE=${1}
 #echo "ARGS_FILE = $ARGS_FILE"
 # read the line from the ARGS_FILE which contains all arguments except the experiment name
 ARGS_NO_EXPERIMENT=`< $ARGS_FILE`
-#echo "ARGS_NO_EXPERIMENT = $ARGS_NO_EXPERIMENT"
+echo "ARGS_NO_EXPERIMENT = $ARGS_NO_EXPERIMENT"
 
 # retrieve the full path name of the file which contains the names of experiments to perform 
 EXPERIMENT_LIST_FILE=`readlink -f ${2}`
