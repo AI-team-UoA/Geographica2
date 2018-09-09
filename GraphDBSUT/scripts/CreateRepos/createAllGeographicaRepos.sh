@@ -27,15 +27,8 @@ echo -e "`date`\n"
 # Synthetic dataset - Points Of Interest only!
 #./createGraphDBRepo.sh synthetic_pois.ttl ${DatasetBaseDir}/SyntheticWorkload/Synthetic_POIs N-TRIPLES $GraphDBBaseDir
 
-# CORINE2012+OSM dataset - Scalability 10K
-./createGraphDBRepo.sh scalability_10K.ttl ${DatasetBaseDir}/Scalability/10K N-TRIPLES $GraphDBBaseDir
-# CORINE2012+OSM dataset - Scalability 100K
-./createGraphDBRepo.sh scalability_100K.ttl ${DatasetBaseDir}/Scalability/100K N-TRIPLES $GraphDBBaseDir
-# CORINE2012+OSM dataset - Scalability 1M
-./createGraphDBRepo.sh scalability_1M.ttl ${DatasetBaseDir}/Scalability/1M N-TRIPLES $GraphDBBaseDir
-# CORINE2012+OSM dataset - Scalability 10M
-./createGraphDBRepo.sh scalability_10M.ttl ${DatasetBaseDir}/Scalability/10M N-TRIPLES $GraphDBBaseDir
-# CORINE2012+OSM dataset - Scalability 100M
-./createGraphDBRepo.sh scalability_100M.ttl ${DatasetBaseDir}/Scalability/100M N-TRIPLES $GraphDBBaseDir
-# CORINE2012+OSM dataset - Scalability 500M
-./createGraphDBRepo.sh scalability_500M.ttl ${DatasetBaseDir}/Scalability/500M N-TRIPLES $GraphDBBaseDir
+# OSM+CORINE2012 datasets - Scalability 10K, 100K, 1M, 10M, 100M, 500M
+levels=(  "10K" "100K" "1M" "10M" "100M" "500M" )
+for level in "${levels[@]}"; do
+        ./createGraphDBRepo.sh scalability_${level}.ttl ${DatasetBaseDir}/Scalability/${level} N-TRIPLES $GraphDBBaseDir
+done

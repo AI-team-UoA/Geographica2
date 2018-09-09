@@ -25,29 +25,26 @@ public class ScalabilityQueriesSet extends QueriesSet {
     static Logger logger = Logger.getLogger(ScalabilityQueriesSet.class.getSimpleName());
 
     // Template to create spatial selection queries
-    private String spatialSelectionQryTemplate = 
-              "\n SELECT ?s1 ?o1 WHERE { \n"
+    private String spatialSelectionQryTemplate
+            = "\n SELECT ?s1 ?o1 WHERE { \n"
             + " ?s1 geo:asWKT ?o1 . \n"
             + "  FILTER(geof:FUNCTION(?o1, GIVEN_SPATIAL_LITERAL)). "
-            + "}  \n";
+            + "} \n";
 
-    private String spatialJoinQryTemplate = 
-              "\n SELECT ?s1 ?s2 WHERE { \n"
-            + " ?s1 coront:hasLandUse coront:waterCourses ; \n"
-            + "     coront:codeLevel1 \"5\"^^xsd:integer ; \n"
-            + "     geo:hasGeometry [ geo:asWKT ?o1 ] . \n"
-            + " ?s2 coront:hasLandUse coront:estuaries ; \n"
-            + "     coront:codeLevel1 \"5\"^^xsd:integer ; \n"
-            + "     geo:hasGeometry [ geo:asWKT ?o2 ] . \n"
-            + " FILTER(?s1 != ?s2). \n"
-            + " FILTER(geof:FUNCTION(?o1, ?o2)). \n"
+    private String spatialJoinQryTemplate
+            = "\n SELECT ?s1 ?s2 WHERE { \n"
+            + "       ?s1 geo:hasGeometry [ geo:asWKT ?o1 ] . \n"
+            + "       ?s2 geo:hasGeometry [ geo:asWKT ?o2 ] . \n"
+            + "   FILTER(regex(str(?o1), \"POINT\", \"i\")). \n"
+            + "   FILTER(regex(str(?o2), \"POLYGON\", \"i\")). \n"
+            + "   FILTER(geof:FUNCTION(?o1, ?o2)) "
             + "} \n";
 
     private String givenPolygonFile = "givenPolygonVrilissia.txt";
     private String givenPolygon;
     private String spatialDatatype = "<http://www.opengis.net/ont/geosparql#wktLiteral>";
-    private String givenPoint = "\"POINT(-52.33052551746367 4.939113845399675)\"^^" + spatialDatatype; // somewhere in French Guyane
-    
+    private String givenPoint = "\"POINT(-4.30938720703125 51.86462001954885)\"^^" + spatialDatatype; // somewhere in Carmarthen Wales
+
     public ScalabilityQueriesSet(SystemUnderTest sut) throws IOException {
         super(sut);
         // redefine the prefixes to include just the necessary prefixes
@@ -79,8 +76,8 @@ public class ScalabilityQueriesSet extends QueriesSet {
         switch (queryIndex) {
 
             case 0:
-                // SC1 - Find all polygons of CORINE_2012 that spatially intersect with a given point
-                label = "SC1_Intersects_Corine_GivenPoint";
+                // SC1 - Find all polygons of that spatially intersect with a given point
+                label = "SC1_Polygon_Intersects_GivenPoint";
                 query = spatialSelectionQryTemplate;
                 // query = query.replace("ASWKT1", default_asWKT);
                 query = query.replace("GIVEN_SPATIAL_LITERAL", givenPoint);
@@ -88,8 +85,8 @@ public class ScalabilityQueriesSet extends QueriesSet {
                 break;
 
             case 1:
-                // SC2 - Find all polygons of CORINE_2012 that spatially intersect with a given line
-                label = "SC2_Corine_Polygons_Intersect";
+                // SC2 - Find all points that spatially intersect with polygons
+                label = "SC2_Points_Intersect_Polygons";
                 query = spatialJoinQryTemplate;
                 // query = query.replace("ASWKT1", default_asWKT);
                 // query = query.replace("ASWKT2", default_asWKT);
