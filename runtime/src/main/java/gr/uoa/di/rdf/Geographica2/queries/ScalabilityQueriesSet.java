@@ -43,7 +43,7 @@ public class ScalabilityQueriesSet extends QueriesSet {
     private String givenPolygonFile = "givenPolygonVrilissia.txt";
     private String givenPolygon;
     private String spatialDatatype = "<http://www.opengis.net/ont/geosparql#wktLiteral>";
-    private String givenPoint = "\"POINT(-4.30938720703125 51.86462001954885)\"^^" + spatialDatatype; // somewhere in Carmarthen Wales
+    private String givenPoint = "\"POLYGON((-3.6199951171875 51.80521825434943,-3.6968994140625004 51.667444941475765,-3.3728027343750004 51.61290019118334,-3.2354736328125004 51.665741411057155,-3.392028808593751 51.76274043738508,-3.6199951171875 51.80521825434943))\"^^" + spatialDatatype; // somewhere in Wales
 
     public ScalabilityQueriesSet(SystemUnderTest sut) throws IOException {
         super(sut);
