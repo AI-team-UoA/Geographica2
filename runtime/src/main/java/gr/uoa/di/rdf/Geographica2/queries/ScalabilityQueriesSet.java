@@ -28,22 +28,21 @@ public class ScalabilityQueriesSet extends QueriesSet {
     private String spatialSelectionQryTemplate
             = "\n SELECT ?s1 ?o1 WHERE { \n"
             + " ?s1 geo:asWKT ?o1 . \n"
-            + "  FILTER(geof:FUNCTION(?o1, GIVEN_SPATIAL_LITERAL)). "
+            + "  FILTER(geof:FUNCTION(?o1, GIVEN_SPATIAL_LITERAL)). \n"
             + "} \n";
 
     private String spatialJoinQryTemplate
             = "\n SELECT ?s1 ?s2 WHERE { \n"
             + "       ?s1 geo:hasGeometry [ geo:asWKT ?o1 ] . \n"
             + "       ?s2 geo:hasGeometry [ geo:asWKT ?o2 ] . \n"
-            + "   FILTER(regex(str(?o1), \"POINT\", \"i\")). \n"
-            + "   FILTER(regex(str(?o2), \"POLYGON\", \"i\")). \n"
-            + "   FILTER(geof:FUNCTION(?o1, ?o2)) "
+            + "   FILTER(?code1>1000 && ?code1<=1050) . \n" 
+            + "   FILTER(?code2>5000 && ?code2<6000) . \n"
+            + "   FILTER(geof:FUNCTION(?o1, ?o2)) \n"
             + "} \n";
 
-    private String givenPolygonFile = "givenPolygonVrilissia.txt";
+    private String givenPolygonFile = "givenPolygonCrossesEurope.txt";
     private String givenPolygon;
     private String spatialDatatype = "<http://www.opengis.net/ont/geosparql#wktLiteral>";
-    private String givenPoint = "\"POLYGON((-3.6199951171875 51.80521825434943,-3.6968994140625004 51.667444941475765,-3.3728027343750004 51.61290019118334,-3.2354736328125004 51.665741411057155,-3.392028808593751 51.76274043738508,-3.6199951171875 51.80521825434943))\"^^" + spatialDatatype; // somewhere in Wales
 
     public ScalabilityQueriesSet(SystemUnderTest sut) throws IOException {
         super(sut);
@@ -76,20 +75,17 @@ public class ScalabilityQueriesSet extends QueriesSet {
         switch (queryIndex) {
 
             case 0:
-                // SC1 - Find all polygons of that spatially intersect with a given point
-                label = "SC1_Polygon_Intersects_GivenPoint";
+                // SC1 - Find all features that spatially intersect with a given polygon
+                label = "SC1_Geometries_Intersects_GivenPolygon";
                 query = spatialSelectionQryTemplate;
-                // query = query.replace("ASWKT1", default_asWKT);
-                query = query.replace("GIVEN_SPATIAL_LITERAL", givenPoint);
+                query = query.replace("GIVEN_SPATIAL_LITERAL", givenPolygon);
                 query = query.replace("FUNCTION", "sfIntersects");
                 break;
 
             case 1:
-                // SC2 - Find all points that spatially intersect with polygons
-                label = "SC2_Points_Intersect_Polygons";
+                // SC2 - Find all features that spatially intersect with other features
+                label = "SC2__Geometries_Intersect_Geometries";
                 query = spatialJoinQryTemplate;
-                // query = query.replace("ASWKT1", default_asWKT);
-                // query = query.replace("ASWKT2", default_asWKT);
                 query = query.replace("FUNCTION", "sfIntersects");
                 break;
 
