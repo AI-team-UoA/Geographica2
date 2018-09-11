@@ -32,13 +32,16 @@ public class ScalabilityQueriesSet extends QueriesSet {
             + "} \n";
 
     private String spatialJoinQryTemplate
-            = "\n SELECT ?s1 ?s2 WHERE { \n"
-            + "       ?s1 geo:hasGeometry [ geo:asWKT ?o1 ] . \n"
-            + "       ?s2 geo:hasGeometry [ geo:asWKT ?o2 ] . \n"
-            + "   FILTER(?code1>1000 && ?code1<=1050) . \n" 
-            + "   FILTER(?code2>5000 && ?code2<6000) . \n"
-            + "   FILTER(geof:FUNCTION(?o1, ?o2)) \n"
-            + "} \n";
+            = "SELECT ?s1 ?s2 \n" +
+                "WHERE { \n" +
+                " ?s1 geo:hasGeometry [ geo:asWKT ?o1 ] ;\n" +
+                "    lgd:has_code ?code1 . \n" +
+                " ?s2 geo:hasGeometry [ geo:asWKT ?o2 ] ;\n" +
+                "    lgd:has_code ?code2 .  \n" +
+                " FILTER(?code1>1000 && ?code1<=1050) .\n" +
+                " FILTER(?code2>5000 && ?code2<6000) .\n" +
+                " FILTER(geof:sfIntersects(?o1, ?o2)). \n" +
+                "} ";
 
     private String givenPolygonFile = "givenPolygonCrossesEurope.txt";
     private String givenPolygon;
@@ -47,12 +50,9 @@ public class ScalabilityQueriesSet extends QueriesSet {
     public ScalabilityQueriesSet(SystemUnderTest sut) throws IOException {
         super(sut);
         // redefine the prefixes to include just the necessary prefixes
-        prefixes = "PREFIX geof: <http://www.opengis.net/def/function/geosparql/> \n"
-                + "PREFIX geo: <http://www.opengis.net/ont/geosparql#> \n"
-                + "PREFIX ext: <http://rdf.useekm.com/ext#> \n"
-                + "PREFIX coront: <http://www.app-lab.eu/corine/ontology#> \n"
-                + "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n"
-                + "\n";
+        prefixes = "PREFIX geof: <http://www.opengis.net/def/function/geosparql/> \n" +
+                    "PREFIX geo: <http://www.opengis.net/ont/geosparql#>  \n" +
+                    "PREFIX lgd: <http://data.linkedeodata.eu/ontology#>";
         queriesN = 2; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
 
         // read static Polygon from external file which might be used in spatial selection queries
