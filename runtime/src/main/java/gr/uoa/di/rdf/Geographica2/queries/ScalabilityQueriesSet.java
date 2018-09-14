@@ -35,11 +35,10 @@ public class ScalabilityQueriesSet extends QueriesSet {
             = "SELECT ?s1 ?s2 \n" +
                 "WHERE { \n" +
                 " ?s1 geo:hasGeometry [ geo:asWKT ?o1 ] ;\n" +
-                "    lgd:has_code ?code1 . \n" +
+                "    lgd:has_code \"1001\"^^xsd:integer . \n" +
                 " ?s2 geo:hasGeometry [ geo:asWKT ?o2 ] ;\n" +
                 "    lgd:has_code ?code2 .  \n" +
-                " FILTER(?code1>1000 && ?code1<=1050) .\n" +
-                " FILTER(?code2>5000 && ?code2<6000) .\n" +
+                " FILTER(?code2>5000 && ?code2<6000 && ?code2 != 5260) .\n" +
                 " FILTER(geof:sfIntersects(?o1, ?o2)). \n" +
                 "} ";
 
@@ -52,7 +51,8 @@ public class ScalabilityQueriesSet extends QueriesSet {
         // redefine the prefixes to include just the necessary prefixes
         prefixes = "PREFIX geof: <http://www.opengis.net/def/function/geosparql/> \n" +
                     "PREFIX geo: <http://www.opengis.net/ont/geosparql#>  \n" +
-                    "PREFIX lgd: <http://data.linkedeodata.eu/ontology#>";
+                    "PREFIX lgd: <http://data.linkedeodata.eu/ontology#> \n" +
+                    "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>";
         queriesN = 2; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
 
         // read static Polygon from external file which might be used in spatial selection queries

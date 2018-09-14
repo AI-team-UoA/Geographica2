@@ -57,11 +57,17 @@ EXEC_QUERY_1_REPO="java $JAVA_OPTS -cp $CLASS_PATH $MAIN_CLASS query \"1\" \"$Re
 EXEC_QUERY_2_REPO="java $JAVA_OPTS -cp $CLASS_PATH $MAIN_CLASS query \"2\" \"$RepoDir\""
 #echo $EXEC_QUERY_2_REPO
 
+# define the run command to QUERY_4 REPO
+EXEC_QUERY_3_REPO="java $JAVA_OPTS -cp $CLASS_PATH $MAIN_CLASS query \"3\" \"$RepoDir\""
+#echo $EXEC_QUERY_1_REPO
+
 # execute commnads
 echo -e "Validating repo \"${RepoDir}\""
 echo -e "QUERY 1: Total Number of triples"
 eval ${EXEC_QUERY_1_REPO}
 echo -e "\nQUERY 2: Number of triples Per Graph"
 eval ${EXEC_QUERY_2_REPO}
+echo -e "\nQUERY 3: Find geometries that intersect with given point"
+eval ${EXEC_QUERY_3_REPO}
 
 exit 0

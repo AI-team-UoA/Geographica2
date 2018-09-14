@@ -46,7 +46,7 @@
                 duplication of libraries in the classpath -->
                 <groupId>org.eclipse.rdf4j</groupId>
                 <artifactId>rdf4j-bom</artifactId>
-                <version>2.3.2</version>
+                <version>2.4.0-M3</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -94,13 +94,11 @@
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-rio-trig</artifactId>
         </dependency>
-        <!--
         <dependency>
-            # GeoSparql support for RDF4J RIO parser 
+            <!--  GeoSparql support for RDF4J RIO parser -->
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-queryalgebra-geosparql</artifactId>
         </dependency>
-        -->
         
         <!-- 2. SLF4J Dependencies -->
         <dependency> 

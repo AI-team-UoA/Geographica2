@@ -71,16 +71,16 @@ public class Rdf4jSUT implements SystemUnderTest {
         // ---------------- Static Mmebers & Methods ---------------------------
         private static String[] validationQueries = new String[]{
             "SELECT (count(*) as ?count) WHERE { ?x ?p ?y . } ",
+            
             "SELECT ?g (count(*) as ?count) WHERE { GRAPH ?g { ?x ?p ?y . } } GROUP BY ?g ORDER BY DESC(?count) ",
-            "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"
-            + "prefix geo: <http://www.opengis.net/ont/geosparql#>\n"
-            + "prefix geof: <http://www.opengis.net/def/function/geosparql/>\n"
-            + "\n"
-            + "select distinct (geof:union(?xGeom, ?yGeom) as ?s)\n"
-            + "where {\n"
-            + "	?x geo:asWKT ?xGeom.\n"
-            + "	?y geo:asWKT ?yGeom.\n"
-            + "}"
+            
+            "PREFIX geof: <http://www.opengis.net/def/function/geosparql/>\n" +
+            "PREFIX geo: <http://www.opengis.net/ont/geosparql#>\n" +
+            "PREFIX lgd: <http://data.linkedeodata.eu/ontology#>\n" +
+            " SELECT ?s1 ?o1 WHERE {\n" +
+            " ?s1 geo:asWKT ?o1 .\n" +
+            "  FILTER(geof:sfIntersects(?o1, \"POINT (-3.9468805 51.618055)\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>)).\n" +
+            "}"
         };
 
         // Creating a Native RDF Repository in <repoDir>

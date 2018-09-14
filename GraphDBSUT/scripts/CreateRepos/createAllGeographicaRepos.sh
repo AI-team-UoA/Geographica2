@@ -9,12 +9,17 @@ SYNTAX: $SCRIPT_NAME <DatasetBaseDir> <GraphDBBaseDir>
 # STEP 1: Validate the script's syntax
 #      1.1: check number of arguments
 if (( $# != 2 )); then
-    echo -e "Illegal number of parameters $SYNTAX"
-	exit 1
+    # in case no arguments are present there might be environment variables defined
+    # globally ! Please check and then exit if necessary
+    if [ -z ${DatasetBaseDir+x} ] || [ -z ${GraphDBBaseDir+x} ]; then
+        echo -e "Illegal number of parameters $SYNTAX"
+	echo "As an alternative, some or all of the following environment variables {DatasetBaseDir, GraphDBBaseDir} is/are not set";
+	return 1    # return instead of exit because we need to source the script
+    fi
+else
+        export DatasetBaseDir=${1}
+        export GraphDBBaseDir=${2}
 fi
-
-DatasetBaseDir=${1}
-GraphDBBaseDir=${2}
 
 echo -e "`date`\n"
 
