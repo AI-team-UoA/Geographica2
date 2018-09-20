@@ -44,6 +44,8 @@ import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.RDFParseException;
 import org.eclipse.rdf4j.sail.config.SailImplConfig;
 import org.eclipse.rdf4j.sail.lucene.LuceneSail;
+import static org.eclipse.rdf4j.sail.lucene.LuceneSail.WKT_FIELDS;
+import org.eclipse.rdf4j.sail.lucene.config.LuceneSailConfig;
 import org.eclipse.rdf4j.sail.nativerdf.NativeStore;
 import org.eclipse.rdf4j.sail.nativerdf.config.NativeStoreConfig;
 
@@ -113,8 +115,8 @@ public class Rdf4jSUT implements SystemUnderTest {
             return (System.currentTimeMillis() - start);
         }
 
-        // Creating a Native RDF Repository in <repoDir>
-        public static long createNativeRepoWithManager(String baseDirString, String repoId, boolean removeExisting, String indexes) {
+        // Creating a Native RDF Repository in <repoDir> with optional Lucene support
+        public static long createNativeRepoWithManager(String baseDirString, String repoId, boolean removeExisting, boolean hasLucene, String indexes, String wktIdxList) {
             long start = System.currentTimeMillis();
             // create a new LocalRepositoryManager in <baseDirString>
             File baseDir = new File(baseDirString);
@@ -133,6 +135,11 @@ public class Rdf4jSUT implements SystemUnderTest {
                 indexes = "spoc,posc";
             }
             SailImplConfig backendConfig = new NativeStoreConfig(indexes);
+            if (hasLucene) { // if requested, add lucene support
+                LuceneSailConfig lcfg = new LuceneSailConfig("./luceneidx", backendConfig);
+                lcfg.setParameter(WKT_FIELDS, wktIdxList);
+                 backendConfig = lcfg;      
+            }
             // stack an inferencer config on top of our backend-config
             //backendConfig = new ForwardChainingRDFSInferencerConfig(backendConfig);
             // create a configuration for the repository implementation
@@ -311,7 +318,7 @@ public class Rdf4jSUT implements SystemUnderTest {
         }
 
         // Query Native RDF Repository in <repoDir> for total records or records per graph 
-        public static long queryRecordCountInNativeRepo(int queryNo, String repoDir) {
+        public static long templateQueryInNativeRepo(String repoDir, int queryNo) {
             String queryString = validationQueries[(queryNo <= validationQueries.length) ? queryNo - 1 : 0];
             long start = System.currentTimeMillis();
             File dataDir = new File(repoDir);
@@ -350,7 +357,7 @@ public class Rdf4jSUT implements SystemUnderTest {
         }
 
         // Query Native RDF Repository in <repoDir> for total records or records per graph 
-        public static long queryNativeRepoWithManager(String baseDirString, String repoId, int queryNo) {
+        public static long templateQueryNativeRepoWithManager(String baseDirString, String repoId, int queryNo) {
             String queryString = validationQueries[(queryNo <= validationQueries.length) ? queryNo - 1 : 0];
             long start = System.currentTimeMillis();
             // create a new LocalRepositoryManager in <baseDirString>
@@ -393,13 +400,14 @@ public class Rdf4jSUT implements SystemUnderTest {
         }
 
         // --------------------- Data Members ----------------------------------
-        // --------------------- Data Members ----------------------------------
         private final String baseDir;     // base directory for repository manager
         private final LocalRepositoryManager repositoryManager;   // repository manager
         private final String repositoryId;    // repository Id
         private Repository repository;  // repository
+        private RepositoryConfig repconfig; // repository configuration
         private RepositoryConnection connection;    // repository connection
         private String indexes;
+        private boolean hasLucene;
 
         // --------------------- Constructors ----------------------------------
         // Constructor 1: Connects to a repository <baseDir> using default indexes
@@ -412,6 +420,7 @@ public class Rdf4jSUT implements SystemUnderTest {
             repositoryManager = null;
             repositoryId = "";
             this.indexes = indexes;
+            this.hasLucene = false;
             // check if repoDir exists, otherwise throw exception
             File dir = new File(repoDir);
             if (!dir.exists()) {
@@ -439,8 +448,8 @@ public class Rdf4jSUT implements SystemUnderTest {
             }
         }
 
-        // Constructor 3: Connects to a repository <baseDir> using <indexes>
-        public RDF4J(String baseDir, String repositoryId, boolean createRepository) {
+        // Constructor 3: Connects to a repository with a repo manager <baseDir> using <indexes>
+        public RDF4J(String baseDir, String repositoryId, boolean createRepository, boolean hasLucene, String indexes, String wktIdxList) {
             // check if baseDir exists, otherwise throw exception
             File dir = new File(baseDir);
             if (!dir.exists()) {
@@ -456,14 +465,16 @@ public class Rdf4jSUT implements SystemUnderTest {
                 if (!createRepository) {    // do not create new repository
                     throw new RuntimeException("Repository " + repositoryId + " does not exist. Cannot proceed unless a new repository is created!");
                 } else { // create a new repository
-                    createNativeRepoWithManager(baseDir, repositoryId, true, "");
+                    createNativeRepoWithManager(baseDir, repositoryId, createRepository, hasLucene, indexes, wktIdxList);
+                    this.hasLucene = hasLucene;
                 }
             }
             // repository exists
             this.repositoryId = repositoryId;
+            RepositoryConfig repconfig;
             // open the repository configuration to check if it OK
             try {
-                RepositoryConfig repconfig = repositoryManager.getRepositoryConfig(repositoryId);
+                repconfig = repositoryManager.getRepositoryConfig(repositoryId);
             } catch (RepositoryConfigException e) {
                 logger.error("RDF4J repository configuration exception " + e.toString());
                 throw new RuntimeException("Error retrieving repository " + repositoryId + " configuration");
@@ -526,8 +537,8 @@ public class Rdf4jSUT implements SystemUnderTest {
         }
     }
 
-    /* Utility class GraphDBSUT.Executor
-    ** Executes queries on GraphDB
+    /* Utility class RDF4JSUT.Executor
+    ** Executes queries on RDF4J
      */
     static class Executor implements Runnable {
 
@@ -562,8 +573,8 @@ public class Rdf4jSUT implements SystemUnderTest {
         @Override
         public void run() {
             try {
-                //runQuery();
-                runQueryPrintLimit(3);
+                runQuery();
+                //runQueryPrintLimit(3);
             } catch (MalformedQueryException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -665,14 +676,20 @@ public class Rdf4jSUT implements SystemUnderTest {
     private String baseDir;     // base directory for repository manager
     private String repositoryId;    // repository Id
     private boolean createRepository;
+    private boolean hasLucene;
+    private String indexes;
+    private String wktIdxList;
     private RDF4J rdf4j;
     private BindingSet firstBindingSet;
 
     // --------------------- Constructors ----------------------------------
-    public Rdf4jSUT(String baseDir, String repositoryId, boolean createRepository) {
+    public Rdf4jSUT(String baseDir, String repositoryId, boolean createRepository, boolean hasLucene, String indexes, String wktIdxList) {
         this.baseDir = baseDir;
         this.repositoryId = repositoryId;
         this.createRepository = createRepository;
+        this.hasLucene = hasLucene;
+        this.indexes = indexes;
+        this.wktIdxList = wktIdxList;
     }
 
     // --------------------- Data Accessors --------------------------------
@@ -690,7 +707,7 @@ public class Rdf4jSUT implements SystemUnderTest {
     @Override
     public void initialize() {
         try {
-            rdf4j = new RDF4J(baseDir, repositoryId, createRepository);
+            rdf4j = new RDF4J(baseDir, repositoryId, createRepository, hasLucene, indexes, wktIdxList);
         } catch (RuntimeException e) {
             logger.fatal("Cannot initialize RDF4J(\"" + baseDir + "\")");
             StringWriter sw = new StringWriter();
@@ -723,9 +740,9 @@ public class Rdf4jSUT implements SystemUnderTest {
         } catch (TimeoutException e) {  // the wait timed out
             isTimedout = true;
             logger.info("timed out!");
-            logger.info("Restarting GraphDB...");
+            logger.info("Restarting RDF4J...");
             this.restart();
-            logger.info("Closing GraphDB...");
+            logger.info("Closing RDF4J...");
             this.close();
         } finally {
             logger.debug("Future canceling...");

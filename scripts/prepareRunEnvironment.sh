@@ -36,7 +36,7 @@ if [ "$Environment" == "VM" ]; then
     export GraphDBBaseDir="/home/tioannid/graphdb-free-8.5.0"
     # RDF4JSUT only
     export JVM_Xmx="-Xmx16g"
-    export RDF4JRepoBaseDir="/media/sf_VM_Shared/PHD/RDF4J_Repos"
+    export RDF4JRepoBaseDir="/media/sf_VM_Shared/PHD/RDF4J_LuceneRepos/server"
 else
     # common for all SUTs
     export DatasetBaseDir="/home/journal/Geographica_Datasets"
@@ -45,7 +45,7 @@ else
     export GraphDBBaseDir="/home/journal/graphdb-free-8.5.0"
     # RDF4JSUT only
     export JVM_Xmx="-Xmx24g"
-    export RDF4JRepoBaseDir="/home/journal/RDF4J_Repos"
+    export RDF4JRepoBaseDir="/home/journal/RDF4J_LuceneRepos/server"
 fi
 
 export ResultsBaseDir="${ResultsBaseDir}/Results${Changeset}"

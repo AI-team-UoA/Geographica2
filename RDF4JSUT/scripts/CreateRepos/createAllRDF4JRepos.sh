@@ -27,17 +27,24 @@ RemoveIfExists=true
 
 echo -e "`date`\n"
 
+HasLucene=true  # enable Lucene for all repositories o RDF4J to improve geospatial query evaluation
+#WKTIdxList="http://www.opengis.net/ont/geosparql#asWKT http://geo.linkedopendata.gr/corine/ontology#asWKT http://dbpedia.org/property/asWKT http://geo.linkedopendata.gr/gag/ontology/asWKT http://www.geonames.org/ontology#asWKT http://teleios.di.uoa.gr/ontologies/noaOntology.owl#asWKT http://linkedgeodata.org/ontology/asWKT"
+
 # Real World dataset
-#./createRDF4JRepo.sh ${RDF4JRepoBaseDir} repoRealWorld ${RemoveIfExists} "spoc,posc,cosp" trig ${DatasetBaseDir}/RealWorldWorkload/WGS84/RealWorld $JVM_Xmx
+#./createRDF4JRepo.sh ${RDF4JRepoBaseDir} repoRealWorld ${RemoveIfExists} "spoc,posc,cosp" trig ${DatasetBaseDir}/RealWorldWorkload/WGS84/RealWorld $JVM_Xmx $HasLucene "$WKTIdxList"
 # Synthetic dataset
-#./createRDF4JRepo.sh ${RDF4JRepoBaseDir} repoSynthetic ${RemoveIfExists} "" n-triples ${DatasetBaseDir}/SyntheticWorkload/Synthetic $JVM_Xmx
+#./createRDF4JRepo.sh ${RDF4JRepoBaseDir} repoSynthetic ${RemoveIfExists} "" n-triples ${DatasetBaseDir}/SyntheticWorkload/Synthetic $JVM_Xmx $HasLucene "$WKTIdxList"
 # Real World dataset - Points only!
-#./createRDF4JRepo.sh ${RDF4JRepoBaseDir} repoRealWorld_Points ${RemoveIfExists} "spoc,posc,cosp" trig ${DatasetBaseDir}/RealWorldWorkload/WGS84/RealWorld_Points $JVM_Xmx
+#./createRDF4JRepo.sh ${RDF4JRepoBaseDir} repoRealWorld_Points ${RemoveIfExists} "spoc,posc,cosp" trig ${DatasetBaseDir}/RealWorldWorkload/WGS84/RealWorld_Points $JVM_Xmx $HasLucene "$WKTIdxList"
 # Synthetic dataset - Points Of Interest only!
-#./createRDF4JRepo.sh ${RDF4JRepoBaseDir} repoSynthetic_POIs ${RemoveIfExists} "" n-triples ${DatasetBaseDir}/SyntheticWorkload/Synthetic_POIs $JVM_Xmx
+#./createRDF4JRepo.sh ${RDF4JRepoBaseDir} repoSynthetic_POIs ${RemoveIfExists} "" n-triples ${DatasetBaseDir}/SyntheticWorkload/Synthetic_POIs $JVM_Xmx $HasLucene "$WKTIdxList"
+
+#exit 0;
 
 # OSM+CORINE2012 datasets - Scalability 10K, 100K, 1M, 10M, 100M, 500M
+WKTIdxList="http://www.opengis.net/ont/geosparql#asWKT"
+#levels=(  "10K" "100K" )
 levels=(  "10K" "100K" "1M" "10M" "100M" "500M" )
 for level in "${levels[@]}"; do
-        ./createRDF4JRepo.sh ${RDF4JRepoBaseDir} scalability_${level} ${RemoveIfExists} "" n-triples ${DatasetBaseDir}/Scalability/${level} $JVM_Xmx
+        ./createRDF4JRepo.sh ${RDF4JRepoBaseDir} scalability_${level} ${RemoveIfExists} "spoc,posc" n-triples ${DatasetBaseDir}/Scalability/${level} $JVM_Xmx $HasLucene "$WKTIdxList"
 done

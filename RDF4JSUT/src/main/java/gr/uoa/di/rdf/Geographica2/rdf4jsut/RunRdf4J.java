@@ -24,6 +24,9 @@ public class RunRdf4J extends RunSystemUnderTest {
         options.addOption("bd", "basedir", true, "BaseDir");
         options.addOption("rp", "repository", true, "RepositoryID");
         options.addOption("cr", "create", true, "CreateRepository");
+        options.addOption("lc", "haslucene", true, "HasLucene");
+        options.addOption("idx", "indexes", true, "Indexes");
+        options.addOption("wktidx", "wktindexes", true, "WKT Index List");
     }
 
     @Override
@@ -34,6 +37,10 @@ public class RunRdf4J extends RunSystemUnderTest {
         logger.info("BaseDir:\t" + cmd.getOptionValue("basedir"));
         logger.info("RepositoryID:\t" + cmd.getOptionValue("repository"));
         logger.info("CreateRepository:\t" + cmd.getOptionValue("create"));
+        logger.info("HasLucene:\t" + cmd.getOptionValue("haslucene"));
+        logger.info("Indexes:\t" + cmd.getOptionValue("indexes"));
+        logger.info("WKTindexes:\t" + cmd.getOptionValue("wktindexes"));
+        
     }
     
     @Override
@@ -41,7 +48,10 @@ public class RunRdf4J extends RunSystemUnderTest {
         String basedir = (cmd.getOptionValue("basedir") != null ? cmd.getOptionValue("basedir") : "");
         String repository = cmd.getOptionValue("repository");
         boolean create = Boolean.parseBoolean(cmd.getOptionValue("create"));
-        sut = new Rdf4jSUT(basedir, repository, create);
+        boolean haslucene = Boolean.parseBoolean(cmd.getOptionValue("haslucene"));
+        String indexes = cmd.getOptionValue("indexes");
+        String wktindexes = cmd.getOptionValue("wktindexes");
+        sut = new Rdf4jSUT(basedir, repository, create, haslucene, indexes, wktindexes);
     }
 
     public static void main(String[] args) throws Exception  {

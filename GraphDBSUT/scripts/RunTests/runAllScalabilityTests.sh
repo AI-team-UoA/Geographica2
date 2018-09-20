@@ -16,7 +16,7 @@ if [ ! -d "${ResultsBaseDir}/GraphDBSUT/Scalability/LOGS" ]; then
     mkdir -p "${ResultsBaseDir}/GraphDBSUT/Scalability/LOGS"
 fi
 
-# levels=(  "10K" "100K" )
+#levels=(  "10K" "100K" "1M" "10M" )
 levels=(  "10K" "100K" "1M" "10M" "100M" "500M" )
 for level in "${levels[@]}"; do
         # clear system caches

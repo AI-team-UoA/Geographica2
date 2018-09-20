@@ -24,4 +24,4 @@ if [ -z ${GraphDB_Data_Dir} ]; then
 fi
 
 # return all arguments except the experiment name
-echo "-bd \"${GraphDB_Data_Dir}\" -rp scalability_${1} -cr false -r 3 -t 86400 -m 60 -l \"${ResultsBaseDir}/GraphDBSUT/Scalability/${1}\" run"
+echo "-bd \"${GraphDB_Data_Dir}\" -rp scalability_${1} -cr false -r 1 -q 2 -t 86400 -m 60 -l \"${ResultsBaseDir}/GraphDBSUT/Scalability/${1}\" run"

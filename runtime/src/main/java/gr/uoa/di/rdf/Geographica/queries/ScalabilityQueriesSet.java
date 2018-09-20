@@ -31,17 +31,28 @@ public class ScalabilityQueriesSet extends QueriesSet {
             + "  FILTER(geof:FUNCTION(?o1, GIVEN_SPATIAL_LITERAL)). \n"
             + "} \n";
 
-    private String spatialJoinQryTemplate
-            = "SELECT ?s1 ?s2 \n" +
+    private String spatialJoinHardQryTemplate
+            =   "SELECT ?s1 ?s2 \n" +
                 "WHERE { \n" +
                 " ?s1 geo:hasGeometry [ geo:asWKT ?o1 ] ;\n" +
                 "    lgd:has_code \"1001\"^^xsd:integer . \n" +
                 " ?s2 geo:hasGeometry [ geo:asWKT ?o2 ] ;\n" +
                 "    lgd:has_code ?code2 .  \n" +
                 " FILTER(?code2>5000 && ?code2<6000 && ?code2 != 5260) .\n" +
-                " FILTER(geof:sfIntersects(?o1, ?o2)). \n" +
+                " FILTER(geof:FUNCTION(?o1, ?o2)). \n" +
                 "} ";
 
+    private String spatialJoinEasyQryTemplate
+            =   "SELECT ?s1 ?s2\n" +
+                "WHERE {\n" +
+                " ?s1 geo:hasGeometry [ geo:asWKT ?o1 ] ;\n" +
+                "    lgd:has_code \"1001\"^^xsd:integer .\n" +
+                " ?s2 geo:hasGeometry [ geo:asWKT ?o2 ] ;\n" +
+                "    lgd:has_code ?code2 .\n" +
+                " FILTER(?code2 IN (5622, 5601, 5641, 5621, 5661)) .\n" +
+                " FILTER(geof:FUNCTION(?o1, ?o2)).\n" +
+                "}";
+            
     private String givenPolygonFile = "givenPolygonCrossesEurope.txt";
     private String givenPolygon;
     private String spatialDatatype = "<http://www.opengis.net/ont/geosparql#wktLiteral>";
@@ -53,7 +64,7 @@ public class ScalabilityQueriesSet extends QueriesSet {
                     "PREFIX geo: <http://www.opengis.net/ont/geosparql#>  \n" +
                     "PREFIX lgd: <http://data.linkedeodata.eu/ontology#> \n" +
                     "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>";
-        queriesN = 2; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
+        queriesN = 3; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
 
         // read static Polygon from external file which might be used in spatial selection queries
         InputStream is = getClass().getResourceAsStream("/" + givenPolygonFile);
@@ -83,9 +94,16 @@ public class ScalabilityQueriesSet extends QueriesSet {
                 break;
 
             case 1:
-                // SC2 - Find all features that spatially intersect with other features
-                label = "SC2__Geometries_Intersect_Geometries";
-                query = spatialJoinQryTemplate;
+                // SC2 - Intensive: Find all features that spatially intersect with other features
+                label = "SC2__Intensive_Geometries_Intersect_Geometries";
+                query = spatialJoinHardQryTemplate;
+                query = query.replace("FUNCTION", "sfIntersects");
+                break;
+
+            case 2:
+                // SC3 - Relaxed: Find all features that spatially intersect with other features
+                label = "SC3__Relaxed_Geometries_Intersect_Geometries";
+                query = spatialJoinEasyQryTemplate;
                 query = query.replace("FUNCTION", "sfIntersects");
                 break;
 

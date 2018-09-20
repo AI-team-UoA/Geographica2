@@ -99,7 +99,13 @@
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-queryalgebra-geosparql</artifactId>
         </dependency>
-        
+        <!-- a temporary fix according to Jeen Broekstra's suggestion is 
+             to explicitly set spatial4j to 0.7 -->
+        <dependency>
+            <groupId>org.locationtech.spatial4j</groupId>
+            <artifactId>spatial4j</artifactId>
+            <version>0.7</version>
+        </dependency>
         <!-- 2. SLF4J Dependencies -->
         <dependency> 
             <!-- use log4j base api -->
