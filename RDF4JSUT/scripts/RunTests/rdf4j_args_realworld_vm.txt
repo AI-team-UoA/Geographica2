@@ -1,1 +1,0 @@
--bd "/home/tioannid/.RDF4J/server" -rp realworld -cr false -r 1 -t 3600 -m 60 -l "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/TestResults/DEVNULL" run

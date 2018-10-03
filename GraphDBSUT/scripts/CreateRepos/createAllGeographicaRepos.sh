@@ -33,7 +33,8 @@ echo -e "`date`\n"
 #./createGraphDBRepo.sh synthetic_pois.ttl ${DatasetBaseDir}/SyntheticWorkload/Synthetic_POIs N-TRIPLES $GraphDBBaseDir
 
 # OSM+CORINE2012 datasets - Scalability 10K, 100K, 1M, 10M, 100M, 500M
-levels=(  "10K" "100K" "1M" "10M" "100M" "500M" )
+levels=(  "10K" "100K" "1M" "10M" "100M" )
+#levels=(  "10K" "100K" "1M" "10M" "100M" "500M" )
 for level in "${levels[@]}"; do
         ./createGraphDBRepo.sh scalability_${level}.ttl ${DatasetBaseDir}/Scalability/${level} N-TRIPLES $GraphDBBaseDir
 done

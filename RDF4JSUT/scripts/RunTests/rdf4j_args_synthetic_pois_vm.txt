@@ -1,1 +1,0 @@
--bd "/home/tioannid/.RDF4J/server" -rp repoSynthetic_POIs -cr false -r 1 -t 3600 -l "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/TestResults/DEVNULL" -N 1024 run
