@@ -39,11 +39,24 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <slf4j.version>1.8.0-beta2</slf4j.version>
     </properties>
+    <repositories>
+        <repository>
+            <id>oss.sonatype.org-snapshot</id>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <!--
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <!-- setup BOM (Bill Of Materials) to avoid version mismatch and
-                duplication of libraries in the classpath -->
+                < setup BOM (Bill Of Materials) to avoid version mismatch and
+                duplication of libraries in the classpath >
                 <groupId>org.eclipse.rdf4j</groupId>
                 <artifactId>rdf4j-bom</artifactId>
                 <version>2.4.0-M3</version>
@@ -52,55 +65,65 @@
             </dependency>
         </dependencies>    
     </dependencyManagement>
+            -->
     <dependencies>
         <!-- 1. RDF4J Dependencies -->
         <dependency>
             <!-- the RDF4J core framework -->
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-runtime</artifactId>
+            <version>2.4-SNAPSHOT</version>
         </dependency>
         <dependency>
             <!-- ability to query RDF with the RDF4J framework -->
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-repository-sail</artifactId>
+            <version>2.4-SNAPSHOT</version>
         </dependency>
         <dependency>
             <!-- in-memory storage backend module of RDF4J -->
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-sail-memory</artifactId>
+            <version>2.4-SNAPSHOT</version>
         </dependency>
         <dependency>
             <!-- persistent/native storage backend module of RDF4J -->
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-sail-nativerdf</artifactId>
+            <version>2.4-SNAPSHOT</version>
         </dependency>
         <dependency>
             <!-- Lucene backend module of RDF4J - Apache Lucene 5 searchIndex implementation -->
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-sail-lucene</artifactId>
+            <version>2.4-SNAPSHOT</version>
         </dependency>
         <dependency>
             <!-- Turtle module of the RDF4J RIO parser -->
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-rio-turtle</artifactId>
+            <version>2.4-SNAPSHOT</version>
         </dependency>
         <dependency>
             <!-- N-Triples module of the RDF4J RIO parser -->
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-rio-ntriples</artifactId>
+            <version>2.4-SNAPSHOT</version>
         </dependency>
         <dependency>
             <!-- TRIG module of the RDF4J RIO parser -->
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-rio-trig</artifactId>
+            <version>2.4-SNAPSHOT</version>
         </dependency>
         <dependency>
             <!--  GeoSparql support for RDF4J RIO parser -->
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-queryalgebra-geosparql</artifactId>
+            <version>2.4-SNAPSHOT</version>
         </dependency>
         <!-- a temporary fix according to Jeen Broekstra's suggestion is 
-             to explicitly set spatial4j to 0.7 -->
+        to explicitly set spatial4j to 0.7 -->
         <dependency>
             <groupId>org.locationtech.spatial4j</groupId>
             <artifactId>spatial4j</artifactId>

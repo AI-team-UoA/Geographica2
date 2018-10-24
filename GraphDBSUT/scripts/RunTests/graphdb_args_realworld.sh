@@ -7,11 +7,11 @@ if [ -z ${GraphDBBaseDir+x} ] || [ -z ${ResultsBaseDir+x} ]; then
     return 1    # return instead of exit because we need to source the script
 fi
 
-# Check if ${ResultsBaseDir}/GraphDBSUT/Scalability/${1} exists and create it if necessary
-if [ ! -d "${ResultsBaseDir}/GraphDBSUT/Scalability/${1}" ]; then
-    mkdir -p "${ResultsBaseDir}/GraphDBSUT/Scalability/${1}"
-else # clear existing data
-    rm -r ${ResultsBaseDir}/GraphDBSUT/Scalability/${1}/*
+# Check if ${ResultsBaseDir}/GraphDBSUT/RealWorld exists and create it if necessary
+if [ ! -d "${ResultsBaseDir}/GraphDBSUT/RealWorld" ]; then
+    mkdir -p "${ResultsBaseDir}/GraphDBSUT/RealWorld"
+#else # clear existing data
+  #  rm -r ${ResultsBaseDir}/GraphDBSUT/RealWorld/*
 fi
 
 #      2.2.1: get the value of the <graphdb.home.data> in the <graphDBBaseDir>/conf/graphdb.properties configuration file
@@ -24,4 +24,4 @@ if [ -z ${GraphDB_Data_Dir} ]; then
 fi
 
 # return all arguments except the experiment name
-echo "-bd \"${GraphDB_Data_Dir}\" -rp scalability_${1} -cr false -r 1 -q 0 -t 86400 -m 60 -l \"${ResultsBaseDir}/GraphDBSUT/Scalability/${1}\" run"
+echo "-bd \"${GraphDB_Data_Dir}\" -rp realworld -cr false -r 1 -t 3600 -m 60 -l \"${ResultsBaseDir}/GraphDBSUT/RealWorld\" run"

@@ -7,7 +7,6 @@ BASE="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # retrieve the name of the file with all arguments except the experiment name
 ARGS_FILE=${1}
 #echo "ARGS_FILE = $ARGS_FILE"
-
 # read the line from the ARGS_FILE which contains all arguments except the experiment name
 ARGS_NO_EXPERIMENT=`< $ARGS_FILE`
 echo "ARGS_NO_EXPERIMENT = $ARGS_NO_EXPERIMENT"
@@ -29,9 +28,11 @@ JAVA_OPTS="${3} -Dlog4j.configuration=file:${LOG4J_CONFIGURATION}"
 cd ${BASE}/../../target
 # define the class path
 CLASS_PATH="$(for file in `ls -1 *.jar`; do myVar=$myVar./$file":"; done;echo $myVar;)runtime/src/main/resources/timestamps.txt"
+# add to the class path any additional resources such as configuration files
+CLASS_PATH="./classes:${CLASS_PATH}"
 
 # define the executing-main class
-MAIN_CLASS="gr.uoa.di.rdf.Geographica2.rdf4jsut.RunRdf4J"
+MAIN_CLASS="gr.uoa.di.rdf.Geographica.strabon.RunStrabon"
 
 # run all experiments
 START_TIME=`date`

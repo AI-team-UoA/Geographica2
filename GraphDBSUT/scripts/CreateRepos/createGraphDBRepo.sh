@@ -101,15 +101,19 @@ if [ "${RDFFormat}" = "TRIG" ]; then
             extension="${filename##*.}"; 
             fname="${filename%.*}"; 
             trigfilename="${fname}.trig"; 
-            java -jar "${BASE}/rdf2rdf-1.0.1-2.3.1.jar" $filename $trigfilename;
-    #      4.2.4: if $MapToContextFile_Exists set the corresponding graph IRI in the TRIG file
-            if [ $MapToContextFile_Exists -eq 1 ]; then
+            if [ ! -f $trigfilename ]; then 
+                java -jar "${BASE}/rdf2rdf-1.0.1-2.3.1.jar" $filename $trigfilename;
+        #      4.2.4: if $MapToContextFile_Exists set the corresponding graph IRI in the TRIG file
+                if [ $MapToContextFile_Exists -eq 1 ]; then
                     matchedline=`grep -e $i $MAP_CONTEXTS_FILE`
                     # echo "File $i found in file $MAP_CONTEXTS_FILE in line : $matchedline"
                     matchedcontext=`echo -e "$matchedline" | awk -F"\t" ' { printf $2 }'`
                     # echo "Corresponding context is : $matchedcontext"
                     sed -i 's+{$+'${matchedcontext}' {+' $trigfilename
                     echo "Modified graph name in TRIG file $trigfilename to $matchedcontext"
+                fi
+            else
+                echo "TRIG file \"$trigfilename\" already exists!" 
             fi
     done
     #      4.2.5: Set the filetype to TRIG
@@ -122,8 +126,8 @@ fi
 time $PreLoad_Exe -c $RepoConfig *$rdffiletype
 
 # STEP 6: Remove TRIG file to avoid allocating space
-if [ "${RDFFormat}" = "TRIG" ]; then
-    rm *.trig
-fi
+#if [ "${RDFFormat}" = "TRIG" ]; then
+#    rm *.trig
+#fi
 
 exit 0

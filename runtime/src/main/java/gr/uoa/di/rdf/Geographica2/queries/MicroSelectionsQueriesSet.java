@@ -26,12 +26,11 @@ public class MicroSelectionsQueriesSet extends QueriesSet {
 	
 	// Template to create queries
 	private final String queryTemplate = prefixes 
-			+ "\n select ?s1 ?o1 where { \n"
+			+ "select ?s1 ?o1 where { \n"
 			+ "	GRAPH <GRAPH1> {?s1 ASWKT1 ?o1} \n"
 			+ "  FILTER(geof:FUNCTION(?o1, GIVEN_SPATIAL_LITERAL)). " 
-			+ "}  \n" 
-	;
-
+			+ "} \n";
+        
 	private String givenPolygonFile = "givenPolygon.txt";
 	private String givenLinesFile = "givenLine.txt";
 	private String givenPolygon;

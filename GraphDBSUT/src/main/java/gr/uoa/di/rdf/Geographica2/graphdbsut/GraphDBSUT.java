@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -261,7 +262,8 @@ public class GraphDBSUT implements SystemUnderTest {
         @Override
         public void run() {
             try {
-                runQuery();
+                //runQuery();
+                runQueryPrintLimit(3);
             } catch (MalformedQueryException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -312,9 +314,67 @@ public class GraphDBSUT implements SystemUnderTest {
              */
             this.returnValue = new long[]{t2 - t1, t3 - t2, t3 - t1, results};
         }
+
+        private void runQueryPrintLimit(int rowsToDisplay) throws MalformedQueryException, QueryEvaluationException, TupleQueryResultHandlerException, IOException {
+            long t1 = 0, t2 = 0, t3 = 0;
+            long results = 0, noOfScanErrors = 0;
+            int printedrow = 0;
+            String bindingLine = "", labelsTitle = "\t";
+            List<String> bindings = null;
+            boolean displayRowsFlag = (rowsToDisplay != 0);
+
+            logger.info("Evaluating query...");
+            TupleQuery tupleQuery = graphDB.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, query);
+
+            // Evaluate and time the evaluation of the prepared query
+            TupleQueryResult tupleQueryResult = null;
+            t1 = System.nanoTime();
+            // if there is an exception during evaluation throw it and return
+            try {
+                tupleQueryResult = tupleQuery.evaluate();
+            } catch (QueryEvaluationException ex) {
+                logger.error("[Query evaluation phase]", ex);
+                throw new QueryEvaluationException("[Query evaluation phase]", ex);
+            }
+            t2 = System.nanoTime();
+
+            // if there is a valid request for rows to display, first display headers
+            if (displayRowsFlag) {
+                // process results
+                bindings = tupleQueryResult.getBindingNames();
+                for (String label : bindings) {
+                    labelsTitle += (label + "\t\t");
+                }
+                logger.info("\n" + labelsTitle + "\n------------------------------------>");
+            }
+
+            while (tupleQueryResult.hasNext()) {
+                try {
+                    firstBindingSet = tupleQueryResult.next();
+                    if (displayRowsFlag) {
+                        if (printedrow < rowsToDisplay) {
+                            bindingLine = "";
+                            for (String label : bindings) {
+                                bindingLine += (firstBindingSet.getValue(label) + "\t");
+                            }
+                            logger.info(bindingLine);
+                            printedrow++;
+                        }
+                    }
+                    results++;
+                } catch (Exception ex) {
+                    noOfScanErrors++;
+                    logger.error("[Query full scan phase]");
+                }
+            }
+            t3 = System.nanoTime();
+            logger.info("\t<-----------\n\n");
+            logger.info("Query evaluated with " + results + " results and " + noOfScanErrors + " scan errors!");
+            this.returnValue = new long[]{t2 - t1, t3 - t2, t3 - t1, results};
+        }
     }
 
-    // --------------------- Data Members ----------------------------------
+// --------------------- Data Members ----------------------------------
     private String baseDir;     // base directory for repository manager
     private String repositoryId;    // repository Id
     private boolean createRepository;
@@ -551,12 +611,12 @@ public class GraphDBSUT implements SystemUnderTest {
             cGeom = oldfilterPart[0].split("\\(")[2];
             // 4. split part-3 using the ) as delimiter
             //    RADIOUS is portion-0 of part-3 converted to long 
-            cRadious = (long)Float.parseFloat(oldfilterPart[3].split("\\)")[0]);
+            cRadious = (long) Float.parseFloat(oldfilterPart[3].split("\\)")[0]);
             // 5. create the new filter using the desired format
             String newFilter = String.format("FILTER(geof:sfWithin(%s, geof:buffer(\"POINT(45 45)\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>, %d))).\n}\n", cGeom, cRadious);
             // 6. replace old with new filter
             translatedQuery = translatedQuery.substring(0, translatedQuery.indexOf("FILTER")) + newFilter;
-            
+
         }
 
         return translatedQuery;

@@ -12,7 +12,7 @@ if [ ! -d "${ResultsBaseDir}/RDF4JSUT/Scalability/LOGS" ]; then
     mkdir -p "${ResultsBaseDir}/RDF4JSUT/Scalability/LOGS"
 fi
 
-levels=(  "10K" "100K" "1M" )
+levels=(  "10K" )
 #levels=(  "10K" "100K" "1M" "10M" "100M" "500M" )
 for level in "${levels[@]}"; do
         # clear system caches
@@ -20,7 +20,7 @@ for level in "${levels[@]}"; do
         # creates/clears ${ResultsBaseDir}/RDF4JSUT/Scalability/${level}
         # returns all arguments except experiment and
         # executes experiment
-        ./rdf4j_args_scalability.sh ${level} | ./runTestsForRDF4JSUT.sh /dev/stdin testslist_scalability.txt -Xmx24g ${RDF4JRepoBaseDir}
+        ./rdf4j_args_scalability.sh ${level} | ./runTestsForRDF4JSUT.sh /dev/stdin testslist_scalability.txt ${JVM_Xmx} ${RDF4JRepoBaseDir}
         # archive log
         mv ../../geographica_Scalability.log ${ResultsBaseDir}/RDF4JSUT/Scalability/LOGS/geographica_Scalability_${level}.log
         # create report

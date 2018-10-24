@@ -14,8 +14,5 @@ else # clear existing data
     rm -r ${ResultsBaseDir}/RDF4JSUT/Scalability/${1}/*
 fi
 
-#      2.2.1: set the RDF4J repos location
-#RDF4J_Data_Dir="${RDF4JRepoBaseDir}/repositories"
-
 # return all arguments except the experiment name
-echo "-bd \"${RDF4JRepoBaseDir}\" -rp scalability_${1} -cr false -r 1 -t 86400 -m 60 -l \"${ResultsBaseDir}/RDF4JSUT/Scalability/${1}\" run"
+echo "-bd \"${RDF4JRepoBaseDir}\" -rp scalability_${1} -cr false -dr 0 -r 3 -t 86400 -m 60 -l \"${ResultsBaseDir}/RDF4JSUT/Scalability/${1}\" run"

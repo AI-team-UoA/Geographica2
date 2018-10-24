@@ -72,17 +72,33 @@ public class Rdf4jSUT implements SystemUnderTest {
 
         // ---------------- Static Mmebers & Methods ---------------------------
         private static String[] validationQueries = new String[]{
+            // Q1: returns the number of triples
             "SELECT (count(*) as ?count) WHERE { ?x ?p ?y . } ",
-            
+            // Q2: returns graph and the number of triples they contain
             "SELECT ?g (count(*) as ?count) WHERE { GRAPH ?g { ?x ?p ?y . } } GROUP BY ?g ORDER BY DESC(?count) ",
-            
-            "PREFIX geof: <http://www.opengis.net/def/function/geosparql/>\n" +
-            "PREFIX geo: <http://www.opengis.net/ont/geosparql#>\n" +
-            "PREFIX lgd: <http://data.linkedeodata.eu/ontology#>\n" +
-            " SELECT ?s1 ?o1 WHERE {\n" +
-            " ?s1 geo:asWKT ?o1 .\n" +
-            "  FILTER(geof:sfIntersects(?o1, \"POINT (-3.9468805 51.618055)\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>)).\n" +
-            "}"
+            // Q3: returns geometries and wkt that intersect with a point
+            "PREFIX geof: <http://www.opengis.net/def/function/geosparql/>\n"
+            + "PREFIX geo: <http://www.opengis.net/ont/geosparql#>\n"
+            + "PREFIX lgd: <http://data.linkedeodata.eu/ontology#>\n"
+            + " SELECT ?s1 ?o1 WHERE {\n"
+            + " ?s1 geo:asWKT ?o1 .\n"
+            + "  FILTER(geof:sfIntersects(?o1, \"POINT (-3.9468805 51.618055)\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>)).\n"
+            + "}",
+            // Q4: returns geometries and wkt that their buffer intersects with a point
+            "PREFIX geof: <http://www.opengis.net/def/function/geosparql/>\n"
+            + "PREFIX geo: <http://www.opengis.net/ont/geosparql#>\n"
+            + "PREFIX lgd: <http://data.linkedeodata.eu/ontology#>\n"
+            + " SELECT ?s1 ?o1 WHERE {\n"
+            + " ?s1 geo:asWKT ?o1 .\n"
+            + "  FILTER(geof:sfIntersects(geof:buffer(?o1,0,<http://www.opengis.net/def/uom/OGC/1.0/metre>), \"POINT (-3.9468805 51.618055)\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>)).\n"
+            + "}",
+            // Q5: returns the buffer of a point
+            "PREFIX geof: <http://www.opengis.net/def/function/geosparql/>\n"
+            + "PREFIX geo: <http://www.opengis.net/ont/geosparql#>  \n"
+            + "PREFIX lgd: <http://data.linkedeodata.eu/ontology#>\n"
+            + "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n"
+            + "SELECT (geof:buffer(\"POINT(23.708496093749996 37.95719224376526)\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>, 1, <http://www.opengis.net/def/uom/OGC/1.0/metre>) as ?o2)\n"
+            + "WHERE { }"
         };
 
         // Creating a Native RDF Repository in <repoDir>
@@ -138,7 +154,7 @@ public class Rdf4jSUT implements SystemUnderTest {
             if (hasLucene) { // if requested, add lucene support
                 LuceneSailConfig lcfg = new LuceneSailConfig("./luceneidx", backendConfig);
                 lcfg.setParameter(WKT_FIELDS, wktIdxList);
-                 backendConfig = lcfg;      
+                backendConfig = lcfg;
             }
             // stack an inferencer config on top of our backend-config
             //backendConfig = new ForwardChainingRDFSInferencerConfig(backendConfig);
@@ -546,6 +562,7 @@ public class Rdf4jSUT implements SystemUnderTest {
         private final String query;
         private final RDF4J rdf4j;
         private BindingSet firstBindingSet;
+        private int dispres;
         /*
         private long evaluationTime,
                 fullResultScanTime,
@@ -554,9 +571,10 @@ public class Rdf4jSUT implements SystemUnderTest {
         private long[] returnValue;
 
         // --------------------- Constructors ----------------------------------
-        public Executor(String query, RDF4J rdf4j, int timeoutSecs) {
+        public Executor(String query, RDF4J rdf4j, int timeoutSecs, int dispres) {
             this.query = query;
             this.rdf4j = rdf4j;
+            this.dispres = dispres;
             this.returnValue = new long[]{timeoutSecs + 1, timeoutSecs + 1, timeoutSecs + 1, -1};
         }
 
@@ -573,8 +591,8 @@ public class Rdf4jSUT implements SystemUnderTest {
         @Override
         public void run() {
             try {
-                runQuery();
-                //runQueryPrintLimit(3);
+                //runQuery();
+                runQueryPrintLimitedRows(this.dispres);
             } catch (MalformedQueryException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -590,106 +608,130 @@ public class Rdf4jSUT implements SystemUnderTest {
             }
         }
 
-        private void runQuery() throws MalformedQueryException, QueryEvaluationException, TupleQueryResultHandlerException, IOException {
+//        private void runQuery() throws MalformedQueryException, QueryEvaluationException, TupleQueryResultHandlerException, IOException {
+//
+//            logger.info("Evaluating query...");
+//            TupleQuery tupleQuery = rdf4j.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, query);
+//
+//            // Evaluate and time the evaluation of the prepared query
+//            // noOfResults = 0;
+//            long results = 0;
+//
+//            long t1 = System.nanoTime();
+//            TupleQueryResult tupleQueryResult = tupleQuery.evaluate();
+//            long t2 = System.nanoTime();
+//
+//            if (tupleQueryResult.hasNext()) {
+//                firstBindingSet = tupleQueryResult.next();
+//                //noOfResults++;
+//                results++;
+//            }
+//
+//            while (tupleQueryResult.hasNext()) {
+//                //noOfResults++;
+//                results++;
+//                tupleQueryResult.next();
+//            }
+//            long t3 = System.nanoTime();
+//
+//            logger.info("Query evaluated");
+//
+//            this.returnValue = new long[]{t2 - t1, t3 - t2, t3 - t1, results};
+//        }
 
-            logger.info("Evaluating query...");
-            TupleQuery tupleQuery = rdf4j.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, query);
-
-            // Evaluate and time the evaluation of the prepared query
-            // noOfResults = 0;
-            long results = 0;
-
-            long t1 = System.nanoTime();
-            TupleQueryResult tupleQueryResult = tupleQuery.evaluate();
-            long t2 = System.nanoTime();
-
-            if (tupleQueryResult.hasNext()) {
-                firstBindingSet = tupleQueryResult.next();
-                //noOfResults++;
-                results++;
-            }
-
-            while (tupleQueryResult.hasNext()) {
-                //noOfResults++;
-                results++;
-                tupleQueryResult.next();
-            }
-            long t3 = System.nanoTime();
-
-            logger.info("Query evaluated");
-
-            this.returnValue = new long[]{t2 - t1, t3 - t2, t3 - t1, results};
-        }
-
-        private void runQueryPrintLimit(int limit) throws MalformedQueryException, QueryEvaluationException, TupleQueryResultHandlerException, IOException {
-
-            logger.info("Evaluating query...");
-            TupleQuery tupleQuery = rdf4j.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, query);
-
-            // Evaluate and time the evaluation of the prepared query
-            // noOfResults = 0;
-            long results = 0;
-
-            long t1 = System.nanoTime();
-            TupleQueryResult tupleQueryResult = tupleQuery.evaluate();
-            long t2 = System.nanoTime();
-
-            // process results
-            List<String> bindings = tupleQueryResult.getBindingNames();
-            String labelsTitle = "\t";
-            for (String label : bindings) {
-                labelsTitle += (label + "\t\t");
-            }
-            logger.info(labelsTitle + "\n------------------------------------>");
-            String bindingLine = "";
+        private void runQueryPrintLimitedRows(int rowsToDisplay) throws MalformedQueryException, QueryEvaluationException, TupleQueryResultHandlerException, IOException {
+            long t1 = 0, t2 = 0, t3 = 0;
+            long results = 0, noOfScanErrors = 0;
             int printedrow = 0;
-            if (tupleQueryResult.hasNext()) {
-                firstBindingSet = tupleQueryResult.next();
-                if (printedrow < limit) {
-                    bindingLine = "";
-                    for (String label : bindings) {
-                        bindingLine += (firstBindingSet.getValue(label) + "\t");
-                    }
-                    logger.info(bindingLine);
-                    printedrow++;
+            String bindingLine = "", labelsTitle = "\t";
+            List<String> bindings = null;
+            boolean displayRowsFlag = (rowsToDisplay != 0);
+
+            logger.info("Evaluating query...");
+            TupleQuery tupleQuery = rdf4j.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, query);
+
+            // Evaluate and time the evaluation of the prepared query
+            TupleQueryResult tupleQueryResult = null;
+            t1 = System.nanoTime();
+            // if there is an exception during evaluation throw it and return
+            try {
+                tupleQueryResult = tupleQuery.evaluate();
+            } catch (QueryEvaluationException ex) {
+                logger.error("[Query evaluation phase]", ex);
+                throw new QueryEvaluationException("[Query evaluation phase]", ex);
+            }
+            t2 = System.nanoTime();
+
+            // if there is a valid request for rows to display, first display headers
+            if (displayRowsFlag) {
+                // process results
+                bindings = tupleQueryResult.getBindingNames();
+                for (String label : bindings) {
+                    labelsTitle += (label + "\t\t");
                 }
-                //noOfResults++;
-                results++;
+                logger.info(labelsTitle);
+                logger.info("------------------------------------>");
+
+                while (tupleQueryResult.hasNext()) {
+                    try {
+                        firstBindingSet = tupleQueryResult.next();
+
+                        if (printedrow < rowsToDisplay) {
+                            bindingLine = "";
+                            for (String label : bindings) {
+                                bindingLine += (firstBindingSet.getValue(label) + "\t");
+                            }
+                            logger.info(bindingLine);
+                            printedrow++;
+                        }
+
+                        results++;
+                    } catch (Exception ex) {
+                        noOfScanErrors++;
+                        logger.error("[Query full scan phase]");
+                    }
+                }
+            } else {
+                while (tupleQueryResult.hasNext()) {
+                    try {
+                        firstBindingSet = tupleQueryResult.next();
+                        results++;
+                    } catch (Exception ex) {
+                        noOfScanErrors++;
+                        logger.error("[Query full scan phase]");
+                    }
+                }
             }
-            logger.info("\t<-----------\n\n");
 
-            while (tupleQueryResult.hasNext()) {
-                //noOfResults++;
-                results++;
-                tupleQueryResult.next();
+            t3 = System.nanoTime();
+            if (displayRowsFlag) {
+                logger.info("<------------------------------------\n");
             }
-            long t3 = System.nanoTime();
-
-            logger.info("Query evaluated");
-
+            logger.info("Query evaluated with " + results + " results and " + noOfScanErrors + " scan errors!");
             this.returnValue = new long[]{t2 - t1, t3 - t2, t3 - t1, results};
         }
-
     }
 
-    // --------------------- Data Members ----------------------------------
+// --------------------- Data Members ----------------------------------
     private String baseDir;     // base directory for repository manager
     private String repositoryId;    // repository Id
     private boolean createRepository;
     private boolean hasLucene;
     private String indexes;
     private String wktIdxList;
+    private int displres;
     private RDF4J rdf4j;
     private BindingSet firstBindingSet;
 
     // --------------------- Constructors ----------------------------------
-    public Rdf4jSUT(String baseDir, String repositoryId, boolean createRepository, boolean hasLucene, String indexes, String wktIdxList) {
+    public Rdf4jSUT(String baseDir, String repositoryId, boolean createRepository, boolean hasLucene, String indexes, String wktIdxList, int displres) {
         this.baseDir = baseDir;
         this.repositoryId = repositoryId;
         this.createRepository = createRepository;
         this.hasLucene = hasLucene;
         this.indexes = indexes;
         this.wktIdxList = wktIdxList;
+        this.displres = displres;
     }
 
     // --------------------- Data Accessors --------------------------------
@@ -721,7 +763,7 @@ public class Rdf4jSUT implements SystemUnderTest {
         //maintains a thread for executing the doWork method
         final ExecutorService pool = Executors.newFixedThreadPool(1);
         //set the pool thread working
-        Executor runnable = new Executor(query, rdf4j, timeoutSecs);
+        Executor runnable = new Executor(query, rdf4j, timeoutSecs, this.displres);
 
         final Future<?> future = pool.submit(runnable);
         boolean isTimedout = false;
@@ -894,11 +936,8 @@ public class Rdf4jSUT implements SystemUnderTest {
         String translatedQuery = null;
         translatedQuery = query;
 
-        if (label.matches("Q14_Within_GeoNames_Point_Buffer")) {
-            translatedQuery = translatedQuery.replaceAll("3000, <http://www.opengis.net/def/uom/OGC/1.0/metre>", "0.03");
-        } else if (label.matches("Q4_Buffer_GeoNames")
-                || label.matches("Q5_Buffer_LGD")) {
-            translatedQuery = translatedQuery.replaceAll("4, <http://www.opengis.net/def/uom/OGC/1.0/metre>", "0.04");
+        if (label.matches("Q6_Area_CLC")) {
+            translatedQuery = translatedQuery.replaceAll("strdf:area", "geof:area");
         } else if (label.indexOf("Synthetic_Selection_Distance") != -1) {
             // convert this: FILTER ( bif:st_within(?geo1, bif:st_point(45, 45), 5000.000000)) 
             // .....to this: FILTER ( geof:sfWithin(?geo1, geof:buffer("POINT(23.71622 37.97945)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>, 5000, <http://www.opengis.net/def/uom/OGC/1.0/metre>)))

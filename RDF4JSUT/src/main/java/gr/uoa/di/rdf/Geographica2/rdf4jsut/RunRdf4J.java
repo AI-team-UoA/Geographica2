@@ -27,6 +27,7 @@ public class RunRdf4J extends RunSystemUnderTest {
         options.addOption("lc", "haslucene", true, "HasLucene");
         options.addOption("idx", "indexes", true, "Indexes");
         options.addOption("wktidx", "wktindexes", true, "WKT Index List");
+        options.addOption("dr", "displres", true, "Display Results");
     }
 
     @Override
@@ -40,6 +41,7 @@ public class RunRdf4J extends RunSystemUnderTest {
         logger.info("HasLucene:\t" + cmd.getOptionValue("haslucene"));
         logger.info("Indexes:\t" + cmd.getOptionValue("indexes"));
         logger.info("WKTindexes:\t" + cmd.getOptionValue("wktindexes"));
+        logger.info("Displres:\t" + cmd.getOptionValue("displres"));
         
     }
     
@@ -51,7 +53,8 @@ public class RunRdf4J extends RunSystemUnderTest {
         boolean haslucene = Boolean.parseBoolean(cmd.getOptionValue("haslucene"));
         String indexes = cmd.getOptionValue("indexes");
         String wktindexes = cmd.getOptionValue("wktindexes");
-        sut = new Rdf4jSUT(basedir, repository, create, haslucene, indexes, wktindexes);
+        int displres = Integer.parseInt(cmd.getOptionValue("displres"));
+        sut = new Rdf4jSUT(basedir, repository, create, haslucene, indexes, wktindexes, displres);
     }
 
     public static void main(String[] args) throws Exception  {
