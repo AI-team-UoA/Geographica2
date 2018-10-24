@@ -26,7 +26,7 @@ public class ScalabilityQueriesSet extends QueriesSet {
 
     // Template to create spatial selection queries
     private String spatialSelectionQryTemplate
-            = "\n SELECT ?s1 ?o1 WHERE { \n"
+            = "SELECT ?s1 ?o1 WHERE { \n"
             + " ?s1 geo:asWKT ?o1 . \n"
             + "  FILTER(geof:FUNCTION(?o1, GIVEN_SPATIAL_LITERAL)). \n"
             + "} \n";
@@ -40,7 +40,7 @@ public class ScalabilityQueriesSet extends QueriesSet {
                 "    lgd:has_code ?code2 .  \n" +
                 " FILTER(?code2>5000 && ?code2<6000 && ?code2 != 5260) .\n" +
                 " FILTER(geof:FUNCTION(?o1, ?o2)). \n" +
-                "} ";
+                "} \n";
 
     private String spatialJoinEasyQryTemplate
             =   "SELECT ?s1 ?s2\n" +
@@ -51,7 +51,7 @@ public class ScalabilityQueriesSet extends QueriesSet {
                 "    lgd:has_code ?code2 .\n" +
                 " FILTER(?code2 IN (5622, 5601, 5641, 5621, 5661)) .\n" +
                 " FILTER(geof:FUNCTION(?o1, ?o2)).\n" +
-                "}";
+                "} \n";
             
     private String givenPolygonFile = "givenPolygonCrossesEurope.txt";
     private String givenPolygon;
@@ -63,7 +63,7 @@ public class ScalabilityQueriesSet extends QueriesSet {
         prefixes = "PREFIX geof: <http://www.opengis.net/def/function/geosparql/> \n" +
                     "PREFIX geo: <http://www.opengis.net/ont/geosparql#>  \n" +
                     "PREFIX lgd: <http://data.linkedeodata.eu/ontology#> \n" +
-                    "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>";
+                    "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\n";
         queriesN = 3; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
 
         // read static Polygon from external file which might be used in spatial selection queries
