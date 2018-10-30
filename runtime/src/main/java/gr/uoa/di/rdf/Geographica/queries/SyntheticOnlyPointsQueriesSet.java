@@ -23,46 +23,30 @@ public class SyntheticOnlyPointsQueriesSet extends QueriesSet {
 	static Logger logger = Logger.getLogger(SyntheticOnlyPointsQueriesSet.class.getSimpleName());
 	int N;
 	private SyntheticGenerator generator;
-	
+        private String[] queries;
+        private double[] selectivities;
+        
 	public SyntheticOnlyPointsQueriesSet(SystemUnderTest sut, int N) throws IOException {
 		super(sut);
-		queriesN = 16; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN
 		this.N = N;
 		this.generator = new SyntheticGenerator("", N);
-	}
+                // according to "7.2.2. Queries" section of the paper
+                // only spatial selections using topological relation 
+                // geof:sfWithin were run
+                this.queries = this.generator.generatePointQueries()[0][0];
+                this.selectivities = this.generator.returnSelectivities();
+		queriesN = queries.length; // IMPORTANT: Add/remove queries in getQuery implies changing queriesN	
+        }
 	
 	@Override
 	public QueryStruct getQuery(int queryIndex, int repetition) {		
 		String query = null, label = null;
-		
-		String[][][] queries = this.generator.generatePointQueries();
-		double[] selectivities = this.generator.returnSelectivities();
-		
-		String[] selections = queries[0][0];
-		assert selections.length == selectivities.length*2;
-				
-		String[] joins = queries[0][1];
-		assert joins.length == 4;
-		assert queriesN == selections.length + joins.length;
-		
-		
+
 		// IMPORTANT: Add/remove queries in getQuery implies changing queriesN and changing case numbers		
-		if (queryIndex >= 0 && queryIndex < selectivities.length*2) {
+		if (queryIndex >= 0 && queryIndex < queries.length) {
 			label = "Synthetic_Selection_Distance_" + ((queryIndex%2 == 0) ? "1" : this.generator.returnMaxTagValue().toString()) + "_" + selectivities[queryIndex/2];
-			query = selections[queryIndex];
-		} 
-		
-		else if (queryIndex == selectivities.length*2) {
-			label = "Synthetic_Join_Distance_1_1"; query = joins[0]; 
-		} else if (queryIndex == selectivities.length*2 + 1) {
-			label = "Synthetic_Join_Distance_1_" + this.generator.returnMaxTagValue() + ""; query = joins[1]; 
-		} else if (queryIndex == selectivities.length*2 + 2) {
-			label = "Synthetic_Join_Distance_" + this.generator.returnMaxTagValue() + "_1"; query = joins[2]; 
-		} else if (queryIndex == selectivities.length*2 + 3) {
-			label = "Synthetic_Join_Distance_" + this.generator.returnMaxTagValue() + "_" + this.generator.returnMaxTagValue() + ""; query = joins[3]; 
-		}
-		
-		else {
+			query = queries[queryIndex];
+		} else {
 			logger.error("No such query number exists:" + queryIndex);
 		}
 	

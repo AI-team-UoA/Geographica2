@@ -1,4 +1,7 @@
 #!/bin/bash
+# find the directory where the script is located in
+BASE="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 SCRIPT_NAME=`basename "$0"`
 # in case no arguments are present there might be environment variables defined
 # globally ! Please check and then exit if necessary
@@ -17,7 +20,7 @@ fi
 
 # Synthetic_Pois experiment
 experiment="SyntheticPOIs"
-TESTSFILE="testslist_synthetic_pois.txt"
+TESTSFILE=${BASE}/"testslist_synthetic_pois.txt"
 
 echo ${experiment} > ${TESTSFILE}
 echo "RDF4JSUT will run the following test on Synthetic_Pois dataset"
@@ -30,7 +33,7 @@ echo "-bd \"${RDF4JRepoBaseDir}\" -rp synthetic_pois -cr false -dr 0 -r 3 -t 360
 # archive log
 mv ../../geographica*.log ${ResultsBaseDir}/RDF4JSUT/Synthetic_Pois/LOGS
 #remove test file
-rm ${TESTFILE}
+rm ${TESTSFILE}
 
 # create report
 ${GeographicaScriptsDir}/createreport.sh ${ResultsBaseDir}/RDF4JSUT/Synthetic_Pois
