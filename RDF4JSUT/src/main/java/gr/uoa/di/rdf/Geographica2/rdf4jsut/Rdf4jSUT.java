@@ -954,11 +954,9 @@ public class Rdf4jSUT implements SystemUnderTest {
             //    RADIOUS is portion-0 of part-3 converted to long 
             cRadious = (long) Float.parseFloat(oldfilterPart[3].split("\\)")[0]);
             // 5. create the new filter using the desired format
-            String newFilter = String.format("FILTER(geof:sfWithin(%s, geof:buffer(\"POINT(45 45)\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>, %d))).\n}\n", cGeom, cRadious);
+            String newFilter = String.format("FILTER(geof:sfWithin(%s, geof:buffer(\"POINT(45 45)\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>, %d, <http://www.opengis.net/def/uom/OGC/1.0/metre>))).\n}\n", cGeom, cRadious);
             // 6. replace old with new filter
-            //translatedQuery = translatedQuery.substring(0, translatedQuery.indexOf("FILTER")) + newFilter;
-            translatedQuery = translatedQuery.substring(0, translatedQuery.indexOf("FILTER")) + "\n}\n";
-
+            translatedQuery = translatedQuery.substring(0, translatedQuery.indexOf("FILTER")) + newFilter;
         }
 
         return translatedQuery;

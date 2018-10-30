@@ -15,4 +15,4 @@ else # clear existing data
 fi
 
 # return all arguments except the experiment name
-echo "-bd \"${RDF4JRepoBaseDir}\" -rp synthetic -cr false -r 3 -t 3600 -l \"${ResultsBaseDir}/RDF4JSUT/Synthetic\" -N 512 run"
+echo "-bd \"${RDF4JRepoBaseDir}\" -rp synthetic -cr false -dr 0 -r 3 -t 3600 -l \"${ResultsBaseDir}/RDF4JSUT/Synthetic\" -N 512 run"

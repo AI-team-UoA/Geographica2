@@ -15,4 +15,4 @@ if [ ! -d "${ResultsBaseDir}/RDF4JSUT/RealWorld" ]; then
 fi
 
 # return all arguments except the experiment name
-echo "-bd \"${RDF4JRepoBaseDir}\" -rp realworld -cr false -dr 0 -r 3 -t 3600 -m 60 -l \"${ResultsBaseDir}/RDF4JSUT/RealWorld\" run"
+echo "-bd \"${RDF4JRepoBaseDir}\" -rp realworld -cr false -dr 0 -r 3 -t 3600 -m 60 -l \"${ResultsBaseDir}/RDF4JSUT/RealWorld\" print"
