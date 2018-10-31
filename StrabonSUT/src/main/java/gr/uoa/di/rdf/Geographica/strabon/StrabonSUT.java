@@ -61,7 +61,6 @@ public class StrabonSUT implements SystemUnderTest {
     static final String SYSCMD_SYNC = "sync";
     static final String SYSCMD_CLEARCACHE = "sudo /sbin/sysctl vm.drop_caches=3";
      */
-    
     public static Properties Properties = new Properties();
     final private static String PROPERTIES_FILE_NAME = "strabonsut.properties";
     static String SYSCMD_POSTGRES_STOP;
@@ -78,11 +77,11 @@ public class StrabonSUT implements SystemUnderTest {
     String passwd = null;
     Integer port = null;
     String host = null;
-    
+
     static {
         InputStream is = StrabonSUT.class.getResourceAsStream("/" + PROPERTIES_FILE_NAME);
         logger.info("Reading StrabonSUT properties from file : " + StrabonSUT.class.getResource("/" + PROPERTIES_FILE_NAME));
-	BufferedReader in = new BufferedReader(new InputStreamReader(is));
+        BufferedReader in = new BufferedReader(new InputStreamReader(is));
         // load the properties
         try {
             Properties.load(in);
@@ -94,7 +93,7 @@ public class StrabonSUT implements SystemUnderTest {
         SYSCMD_POSTGRES_START = Properties.getProperty("POSTGRES_START");
         SYSCMD_POSTGRES_RESTART = Properties.getProperty("POSTGRES_RESTART");
         SYSCMD_SYNC = Properties.getProperty("SYSCMD_SYNC");
-        SYSCMD_CLEARCACHE = Properties.getProperty("SYSCMD_CLEARCACHE");        
+        SYSCMD_CLEARCACHE = Properties.getProperty("SYSCMD_CLEARCACHE");
     }
 
     public StrabonSUT(String db, String user, String passwd, Integer port,
@@ -367,7 +366,7 @@ public class StrabonSUT implements SystemUnderTest {
 //			System.out.println(pr.exitValue());
             if (pr.exitValue() != 0) {
                 logger.error("Something went wrong while starting postgres");
-                 logger.error("... with command " + Arrays.toString(start_postgres));
+                logger.error("... with command " + Arrays.toString(start_postgres));
             }
 
             Thread.sleep(5000);
@@ -386,25 +385,29 @@ public class StrabonSUT implements SystemUnderTest {
         translatedQuery = query;
 
         translatedQuery = translatedQuery.replaceAll("geof:union", "strdf:union");
-        /*
-        translatedQuery = translatedQuery.replaceAll("geof:distance", "strdf:distance");
-
-        if (label.matches("Get_CLC_areas")
-                || label.matches("Get_highways")
-                || label.matches("Get_municipalities")
-                || label.matches("Get_hotspots")
-                || label.matches("Get_coniferous_forests_in_fire")
-                || label.matches("Get_road_segments_affected_by_fire")) {
-            translatedQuery = translatedQuery.replaceAll("<http://www.opengis.net/ont/geosparql#wktLiteral>", "strdf:WKT");
+        
+        if (label.matches("Q6_Area_CLC")) {
+            translatedQuery = translatedQuery.replaceAll("strdf:area", "geof:area");
+        } else if (label.indexOf("Synthetic_Selection_Distance") != -1) {
+            // convert this: FILTER ( bif:st_within(?geo1, bif:st_point(45, 45), 5000.000000)) 
+            // .....to this: FILTER ( geof:sfWithin(?geo1, geof:buffer("POINT(23.71622 37.97945)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>, 5000, <http://www.opengis.net/def/uom/OGC/1.0/metre>)))
+            // 1. locate the last part of the query which starts with FILTER
+            String cGeom = "";
+            long cRadious = 0;
+            String oldFilter = translatedQuery.substring(translatedQuery.indexOf("FILTER"));
+            // 2. split to 4 parts using the comma as delimiter
+            String[] oldfilterPart = oldFilter.split(",");
+            // 3. split part-0 using the ( as delimiter
+            //    ?geo1 is portion-2 of part-0
+            cGeom = oldfilterPart[0].split("\\(")[2];
+            // 4. split part-3 using the ) as delimiter
+            //    RADIOUS is portion-0 of part-3 converted to long 
+            cRadious = (long) Float.parseFloat(oldfilterPart[3].split("\\)")[0]);
+            // 5. create the new filter using the desired format
+            String newFilter = String.format("FILTER(geof:sfWithin(%s, geof:buffer(\"POINT(45 45)\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>, %d, <http://www.opengis.net/def/uom/OGC/1.0/metre>))).\n}\n", cGeom, cRadious);
+            // 6. replace old with new filter
+            translatedQuery = translatedQuery.substring(0, translatedQuery.indexOf("FILTER")) + newFilter;
         }
-
-        if (label.matches("List_GeoNames_categories_per_CLC_category")
-                || label.matches("Count_GeoNames_categories_in_ContinuousUrbanFabric")) {
-            translatedQuery = translatedQuery.replaceAll(
-                    " } \\n	FILTER\\(geof:sfIntersects\\(\\?clcWkt, \\?fWkt\\)\\)\\. \\\n",
-                    " \n	FILTER(geof:sfIntersects(?clcWkt, ?fWkt)). } \n");
-        }
-         */
         return translatedQuery;
     }
 }
