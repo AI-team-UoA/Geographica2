@@ -12,7 +12,7 @@ BASE="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # STEP 1: Validate the script's syntax
 #      1.1: check number of arguments
-if (( $# != 3 )); then
+if (( $# != 4 )); then
     echo -e "Illegal number of parameters $SYNTAX"
     exit 1
 fi
@@ -24,6 +24,8 @@ RepoID=$2
 #echo "RepoID = ${RepoID}"
 JVM_Xmx=$3
 #echo "JVM_Xmx = ${JVM_Xmx}"
+upgradeLuceneIdxs=$4
+#echo "upgradeLuceneIdxs = ${upgradeLuceneIdxs}"
 
 #      1.3: check whether the directory (<RDF4JRepoBaseDir>) does not exists
 dirs=(  "$RDF4JRepoBaseDir" )
@@ -52,6 +54,16 @@ CLASS_PATH="$(for file in `ls -1 *.jar`; do myVar=$myVar./$file":"; done;echo $m
 
 # define the executing-main class
 MAIN_CLASS="gr.uoa.di.rdf.Geographica2.rdf4jsut.RepoUtil"
+LUCENE_UPGRADE_CLASS="org.apache.lucene.index.IndexUpgrader"
+luceneIndexDir=${RDF4JRepoBaseDir}/repositories/${RepoID}/luceneidx
+#echo ${luceneIndexDir}
+
+if [ "$upgradeLuceneIdxs" = true ]; then
+    #define the lucene index upgrade command
+    EXEC_UPGRADE_LUCENE_IDXS="java -cp $CLASS_PATH $LUCENE_UPGRADE_CLASS -delete-prior-commits -verbose ${luceneIndexDir}"
+    #echo ${EXEC_UPGRADE_LUCENE_IDXS}
+    eval ${EXEC_UPGRADE_LUCENE_IDXS}
+fi
 
 # define the run command to QUERY_1 REPO
 EXEC_QUERY_1_REPO="java $JAVA_OPTS -cp $CLASS_PATH $MAIN_CLASS queryman \"${RDF4JRepoBaseDir}\" $RepoID 1"

@@ -29,19 +29,19 @@ echo -e "`date`\n"
 
 HasLucene=true  # enable Lucene for all repositories of RDF4J to improve geospatial query evaluation
 # Real World dataset
-WKTIdxList="http://www.opengis.net/ont/geosparql#asWKT http://geo.linkedopendata.gr/corine/ontology#asWKT http://dbpedia.org/property/asWKT http://geo.linkedopendata.gr/gag/ontology/asWKT http://www.geonames.org/ontology#asWKT http://teleios.di.uoa.gr/ontologies/noaOntology.owl#asWKT http://linkedgeodata.org/ontology/asWKT"
-./createRDF4JRepo.sh ${RDF4JRepoBaseDir} realworld ${RemoveIfExists} "spoc,posc,cosp" trig ${DatasetBaseDir}/RealWorldWorkload/NO_CRS/RealWorld ${JVM_Xmx} ${HasLucene} "${WKTIdxList}"
+#WKTIdxList="http://www.opengis.net/ont/geosparql#asWKT http://geo.linkedopendata.gr/corine/ontology#asWKT http://dbpedia.org/property/asWKT http://geo.linkedopendata.gr/gag/ontology/asWKT http://www.geonames.org/ontology#asWKT http://teleios.di.uoa.gr/ontologies/noaOntology.owl#asWKT http://linkedgeodata.org/ontology/asWKT"
+#./createRDF4JRepo.sh ${RDF4JRepoBaseDir} realworld ${RemoveIfExists} "spoc,posc,cosp" trig ${DatasetBaseDir}/RealWorldWorkload/NO_CRS/RealWorld ${JVM_Xmx} ${HasLucene} "${WKTIdxList}"
 # Synthetic dataset
-WKTIdxList="http://geographica.di.uoa.gr/generator/pointOfInterest/asWKT http://geographica.di.uoa.gr/generator/stateCenter/asWKT http://geographica.di.uoa.gr/generator/state/asWKT http://geographica.di.uoa.gr/generator/landOwnership/asWKT http://geographica.di.uoa.gr/generator/road/asWKT"
-./createRDF4JRepo.sh ${RDF4JRepoBaseDir} synthetic ${RemoveIfExists} "spoc,posc" n-triples ${DatasetBaseDir}/SyntheticWorkload/Synthetic ${JVM_Xmx} ${HasLucene} "${WKTIdxList}"
+#WKTIdxList="http://geographica.di.uoa.gr/generator/pointOfInterest/asWKT http://geographica.di.uoa.gr/generator/stateCenter/asWKT http://geographica.di.uoa.gr/generator/state/asWKT http://geographica.di.uoa.gr/generator/landOwnership/asWKT http://geographica.di.uoa.gr/generator/road/asWKT"
+#./createRDF4JRepo.sh ${RDF4JRepoBaseDir} synthetic ${RemoveIfExists} "spoc,posc" n-triples ${DatasetBaseDir}/SyntheticWorkload/Synthetic ${JVM_Xmx} ${HasLucene} "${WKTIdxList}"
 # Real World dataset - Points only!
-WKTIdxList="http://www.opengis.net/ont/geosparql#asWKT http://dbpedia.org/property/asWKT http://www.geonames.org/ontology#asWKT"
-./createRDF4JRepo.sh ${RDF4JRepoBaseDir} realworld_points ${RemoveIfExists} "spoc,posc,cosp" trig ${DatasetBaseDir}/RealWorldWorkload/NO_CRS/RealWorld_Points ${JVM_Xmx} ${HasLucene} "${WKTIdxList}"
+#WKTIdxList="http://www.opengis.net/ont/geosparql#asWKT http://dbpedia.org/property/asWKT http://www.geonames.org/ontology#asWKT"
+#./createRDF4JRepo.sh ${RDF4JRepoBaseDir} realworld_points ${RemoveIfExists} "spoc,posc,cosp" trig ${DatasetBaseDir}/RealWorldWorkload/NO_CRS/RealWorld_Points ${JVM_Xmx} ${HasLucene} "${WKTIdxList}"
 # Synthetic dataset - Points Of Interest only!
 WKTIdxList="http://www.opengis.net/ont/geosparql#asWKT http://geographica.di.uoa.gr/generator/pointOfInterest/asWKT"
 ./createRDF4JRepo.sh ${RDF4JRepoBaseDir} synthetic_pois ${RemoveIfExists} "spoc,posc" n-triples ${DatasetBaseDir}/SyntheticWorkload/Synthetic_POIs ${JVM_Xmx} ${HasLucene} "${WKTIdxList}"
 
-#exit 0;
+exit 0;
 
 # OSM+CORINE2012 datasets - Scalability 10K, 100K, 1M, 10M, 100M, 500M
 WKTIdxList="http://www.opengis.net/ont/geosparql#asWKT"

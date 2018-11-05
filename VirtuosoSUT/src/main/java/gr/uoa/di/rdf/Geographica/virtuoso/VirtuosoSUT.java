@@ -8,7 +8,7 @@
  */
 package gr.uoa.di.rdf.Geographica.virtuoso;
 
-import gr.uoa.di.rdf.Geographica.systemsundertest.SystemUnderTest;
+import gr.uoa.di.rdf.Geographica2.systemsundertest.SystemUnderTest;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,27 +27,28 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.apache.log4j.Logger;
-import org.openrdf.model.BNode;
-import org.openrdf.model.Literal;
-import org.openrdf.model.URI;
-import org.openrdf.model.impl.BNodeImpl;
-import org.openrdf.model.impl.LiteralImpl;
-import org.openrdf.model.impl.URIImpl;
-import org.openrdf.query.Binding;
-import org.openrdf.query.BindingSet;
-import org.openrdf.query.MalformedQueryException;
-import org.openrdf.query.QueryEvaluationException;
-import org.openrdf.query.TupleQueryResultHandlerException;
-import org.openrdf.query.impl.BindingImpl;
-import org.openrdf.repository.sparql.query.SPARQLQueryBindingSet;
+import org.eclipse.rdf4j.model.BNode;
+import org.eclipse.rdf4j.model.Literal;
+import org.eclipse.rdf4j.model.URI;
+import org.eclipse.rdf4j.model.impl.BNodeImpl;
+import org.eclipse.rdf4j.model.impl.LiteralImpl;
+import org.eclipse.rdf4j.model.impl.URIImpl;
+import org.eclipse.rdf4j.query.Binding;
+import org.eclipse.rdf4j.query.BindingSet;
+import org.eclipse.rdf4j.query.MalformedQueryException;
+import org.eclipse.rdf4j.query.QueryEvaluationException;
+import org.eclipse.rdf4j.query.TupleQueryResultHandlerException;
+import org.eclipse.rdf4j.query.impl.BindingImpl;
+import org.eclipse.rdf4j.repository.sparql.query.SPARQLQueryBindingSet;
 
-import virtuoso.jdbc3.VirtuosoExtendedString;
-import virtuoso.jdbc3.VirtuosoRdfBox;
+import virtuoso.jdbc4.VirtuosoExtendedString;
+import virtuoso.jdbc4.VirtuosoRdfBox;
 
 
 /**
- * @author Kostis Kyzirakos <kkyzir@di.uoa.gr>
  *
+ * @author Ioannidis Theofilos <tioannid@yahoo.com>
+ * @since 02/11/2018
  */
 public class VirtuosoSUT implements SystemUnderTest {
 	static Logger logger = Logger.getLogger(SystemUnderTest.class.getSimpleName());
@@ -78,7 +79,7 @@ public class VirtuosoSUT implements SystemUnderTest {
 	@Override
 	public void initialize() {
 		try {
-			Class.forName("virtuoso.jdbc3.Driver");
+			Class.forName("virtuoso.jdbc4.Driver");
 			virtuoso = DriverManager.getConnection("jdbc:virtuoso://"+this.host+":"+this.port, this.user, this.passwd);
 		} catch (Exception e) {
 			logger.fatal("Cannot initialize virtuoso");

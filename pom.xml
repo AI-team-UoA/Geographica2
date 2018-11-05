@@ -15,6 +15,7 @@
         <module>StrabonSUT</module>
         <module>GraphDBSUT</module>
         <module>RDF4JSUT</module>
+        <module>VirtuosoSUT</module>
     </modules>
 	
     <properties>

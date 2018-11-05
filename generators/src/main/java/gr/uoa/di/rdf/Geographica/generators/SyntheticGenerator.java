@@ -642,7 +642,7 @@ public class SyntheticGenerator {
 				distance = distanceAndCenter[0]; // degree
 			else {
 				distance = distanceAndCenter[1];  // metre
-				distance = String.format("%f", (Double.parseDouble(distance)/1000));
+				distance = String.format("%f", (Double.parseDouble(distance)));
 			}
 			
 			

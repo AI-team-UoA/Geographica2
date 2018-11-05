@@ -1,6 +1,6 @@
 package gr.uoa.di.rdf.Geographica.virtuoso;
 
-import gr.uoa.di.rdf.Geographica.systemsundertest.RunSystemUnderTest;
+import gr.uoa.di.rdf.Geographica2.systemsundertest.RunSystemUnderTest;
 
 import org.apache.log4j.Logger;
 

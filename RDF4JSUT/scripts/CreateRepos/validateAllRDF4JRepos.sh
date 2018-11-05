@@ -21,22 +21,24 @@ else
         export JVM_Xmx=${2}
 fi
 
+upgradeLuceneIdxs=false
+
 echo -e "`date`\n"
 
 # Real World dataset
-./validateRDF4JRepo.sh ${RDF4JRepoBaseDir} realworld ${JVM_Xmx}
+#./validateRDF4JRepo.sh ${RDF4JRepoBaseDir} realworld ${JVM_Xmx} ${upgradeLuceneIdxs}
 # Synthetic dataset
-./validateRDF4JRepo.sh ${RDF4JRepoBaseDir} synthetic ${JVM_Xmx}
+#./validateRDF4JRepo.sh ${RDF4JRepoBaseDir} synthetic ${JVM_Xmx} ${upgradeLuceneIdxs}
 # Real World dataset - Points only!
-./validateRDF4JRepo.sh ${RDF4JRepoBaseDir} realworld_points ${JVM_Xmx}
+#./validateRDF4JRepo.sh ${RDF4JRepoBaseDir} realworld_points ${JVM_Xmx} ${upgradeLuceneIdxs}
 # Synthetic dataset - Points Of Interest only!
-./validateRDF4JRepo.sh ${RDF4JRepoBaseDir} synthetic_pois ${JVM_Xmx}
+./validateRDF4JRepo.sh ${RDF4JRepoBaseDir} synthetic_pois ${JVM_Xmx} ${upgradeLuceneIdxs}
 
-#exit 0;
+exit 0;
 
 # OSM+CORINE2012 datasets - Scalability 10K, 100K, 1M, 10M, 100M, 500M
 #levels=( "10K" )
 levels=(  "10K" "100K" "1M" "10M" "100M" "500M" )
 for level in "${levels[@]}"; do
-    ./validateRDF4JRepo.sh ${RDF4JRepoBaseDir} scalability_${level} ${JVM_Xmx}
+    ./validateRDF4JRepo.sh ${RDF4JRepoBaseDir} scalability_${level} ${JVM_Xmx} ${upgradeLuceneIdxs}
 done

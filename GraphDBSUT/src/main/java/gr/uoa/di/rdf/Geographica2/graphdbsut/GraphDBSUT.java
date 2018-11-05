@@ -612,6 +612,8 @@ public class GraphDBSUT implements SystemUnderTest {
             // 4. split part-3 using the ) as delimiter
             //    RADIOUS is portion-0 of part-3 converted to long 
             cRadious = (long) Float.parseFloat(oldfilterPart[3].split("\\)")[0]);
+            // In the SyntheticOnly experiment the radius is in meters therefore we have to divide by 1000
+            cRadious = cRadious / 1000;
             // 5. create the new filter using the desired format
             String newFilter = String.format("FILTER(geof:sfWithin(%s, geof:buffer(\"POINT(45 45)\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>, %d))).\n}\n", cGeom, cRadious);
             // 6. replace old with new filter
