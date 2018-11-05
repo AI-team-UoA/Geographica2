@@ -15,6 +15,7 @@ public class RunGraphDB extends RunSystemUnderTest {
         options.addOption("bd", "basedir", true, "BaseDir");
         options.addOption("rp", "repository", true, "RepositoryID");
         options.addOption("cr", "create", true, "CreateRepository");
+        options.addOption("dr", "displres", true, "Display Results");
     }
 
     @Override
@@ -25,6 +26,7 @@ public class RunGraphDB extends RunSystemUnderTest {
         logger.info("BaseDir:\t" + cmd.getOptionValue("basedir"));
         logger.info("RepositoryID:\t" + cmd.getOptionValue("repository"));
         logger.info("CreateRepository:\t" + cmd.getOptionValue("create"));
+        logger.info("Displres:\t" + cmd.getOptionValue("displres"));
     }
 
     @Override
@@ -32,7 +34,8 @@ public class RunGraphDB extends RunSystemUnderTest {
         String basedir = (cmd.getOptionValue("basedir") != null ? cmd.getOptionValue("basedir") : "");
         String repository = cmd.getOptionValue("repository");
         boolean create = Boolean.parseBoolean(cmd.getOptionValue("create"));
-        sut = new GraphDBSUT(basedir, repository, create);
+        int displres = Integer.parseInt(cmd.getOptionValue("displres"));
+        sut = new GraphDBSUT(basedir, repository, create, displres);
     }
 
     public static void main(String[] args) throws Exception  {

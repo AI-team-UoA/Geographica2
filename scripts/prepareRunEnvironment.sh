@@ -55,4 +55,14 @@ else
     export StrabonLoaderBaseDir="/home/journal/StrabonLoader"
 fi
 
+# read the GraphDB data directory from the config file
+GraphDB_Properties_File="${GraphDBBaseDir}/conf/graphdb.properties"
+matchedLine=`grep -e "^graphdb.home.data =" $GraphDB_Properties_File`
+export GraphDB_Data_Dir="${matchedLine##*= }"
+# if graphdb.home.data is not explicitly set then assign default path
+if [ -z ${GraphDB_Data_Dir} ]; then
+        export GraphDB_Data_Dir="${GraphDBBaseDir}/data"
+fi
+
+# define Results base directory
 export ResultsBaseDir="${ResultsBaseDir}/Results${Changeset}"

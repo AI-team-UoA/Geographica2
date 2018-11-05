@@ -225,6 +225,7 @@ public class GraphDBSUT implements SystemUnderTest {
         private final String query;
         private final GraphDB graphDB;
         private BindingSet firstBindingSet;
+        private int dispres;
         /*
         private long evaluationTime,
                 fullResultScanTime,
@@ -233,9 +234,10 @@ public class GraphDBSUT implements SystemUnderTest {
         private long[] returnValue;
 
         // --------------------- Constructors ----------------------------------
-        public Executor(String query, GraphDB graphDB, int timeoutSecs) {
+        public Executor(String query, GraphDB graphDB, int timeoutSecs, int dispres) {
             this.query = query;
             this.graphDB = graphDB;
+            this.dispres = dispres;
             /*
             this.evaluationTime = timeoutSecs + 1;
             this.fullResultScanTime = timeoutSecs + 1;
@@ -263,7 +265,7 @@ public class GraphDBSUT implements SystemUnderTest {
         public void run() {
             try {
                 //runQuery();
-                runQueryPrintLimit(3);
+                runQueryPrintLimitedRows(this.dispres);
             } catch (MalformedQueryException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -279,43 +281,100 @@ public class GraphDBSUT implements SystemUnderTest {
             }
         }
 
-        private void runQuery() throws MalformedQueryException, QueryEvaluationException, TupleQueryResultHandlerException, IOException {
-
-            logger.info("Evaluating query...");
-            TupleQuery tupleQuery = graphDB.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, query);
-
-            // Evaluate and time the evaluation of the prepared query
-            // noOfResults = 0;
-            long results = 0;
-
-            long t1 = System.nanoTime();
-            TupleQueryResult tupleQueryResult = tupleQuery.evaluate();
-            long t2 = System.nanoTime();
-
-            if (tupleQueryResult.hasNext()) {
-                firstBindingSet = tupleQueryResult.next();
-                //noOfResults++;
-                results++;
-            }
-
-            while (tupleQueryResult.hasNext()) {
-                //noOfResults++;
-                results++;
-                tupleQueryResult.next();
-            }
-            long t3 = System.nanoTime();
-
-            logger.info("Query evaluated");
-
-            // Calculate durations: Evaluation, Full ResultSet Scan
-            /*
-            fullResultScanTime = System.nanoTime() - t2;
-            evaluationTime = t2 - t1;
-             */
-            this.returnValue = new long[]{t2 - t1, t3 - t2, t3 - t1, results};
-        }
-
-        private void runQueryPrintLimit(int rowsToDisplay) throws MalformedQueryException, QueryEvaluationException, TupleQueryResultHandlerException, IOException {
+//        private void runQuery() throws MalformedQueryException, QueryEvaluationException, TupleQueryResultHandlerException, IOException {
+//
+//            logger.info("Evaluating query...");
+//            TupleQuery tupleQuery = graphDB.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, query);
+//
+//            // Evaluate and time the evaluation of the prepared query
+//            // noOfResults = 0;
+//            long results = 0;
+//
+//            long t1 = System.nanoTime();
+//            TupleQueryResult tupleQueryResult = tupleQuery.evaluate();
+//            long t2 = System.nanoTime();
+//
+//            if (tupleQueryResult.hasNext()) {
+//                firstBindingSet = tupleQueryResult.next();
+//                //noOfResults++;
+//                results++;
+//            }
+//
+//            while (tupleQueryResult.hasNext()) {
+//                //noOfResults++;
+//                results++;
+//                tupleQueryResult.next();
+//            }
+//            long t3 = System.nanoTime();
+//
+//            logger.info("Query evaluated");
+//
+//            // Calculate durations: Evaluation, Full ResultSet Scan
+//            /*
+//            fullResultScanTime = System.nanoTime() - t2;
+//            evaluationTime = t2 - t1;
+//             */
+//            this.returnValue = new long[]{t2 - t1, t3 - t2, t3 - t1, results};
+//        }
+//        private void runQueryPrintLimit(int rowsToDisplay) throws MalformedQueryException, QueryEvaluationException, TupleQueryResultHandlerException, IOException {
+//            long t1 = 0, t2 = 0, t3 = 0;
+//            long results = 0, noOfScanErrors = 0;
+//            int printedrow = 0;
+//            String bindingLine = "", labelsTitle = "\t";
+//            List<String> bindings = null;
+//            boolean displayRowsFlag = (rowsToDisplay != 0);
+//
+//            logger.info("Evaluating query...");
+//            TupleQuery tupleQuery = graphDB.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, query);
+//
+//            // Evaluate and time the evaluation of the prepared query
+//            TupleQueryResult tupleQueryResult = null;
+//            t1 = System.nanoTime();
+//            // if there is an exception during evaluation throw it and return
+//            try {
+//                tupleQueryResult = tupleQuery.evaluate();
+//            } catch (QueryEvaluationException ex) {
+//                logger.error("[Query evaluation phase]", ex);
+//                throw new QueryEvaluationException("[Query evaluation phase]", ex);
+//            }
+//            t2 = System.nanoTime();
+//
+//            // if there is a valid request for rows to display, first display headers
+//            if (displayRowsFlag) {
+//                // process results
+//                bindings = tupleQueryResult.getBindingNames();
+//                for (String label : bindings) {
+//                    labelsTitle += (label + "\t\t");
+//                }
+//                logger.info("\n" + labelsTitle + "\n------------------------------------>");
+//            }
+//
+//            while (tupleQueryResult.hasNext()) {
+//                try {
+//                    firstBindingSet = tupleQueryResult.next();
+//                    if (displayRowsFlag) {
+//                        if (printedrow < rowsToDisplay) {
+//                            bindingLine = "";
+//                            for (String label : bindings) {
+//                                bindingLine += (firstBindingSet.getValue(label) + "\t");
+//                            }
+//                            logger.info(bindingLine);
+//                            printedrow++;
+//                        }
+//                    }
+//                    results++;
+//                } catch (Exception ex) {
+//                    noOfScanErrors++;
+//                    logger.error("[Query full scan phase]");
+//                }
+//            }
+//            t3 = System.nanoTime();
+//            logger.info("\t<-----------\n\n");
+//            logger.info("Query evaluated with " + results + " results and " + noOfScanErrors + " scan errors!");
+//            this.returnValue = new long[]{t2 - t1, t3 - t2, t3 - t1, results};
+//        }
+//    }
+        private void runQueryPrintLimitedRows(int rowsToDisplay) throws MalformedQueryException, QueryEvaluationException, TupleQueryResultHandlerException, IOException {
             long t1 = 0, t2 = 0, t3 = 0;
             long results = 0, noOfScanErrors = 0;
             int printedrow = 0;
@@ -345,13 +404,13 @@ public class GraphDBSUT implements SystemUnderTest {
                 for (String label : bindings) {
                     labelsTitle += (label + "\t\t");
                 }
-                logger.info("\n" + labelsTitle + "\n------------------------------------>");
-            }
+                logger.info(labelsTitle);
+                logger.info("------------------------------------>");
 
-            while (tupleQueryResult.hasNext()) {
-                try {
-                    firstBindingSet = tupleQueryResult.next();
-                    if (displayRowsFlag) {
+                while (tupleQueryResult.hasNext()) {
+                    try {
+                        firstBindingSet = tupleQueryResult.next();
+
                         if (printedrow < rowsToDisplay) {
                             bindingLine = "";
                             for (String label : bindings) {
@@ -360,15 +419,29 @@ public class GraphDBSUT implements SystemUnderTest {
                             logger.info(bindingLine);
                             printedrow++;
                         }
+
+                        results++;
+                    } catch (Exception ex) {
+                        noOfScanErrors++;
+                        logger.error("[Query full scan phase]");
                     }
-                    results++;
-                } catch (Exception ex) {
-                    noOfScanErrors++;
-                    logger.error("[Query full scan phase]");
+                }
+            } else {
+                while (tupleQueryResult.hasNext()) {
+                    try {
+                        firstBindingSet = tupleQueryResult.next();
+                        results++;
+                    } catch (Exception ex) {
+                        noOfScanErrors++;
+                        logger.error("[Query full scan phase]");
+                    }
                 }
             }
+
             t3 = System.nanoTime();
-            logger.info("\t<-----------\n\n");
+            if (displayRowsFlag) {
+                logger.info("<------------------------------------\n");
+            }
             logger.info("Query evaluated with " + results + " results and " + noOfScanErrors + " scan errors!");
             this.returnValue = new long[]{t2 - t1, t3 - t2, t3 - t1, results};
         }
@@ -379,13 +452,15 @@ public class GraphDBSUT implements SystemUnderTest {
     private String repositoryId;    // repository Id
     private boolean createRepository;
     private GraphDB graphDB;
+    private int displres;
     private BindingSet firstBindingSet;
 
     // --------------------- Constructors ----------------------------------
-    public GraphDBSUT(String baseDir, String repositoryId, boolean createRepository) {
+    public GraphDBSUT(String baseDir, String repositoryId, boolean createRepository, int displres) {
         this.baseDir = baseDir;
         this.repositoryId = repositoryId;
         this.createRepository = createRepository;
+        this.displres = displres;
     }
 
     // --------------------- Data Accessors --------------------------------
@@ -417,7 +492,7 @@ public class GraphDBSUT implements SystemUnderTest {
         //maintains a thread for executing the doWork method
         final ExecutorService pool = Executors.newFixedThreadPool(1);
         //set the pool thread working
-        Executor runnable = new Executor(query, graphDB, timeoutSecs);
+        Executor runnable = new Executor(query, graphDB, timeoutSecs, this.displres);
 
         final Future<?> future = pool.submit(runnable);
         boolean isTimedout = false;

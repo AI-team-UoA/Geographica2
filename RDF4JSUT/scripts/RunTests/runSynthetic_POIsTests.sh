@@ -29,7 +29,7 @@ cat ${TESTSFILE}
 sudo /sbin/sysctl vm.drop_caches=3
 # returns all arguments except experiment and
 # executes experiment
-echo "-bd \"${RDF4JRepoBaseDir}\" -rp synthetic_pois -cr false -dr 0 -r 3 -t 3600 -l \"${ResultsBaseDir}/RDF4JSUT/Synthetic_Pois\" -N 1024 print" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${RDF4JRepoBaseDir}
+echo "-bd \"${RDF4JRepoBaseDir}\" -rp synthetic_pois -cr false -dr 0 -r 3 -t 3600 -l \"${ResultsBaseDir}/RDF4JSUT/Synthetic_Pois\" -N 1024 run" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${RDF4JRepoBaseDir}
 # archive log
 mv ../../geographica*.log ${ResultsBaseDir}/RDF4JSUT/Synthetic_Pois/LOGS
 #remove test file
