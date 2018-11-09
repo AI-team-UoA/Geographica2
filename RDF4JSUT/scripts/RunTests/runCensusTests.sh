@@ -34,35 +34,35 @@ fi
 
 # in case no arguments are present there might be environment variables defined
 # globally ! Please check and then exit if necessary
-if [ -z ${GraphDBBaseDir+x} ] || [ -z ${ExperimentResultDir+x} ] || [ -z ${JVM_Xmx+x} ]; then
-    echo "${SCRIPT_NAME}: One or all of the following environment variables {GraphDBBaseDir, ExperimentResultDir, JVM_Xmx} is/are not set";
+if [ -z ${RDF4JRepoBaseDir+x} ] || [ -z ${ExperimentResultDir+x} ] || [ -z ${JVM_Xmx+x} ]; then
+    echo "${SCRIPT_NAME}: One or all of the following environment variables {RDF4JRepoBaseDir, ExperimentResultDir, JVM_Xmx} is/are not set";
     return 1    # return instead of exit because we need to source the script
 fi
 
-# Check if ${ExperimentResultDir}/Synthetic_Pois/LOGS exists and create it if necessary
-if [ ! -d "${ExperimentResultDir}/Synthetic_Pois/LOGS" ]; then
-    echo "Will create ${ExperimentResultDir}/Synthetic_Pois/LOGS"
-    mkdir -p "${ExperimentResultDir}/Synthetic_Pois/LOGS"
+# Check if ${ExperimentResultDir}/Census/LOGS exists and create it if necessary
+if [ ! -d "${ExperimentResultDir}/Census/LOGS" ]; then
+    echo "Will create ${ExperimentResultDir}/Census/LOGS"
+    mkdir -p "${ExperimentResultDir}/Census/LOGS"
 else
-    echo "${ExperimentResultDir}/Synthetic_Pois/LOGS already exists"
+    echo "${ExperimentResultDir}/Census/LOGS already exists"
 fi
 
-# Synthetic_Pois experiment
-experiment="SyntheticPOIs"
-TESTSFILE=${BASE}/"testslist_synthetic_pois.txt"
+# Census experiment
+experiment="MacroGeocoding"
+TESTSFILE=${BASE}/"testslist_census.txt
 
 echo ${experiment} > ${TESTSFILE}
-echo "GraphDBSUT will run the following test on Synthetic_Pois dataset"
+echo "RDF4JSUT will run the following test on Census dataset"
 cat ${TESTSFILE}
 # clear system caches
 sudo /sbin/sysctl vm.drop_caches=3
 # returns all arguments except experiment and
 # executes experiment
-echo "-bd \"${GraphDBDataDir}\" -rp synthetic_pois -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -l \"${ExperimentResultDir}/Synthetic_Pois\" -N 1024 ${Action}" | ./runTestsForGraphDBSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${GraphDBBaseDir}
+echo "-bd \"${RDF4JRepoBaseDir}\" -rp census -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -l \"${ExperimentResultDir}/Census\" -N 1024 ${Action}" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${RDF4JRepoBaseDir}
 # archive log
-mv ../../geographica*.log ${ExperimentResultDir}/Synthetic_Pois/LOGS
+mv ../../geographica*.log ${ExperimentResultDir}/Census/LOGS
 #remove test file
 rm ${TESTSFILE}
 
 # create report
-${GeographicaScriptsDir}/createreport.sh ${ExperimentResultDir}/Synthetic_Pois
+${GeographicaScriptsDir}/createreport.sh ${ExperimentResultDir}/Census

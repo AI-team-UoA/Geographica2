@@ -2,17 +2,17 @@
 SCRIPT_NAME=`basename "$0"`
 # in case no arguments are present there might be environment variables defined
 # globally ! Please check and then exit if necessary
-if [ -z ${RDF4JRepoBaseDir+x} ] || [ -z ${ResultsBaseDir+x} ] || [ -z ${JVM_Xmx+x} ]; then
-    echo "${SCRIPT_NAME}: One or all of the following environment variables {RDF4JRepoBaseDir, ResultsBaseDir, JVM_Xmx} is/are not set";
+if [ -z ${RDF4JRepoBaseDir+x} ] || [ -z ${ExperimentResultDir+x} ] || [ -z ${JVM_Xmx+x} ]; then
+    echo "${SCRIPT_NAME}: One or all of the following environment variables {RDF4JRepoBaseDir, ExperimentResultDir, JVM_Xmx} is/are not set";
     return 1    # return instead of exit because we need to source the script
 fi
 
-# Check if ${ResultsBaseDir}/RDF4JSUT/RealWorld_Points/LOGS exists and create it if necessary
-if [ ! -d "${ResultsBaseDir}/RDF4JSUT/RealWorld_Points/LOGS" ]; then
-    echo "Will create ${ResultsBaseDir}/RDF4JSUT/RealWorld_Points/LOGS"
-    mkdir -p "${ResultsBaseDir}/RDF4JSUT/RealWorld_Points/LOGS"
+# Check if ${ExperimentResultDir}/RealWorld_Points/LOGS exists and create it if necessary
+if [ ! -d "${ExperimentResultDir}/RealWorld_Points/LOGS" ]; then
+    echo "Will create ${ExperimentResultDir}/RealWorld_Points/LOGS"
+    mkdir -p "${ExperimentResultDir}/RealWorld_Points/LOGS"
 else
-    echo "${ResultsBaseDir}/RDF4JSUT/RealWorld_Points/LOGS already exists"
+    echo "${ExperimentResultDir}/RealWorld_Points/LOGS already exists"
 fi
 
 # RealWorld_Points experiment comprises 2 queries from MicroSelections and
@@ -31,9 +31,9 @@ for index in "${!experiments[@]}"; do
     sudo /sbin/sysctl vm.drop_caches=3
     # returns all arguments except experiment and
     # executes experiment
-    echo "-bd \"${RDF4JRepoBaseDir}\" -rp realworld_points -cr false -dr 0 ${querylists[$index]} -r 3 -t 3600 -m 60 -l \"${ResultsBaseDir}/RDF4JSUT/RealWorld_Points\" run" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${RDF4JRepoBaseDir}
+    echo "-bd \"${RDF4JRepoBaseDir}\" -rp realworld_points -cr false -dr 0 ${querylists[$index]} -r 3 -t 3600 -m 60 -l \"${ExperimentResultDir}/RealWorld_Points\" run" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${RDF4JRepoBaseDir}
     # archive log
-    mv ../../geographica*.log ${ResultsBaseDir}/RDF4JSUT/RealWorld_Points/LOGS
+    mv ../../geographica*.log ${ExperimentResultDir}/RealWorld_Points/LOGS
 done
 
 
@@ -44,9 +44,9 @@ cat ${TESTSFILE}
 sudo /sbin/sysctl vm.drop_caches=3
 # returns all arguments except experiment and
 # executes experiment
-echo "-bd \"${RDF4JRepoBaseDir}\" -rp realworld_points -cr false -dr 0 ${MICROJOINS_QUERYLIST} -r 3 -t 3600 -m 60 -l \"${ResultsBaseDir}/RDF4JSUT/RealWorld_Points\" run" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${RDF4JRepoBaseDir}
+echo "-bd \"${RDF4JRepoBaseDir}\" -rp realworld_points -cr false -dr 0 ${MICROJOINS_QUERYLIST} -r 3 -t 3600 -m 60 -l \"${ExperimentResultDir}/RealWorld_Points\" run" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${RDF4JRepoBaseDir}
 # archive log
-mv ../../geographica*.log ${ResultsBaseDir}/RDF4JSUT/RealWorld_Points/LOGS
+mv ../../geographica*.log ${ExperimentResultDir}/RealWorld_Points/LOGS
 
 # create report
-${GeographicaScriptsDir}/createreport.sh ${ResultsBaseDir}/RDF4JSUT/RealWorld_Points
+${GeographicaScriptsDir}/createreport.sh ${ExperimentResultDir}/RealWorld_Points

@@ -938,7 +938,7 @@ public class Rdf4jSUT implements SystemUnderTest {
 
         if (label.matches("Q6_Area_CLC")) {
             translatedQuery = translatedQuery.replaceAll("strdf:area", "geof:area");
-        } else if (label.indexOf("Synthetic_Selection_Distance") != -1) {
+        } else if (label.indexOf("Synthetic_Selection_Distance") != -1) { // Synthetic_POIs experiment
             // convert this: FILTER ( bif:st_within(?geo1, bif:st_point(45, 45), 5000.000000)) 
             // .....to this: FILTER ( geof:sfWithin(?geo1, geof:buffer("POINT(23.71622 37.97945)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>, 5000, <http://www.opengis.net/def/uom/OGC/1.0/metre>)))
             // 1. locate the last part of the query which starts with FILTER
@@ -953,6 +953,14 @@ public class Rdf4jSUT implements SystemUnderTest {
             // 4. split part-3 using the ) as delimiter
             //    RADIOUS is portion-0 of part-3 converted to long 
             cRadious = (long) Float.parseFloat(oldfilterPart[3].split("\\)")[0]);
+            // In the SyntheticOnly experiment the radius is in meters therefore 
+            // we would have had to divide by 100000 to convert it to degrees, because this
+            // the analogy of Km/degree around the average latitude 45 but RDF4J
+            // uses geof:buffer(geom, radius, uom:metre) and therefore there is
+            // no need to convert cRadious!! The SyntheticGenerator especially for POIs returns
+            // radious in Km, that is the cRadius is already divide by 1000 and
+            // in order to be converted back to meters, it has to multiplied by 1000
+            cRadious = cRadious * 1000;
             // 5. create the new filter using the desired format
             String newFilter = String.format("FILTER(geof:sfWithin(%s, geof:buffer(\"POINT(45 45)\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>, %d, <http://www.opengis.net/def/uom/OGC/1.0/metre>))).\n}\n", cGeom, cRadious);
             // 6. replace old with new filter

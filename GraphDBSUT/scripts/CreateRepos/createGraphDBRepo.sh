@@ -26,7 +26,7 @@ MAP_CONTEXTS_FILE=$BASE/$MAP_CONTEXTS_FILE
 #      1.1: check number of arguments and assign them to variables
 if (( $# != 4 )); then
     echo -e "Illegal number of parameters $SYNTAX"
-	exit 1
+    exit 1
 fi
 
 RepoConfig=$BASE/$1
@@ -65,18 +65,11 @@ if [ ! -e "$PreLoad_Exe" ]; then
 fi
 
 #      2.2: check whether the repos $RepoName already exists
-#      2.2.1: get the value of the <graphdb.home.data> in the <graphDBBaseDir>/conf/graphdb.properties configuration file
-GraphDB_Properties_File="${GraphDBBaseDir}/conf/graphdb.properties" 
-#echo "GraphDB Properties file is : $GraphDB_Properties_File"
-matchedLine=`grep -e "^graphdb.home.data =" $GraphDB_Properties_File`
-GraphDB_Data_Dir="${matchedLine##*= }"
-# echo "GraphDB Data dir is : $GraphDB_Data_Dir"
-
-#      2.2.2: check if <GraphDBDataDir>/repositories contains any of the repos (repoName )
-repoDir="${GraphDB_Data_Dir}/repositories/${RepoName}"
-# echo $repoDir 
-if [ -d "$repoDir" ]; then
-	echo "Repo $RepoName already exists in --> $repoDir"
+#      2.2.1: check if <GraphDBDataDir>/repositories contains any of the repos (repoName )
+RepoDir="${GraphDBDataDir}/repositories/${RepoName}"
+# echo $RepoDir 
+if [ -d "$RepoDir" ]; then
+	echo "Repo $RepoName already exists in --> $RepoDir"
 	exit 5
 fi		
 
@@ -129,5 +122,8 @@ time $PreLoad_Exe -c $RepoConfig *$rdffiletype
 #if [ "${RDFFormat}" = "TRIG" ]; then
 #    rm *.trig
 #fi
+
+# print repository size in MB
+echo -e "GraphDB repository \"${RepoDir}/\" has size: `du -hs -BM ${RepoDir} | cut -d 'M' -f 1`MB"
 
 exit 0

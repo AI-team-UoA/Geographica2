@@ -7,24 +7,33 @@
 #    <script> environment
 SCRIPT_NAME=`basename "$0"`
 SYNTAX="
-SYNTAX: $SCRIPT_NAME <environment> <changeset>
+SYNTAX: $SCRIPT_NAME <environment> <changeset> <activesut> <short description>
 \t<environment>\t:\tEnvironment the Geographica will run {TELEIOS3 | VM}
-\t<changeset>\t:\tGeographica mercurial changeset"
+\t<changeset>\t:\tGeographica mercurial changeset
+\t<activesut>\t:\tActive SUT
+\t<shortdesc>\t:\tExperiment short description"
 
 # STEP 0: Find the directory where the script is located in, Geographica/scripts
 export GeographicaScriptsDir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # STEP 1: Validate the script's syntax
 #      1.1: check number of arguments
-if (( $# != 2 )); then
+if (( $# != 4 )); then
     echo -e "Illegal number of parameters $SYNTAX"
-    exit 1
+    return 1
 fi
 #      1.2: read the arguments
 Environment=${1^^}
 Changeset=${2}      # should be a number nn or nnn
+# set the active SUT
+export ActiveSUT=${3}
+ShortDesc=${4}
 
 # STEP 2: Set the values of the exported environment variables
+
+# formulate the results folder name
+DateTimeISO8601=`date --iso-8601='date'`
+export ResultsDirName="${Changeset}#_${DateTimeISO8601}_${ShortDesc}"
 
 # TELEIOS3 is considered the default environment, 
 # VM is the development environment, but more environments
@@ -41,6 +50,9 @@ if [ "$Environment" == "VM" ]; then
     # StrabonSUT only
     export StrabonBaseDir="/home/tioannid/NetBeansProjects/PhD/Strabon"
     export StrabonLoaderBaseDir="/home/tioannid/NetBeansProjects/PhD/StrabonLoader"
+    # VirtuosoSUT only
+    export VirtuosoBaseDir="/media/sf_VM_Shared/PHD/VirtuosoOS_7.2.5/virtuoso-opensource"
+    export VirtuosoDataDir="${VirtuosoBaseDir}/repos"
 else
     # common for all SUTs
     export DatasetBaseDir="/home/journal/Geographica_Datasets"
@@ -53,16 +65,19 @@ else
     # StrabonSUT only
     export StrabonBaseDir="/home/journal/Strabon"
     export StrabonLoaderBaseDir="/home/journal/StrabonLoader"
+    # VirtuosoSUT only
+    export VirtuosoBaseDir="/home/journal/VirtuosoOS_7.2.5/virtuoso-opensource"
+    export VirtuosoDataDir="${VirtuosoBaseDir}/repos"
 fi
 
 # read the GraphDB data directory from the config file
 GraphDB_Properties_File="${GraphDBBaseDir}/conf/graphdb.properties"
 matchedLine=`grep -e "^graphdb.home.data =" $GraphDB_Properties_File`
-export GraphDB_Data_Dir="${matchedLine##*= }"
+export GraphDBDataDir="${matchedLine##*= }"
 # if graphdb.home.data is not explicitly set then assign default path
-if [ -z ${GraphDB_Data_Dir} ]; then
-        export GraphDB_Data_Dir="${GraphDBBaseDir}/data"
+if [ -z ${GraphDBDataDir} ]; then
+        export GraphDBDataDir="${GraphDBBaseDir}/data"
 fi
 
 # define Results base directory
-export ResultsBaseDir="${ResultsBaseDir}/Results${Changeset}"
+export ExperimentResultDir="${ResultsBaseDir}/${ActiveSUT}/${ResultsDirName}"

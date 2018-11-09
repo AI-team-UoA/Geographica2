@@ -2,17 +2,17 @@
 SCRIPT_NAME=`basename "$0"`
 # in case no arguments are present there might be environment variables defined
 # globally ! Please check and then exit if necessary
-if [ -z ${RDF4JRepoBaseDir+x} ] || [ -z ${ResultsBaseDir+x} ] || [ -z ${JVM_Xmx+x} ]; then
-    echo "${SCRIPT_NAME}: One or all of the following environment variables {RDF4JRepoBaseDir, ResultsBaseDir, JVM_Xmx} is/are not set";
+if [ -z ${RDF4JRepoBaseDir+x} ] || [ -z ${ExperimentResultDir+x} ] || [ -z ${JVM_Xmx+x} ]; then
+    echo "${SCRIPT_NAME}: One or all of the following environment variables {RDF4JRepoBaseDir, ExperimentResultDir, JVM_Xmx} is/are not set";
     return 1    # return instead of exit because we need to source the script
 fi
 
-# Check if ${ResultsBaseDir}/RDF4JSUT/RealWorld/LOGS exists and create it if necessary
-if [ ! -d "${ResultsBaseDir}/RDF4JSUT/RealWorld/LOGS" ]; then
-    echo "Will create ${ResultsBaseDir}/RDF4JSUT/RealWorld/LOGS"
-    mkdir -p "${ResultsBaseDir}/RDF4JSUT/RealWorld/LOGS"
+# Check if ${ExperimentResultDir}/RealWorld/LOGS exists and create it if necessary
+if [ ! -d "${ExperimentResultDir}/RealWorld/LOGS" ]; then
+    echo "Will create ${ExperimentResultDir}/RealWorld/LOGS"
+    mkdir -p "${ExperimentResultDir}/RealWorld/LOGS"
 else
-    echo "${ResultsBaseDir}/RDF4JSUT/RealWorld/LOGS already exists"
+    echo "${ExperimentResultDir}/RealWorld/LOGS already exists"
 fi
 
 # Check if there is a parameter. If there is it should contain a sublist of
@@ -39,6 +39,6 @@ sudo /sbin/sysctl vm.drop_caches=3
 # executes experiment
 ./rdf4j_args_realworld.sh | ./runTestsForRDF4JSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${RDF4JRepoBaseDir}
 # archive log
-mv ../../geographica*.log ${ResultsBaseDir}/RDF4JSUT/RealWorld/LOGS
+mv ../../geographica*.log ${ExperimentResultDir}/RealWorld/LOGS
 # create report
-${GeographicaScriptsDir}/createreport.sh ${ResultsBaseDir}/RDF4JSUT/RealWorld
+${GeographicaScriptsDir}/createreport.sh ${ExperimentResultDir}/RealWorld

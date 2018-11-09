@@ -38,8 +38,11 @@ HasLucene=true  # enable Lucene for all repositories of RDF4J to improve geospat
 #WKTIdxList="http://www.opengis.net/ont/geosparql#asWKT http://dbpedia.org/property/asWKT http://www.geonames.org/ontology#asWKT"
 #./createRDF4JRepo.sh ${RDF4JRepoBaseDir} realworld_points ${RemoveIfExists} "spoc,posc,cosp" trig ${DatasetBaseDir}/RealWorldWorkload/NO_CRS/RealWorld_Points ${JVM_Xmx} ${HasLucene} "${WKTIdxList}"
 # Synthetic dataset - Points Of Interest only!
-WKTIdxList="http://www.opengis.net/ont/geosparql#asWKT http://geographica.di.uoa.gr/generator/pointOfInterest/asWKT"
-./createRDF4JRepo.sh ${RDF4JRepoBaseDir} synthetic_pois ${RemoveIfExists} "spoc,posc" n-triples ${DatasetBaseDir}/SyntheticWorkload/Synthetic_POIs ${JVM_Xmx} ${HasLucene} "${WKTIdxList}"
+#WKTIdxList="http://www.opengis.net/ont/geosparql#asWKT http://geographica.di.uoa.gr/generator/pointOfInterest/asWKT"
+#./createRDF4JRepo.sh ${RDF4JRepoBaseDir} synthetic_pois ${RemoveIfExists} "spoc,posc" n-triples ${DatasetBaseDir}/SyntheticWorkload/Synthetic_POIs ${JVM_Xmx} ${HasLucene} "${WKTIdxList}"
+# Census dataset
+WKTIdxList="http://geographica.di.uoa.gr/cencus/ontology#asWKT"
+./createRDF4JRepo.sh ${RDF4JRepoBaseDir} census ${RemoveIfExists} "spoc,posc" n-triples ${DatasetBaseDir}/Census/NO_CRS ${JVM_Xmx} ${HasLucene} "${WKTIdxList}"
 
 exit 0;
 
