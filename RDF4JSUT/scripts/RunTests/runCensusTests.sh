@@ -49,7 +49,7 @@ fi
 
 # Census experiment
 experiment="MacroGeocoding"
-TESTSFILE=${BASE}/"testslist_census.txt
+TESTSFILE="${BASE}/testslist_census.txt"
 
 echo ${experiment} > ${TESTSFILE}
 echo "RDF4JSUT will run the following test on Census dataset"
@@ -58,7 +58,7 @@ cat ${TESTSFILE}
 sudo /sbin/sysctl vm.drop_caches=3
 # returns all arguments except experiment and
 # executes experiment
-echo "-bd \"${RDF4JRepoBaseDir}\" -rp census -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -l \"${ExperimentResultDir}/Census\" -N 1024 ${Action}" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${RDF4JRepoBaseDir}
+echo "-bd \"${RDF4JRepoBaseDir}\" -rp census -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -m 60 -l \"${ExperimentResultDir}/Census\" ${Action}" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${RDF4JRepoBaseDir}
 # archive log
 mv ../../geographica*.log ${ExperimentResultDir}/Census/LOGS
 #remove test file

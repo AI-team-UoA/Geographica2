@@ -36,31 +36,12 @@ import org.openrdf.query.TupleQueryResult;
 import org.openrdf.query.TupleQueryResultHandlerException;
 
 /**
- * @author George Garbis <ggarbis@di.uoa.gr>
+ * @author Ioannidis Theofilos <tioannid@yahoo.com>
  *
  */
 public class StrabonSUT implements SystemUnderTest {
 
     static Logger logger = Logger.getLogger(StrabonSUT.class.getSimpleName());
-    /* Original commands for the test
-    static final String SYSCMD_POSTGRES_STOP = "service postgresql stop";
-    static final String SYSCMD_POSTGRES_START = "service postgresql start";
-    static final String SYSCMD_POSTGRES_RESTART = "service postgresql restart";
-    static final String SYSCMD_SYNC = "sync";
-    static final String SYSCMD_CLEARCACHE = "echo 3 > /proc/sys/vm/drop_caches";
-     */
-
- /* The following commands run on UBUNTU 16.04LTS
-    ** and demands that the <sudo xxx> commands are added to
-    ** /etc/sudoers for the sys user that will be running the test
-     */
- /* Set of commands for the VM of tioannidis
-    static final String SYSCMD_POSTGRES_STOP = "sudo /etc/init.d/postgresql stop";
-    static final String SYSCMD_POSTGRES_START = "sudo /etc/init.d/postgresql start";
-    static final String SYSCMD_POSTGRES_RESTART = "sudo /etc/init.d/postgresql restart";
-    static final String SYSCMD_SYNC = "sync";
-    static final String SYSCMD_CLEARCACHE = "sudo /sbin/sysctl vm.drop_caches=3";
-     */
     public static Properties Properties = new Properties();
     final private static String PROPERTIES_FILE_NAME = "strabonsut.properties";
     static String SYSCMD_POSTGRES_STOP;
@@ -265,17 +246,11 @@ public class StrabonSUT implements SystemUnderTest {
             firstBindingSet = null;
         } catch (Exception e) {
         }
-        // TODO
-//		Runtime run = Runtime.getRuntime();
-//
-//		Process pr = run.exec(restart_script);
-//		pr.waitFor();
-//
         System.gc();
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
-            logger.fatal("Cannot clear caches");
+            logger.fatal("Cannot close Strabon");
             StringWriter sw = new StringWriter();
             e.printStackTrace(new PrintWriter(sw));
             String stacktrace = sw.toString();
@@ -338,32 +313,25 @@ public class StrabonSUT implements SystemUnderTest {
 
             pr = Runtime.getRuntime().exec(stop_postgres);
             pr.waitFor();
-//			System.out.println(pr.exitValue());
             if (pr.exitValue() != 0) {
-                logger.error("Something went wrong while stoping postgres");
+                logger.error("Something went wrong while stopping postgres");
                 logger.error("... with command " + Arrays.toString(stop_postgres));
             }
-//			System.in.read();
 
             pr = Runtime.getRuntime().exec(sys_sync);
             pr.waitFor();
-//			System.out.println(pr.exitValue());
             if (pr.exitValue() != 0) {
                 logger.error("Something went wrong while system sync");
             }
-//			System.in.read();
 
             pr = Runtime.getRuntime().exec(clear_caches);
             pr.waitFor();
-//			System.out.println(pr.exitValue());
             if (pr.exitValue() != 0) {
                 logger.error("Something went wrong while clearing caches");
             }
-//			System.in.read();
 
             pr = Runtime.getRuntime().exec(start_postgres);
             pr.waitFor();
-//			System.out.println(pr.exitValue());
             if (pr.exitValue() != 0) {
                 logger.error("Something went wrong while starting postgres");
                 logger.error("... with command " + Arrays.toString(start_postgres));

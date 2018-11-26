@@ -67,11 +67,13 @@
             <version>${gr.uoa.di.rdf.geographica.version}</version>
             <type>jar</type>
         </dependency>
+        <!--
         <dependency>
             <groupId>eu.earthobservatory</groupId>
             <artifactId>strabon-runtime</artifactId>
             <version>${eu.earthobservatory.version}</version>
             <scope>compile</scope>
         </dependency>
+        -->
     </dependencies>
 </project>

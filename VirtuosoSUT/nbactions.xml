@@ -10,7 +10,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-classpath %classpath gr.uoa.di.rdf.Geographica.virtuoso.RunVirtuoso -h localhost -db test -p 1111 -u dba -P dba -s startVSO -S stopVSO -r 1 -t 3600 -l /media/sf_VM_Shared/PHD/Results_Store/VM_Results run MicroNonTopological</exec.args>
+                <exec.args>-classpath %classpath gr.uoa.di.rdf.Geographica2.virtuoso.RunVirtuoso -dr 3 -bd /home/tioannid/NetBeansProjects/PhD/vso/repos -h localhost -db realworld -p 1111 -u dba -P dba -s /home/tioannid/NetBeansProjects/PhD/Geographica/VirtuosoSUT/scripts/Admin/start.sh -S /home/tioannid/NetBeansProjects/PhD/Geographica/VirtuosoSUT/scripts/Admin/stop.sh -r 1 -t 3600 -l /media/sf_VM_Shared/PHD/Results_Store/VM_Results run MicroNonTopological</exec.args>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
@@ -24,7 +24,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -classpath %classpath gr.uoa.di.rdf.Geographica.virtuoso.RunVirtuoso -h localhost -db test -p 1111 -u dba -P dba -s startVSO -S stopVSO -r 1 -t 3600 -l /media/sf_VM_Shared/PHD/Results_Store/VM_Results run MicroNonTopological</exec.args>
+                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -classpath %classpath gr.uoa.di.rdf.Geographica2.virtuoso.RunVirtuoso -dr 3 -bd /home/tioannid/NetBeansProjects/PhD/vso/repos -h localhost -db realworld -p 1111 -u dba -P dba -s /home/tioannid/NetBeansProjects/PhD/Geographica/VirtuosoSUT/scripts/Admin/start.sh -S /home/tioannid/NetBeansProjects/PhD/Geographica/VirtuosoSUT/scripts/Admin/stop.sh -r 1 -t 3600 -l /media/sf_VM_Shared/PHD/Results_Store/VM_Results run MicroNonTopological</exec.args>
                 <exec.executable>java</exec.executable>
                 <jpda.listen>true</jpda.listen>
             </properties>
@@ -39,7 +39,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-classpath %classpath gr.uoa.di.rdf.Geographica.virtuoso.RunVirtuoso -h localhost -db test -p 1111 -u dba -P dba -s startVSO -S stopVSO -r 1 -t 3600 -l /media/sf_VM_Shared/PHD/Results_Store/VM_Results run MicroNonTopological</exec.args>
+                <exec.args>-classpath %classpath gr.uoa.di.rdf.Geographica2.virtuoso.RunVirtuoso -dr 3 -bd /home/tioannid/NetBeansProjects/PhD/vso/repos -h localhost -db realworld -p 1111 -u dba -P dba -s /home/tioannid/NetBeansProjects/PhD/Geographica/VirtuosoSUT/scripts/Admin/start.sh -S /home/tioannid/NetBeansProjects/PhD/Geographica/VirtuosoSUT/scripts/Admin/stop.sh -r 1 -t 3600 -l /media/sf_VM_Shared/PHD/Results_Store/VM_Results run MicroNonTopological</exec.args>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>

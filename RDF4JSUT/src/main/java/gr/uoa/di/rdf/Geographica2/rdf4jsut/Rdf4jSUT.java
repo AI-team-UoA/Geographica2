@@ -560,7 +560,7 @@ public class Rdf4jSUT implements SystemUnderTest {
 
         // --------------------- Data Members ----------------------------------
         private final String query;
-        private final RDF4J rdf4j;
+        private final RDF4J sut;
         private BindingSet firstBindingSet;
         private int dispres;
         /*
@@ -571,9 +571,9 @@ public class Rdf4jSUT implements SystemUnderTest {
         private long[] returnValue;
 
         // --------------------- Constructors ----------------------------------
-        public Executor(String query, RDF4J rdf4j, int timeoutSecs, int dispres) {
+        public Executor(String query, RDF4J sut, int timeoutSecs, int dispres) {
             this.query = query;
-            this.rdf4j = rdf4j;
+            this.sut = sut;
             this.dispres = dispres;
             this.returnValue = new long[]{timeoutSecs + 1, timeoutSecs + 1, timeoutSecs + 1, -1};
         }
@@ -591,7 +591,6 @@ public class Rdf4jSUT implements SystemUnderTest {
         @Override
         public void run() {
             try {
-                //runQuery();
                 runQueryPrintLimitedRows(this.dispres);
             } catch (MalformedQueryException e) {
                 // TODO Auto-generated catch block
@@ -608,37 +607,6 @@ public class Rdf4jSUT implements SystemUnderTest {
             }
         }
 
-//        private void runQuery() throws MalformedQueryException, QueryEvaluationException, TupleQueryResultHandlerException, IOException {
-//
-//            logger.info("Evaluating query...");
-//            TupleQuery tupleQuery = rdf4j.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, query);
-//
-//            // Evaluate and time the evaluation of the prepared query
-//            // noOfResults = 0;
-//            long results = 0;
-//
-//            long t1 = System.nanoTime();
-//            TupleQueryResult tupleQueryResult = tupleQuery.evaluate();
-//            long t2 = System.nanoTime();
-//
-//            if (tupleQueryResult.hasNext()) {
-//                firstBindingSet = tupleQueryResult.next();
-//                //noOfResults++;
-//                results++;
-//            }
-//
-//            while (tupleQueryResult.hasNext()) {
-//                //noOfResults++;
-//                results++;
-//                tupleQueryResult.next();
-//            }
-//            long t3 = System.nanoTime();
-//
-//            logger.info("Query evaluated");
-//
-//            this.returnValue = new long[]{t2 - t1, t3 - t2, t3 - t1, results};
-//        }
-
         private void runQueryPrintLimitedRows(int rowsToDisplay) throws MalformedQueryException, QueryEvaluationException, TupleQueryResultHandlerException, IOException {
             long t1 = 0, t2 = 0, t3 = 0;
             long results = 0, noOfScanErrors = 0;
@@ -648,7 +616,7 @@ public class Rdf4jSUT implements SystemUnderTest {
             boolean displayRowsFlag = (rowsToDisplay != 0);
 
             logger.info("Evaluating query...");
-            TupleQuery tupleQuery = rdf4j.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, query);
+            TupleQuery tupleQuery = sut.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, query);
 
             // Evaluate and time the evaluation of the prepared query
             TupleQueryResult tupleQueryResult = null;

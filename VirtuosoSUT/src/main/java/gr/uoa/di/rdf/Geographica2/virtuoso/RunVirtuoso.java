@@ -1,4 +1,4 @@
-package gr.uoa.di.rdf.Geographica.virtuoso;
+package gr.uoa.di.rdf.Geographica2.virtuoso;
 
 import gr.uoa.di.rdf.Geographica2.systemsundertest.RunSystemUnderTest;
 
@@ -10,7 +10,7 @@ public class RunVirtuoso extends RunSystemUnderTest {
 	@Override
 	protected void addOptions() {
 		super.addOptions();
-
+                
 		options.addOption("h", "host", true, "Server");
 		options.addOption("db", "database", true, "Database");
 		options.addOption("p", "port", true, "Port");
@@ -22,6 +22,8 @@ public class RunVirtuoso extends RunSystemUnderTest {
 				"Start-up script for Virtuoso");
 		options.addOption("S", "scriptStop", true,
 				"Stop script for Virtuoso");
+                options.addOption("bd", "basedir", true, "BaseDir");
+                options.addOption("dr", "displres", true, "Display Results");
 	}
 
 	@Override
@@ -34,9 +36,11 @@ public class RunVirtuoso extends RunSystemUnderTest {
 		logger.info("Port:\t"+cmd.getOptionValue("port"));
 		logger.info("Username:\t"+cmd.getOptionValue("username"));
 		logger.info("Password:\t"+cmd.getOptionValue("password"));
-		
 		logger.info("Start script:\t"+cmd.getOptionValue("scriptStart"));
 		logger.info("Stop script:\t"+cmd.getOptionValue("scriptStop"));
+                logger.info("BaseDir:\t" + cmd.getOptionValue("basedir"));
+                logger.info("Displres:\t" + cmd.getOptionValue("displres"));
+
 	}
 
 	protected void initSystemUnderTest() throws Exception {
@@ -47,8 +51,10 @@ public class RunVirtuoso extends RunSystemUnderTest {
 		String password = cmd.getOptionValue("password");
 		String startScript = cmd.getOptionValue("s");
 		String stopScript = cmd.getOptionValue("S");
+                String basedir = (cmd.getOptionValue("basedir") != null ? cmd.getOptionValue("basedir") : "");
+                int displres = Integer.parseInt(cmd.getOptionValue("displres"));
 		
-		sut = new VirtuosoSUT(db, user, password,   port, host, startScript, stopScript);
+		sut = new VirtuosoSUT(basedir, db, user, password,   port, host, startScript, stopScript, displres);
 	}
 
 	public static void main(String[] args) throws Exception {

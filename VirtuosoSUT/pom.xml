@@ -38,12 +38,14 @@
             <artifactId>runtime</artifactId>
             <version>${gr.uoa.di.rdf.geographica.version}</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>eu.earthobservatory</groupId>
             <artifactId>strabon-runtime</artifactId>
             <version>${eu.earthobservatory.version}</version>
             <scope>compile</scope>
         </dependency>
+        -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>

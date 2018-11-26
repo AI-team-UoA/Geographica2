@@ -51,7 +51,7 @@ if [ "$Environment" == "VM" ]; then
     export StrabonBaseDir="/home/tioannid/NetBeansProjects/PhD/Strabon"
     export StrabonLoaderBaseDir="/home/tioannid/NetBeansProjects/PhD/StrabonLoader"
     # VirtuosoSUT only
-    export VirtuosoBaseDir="/media/sf_VM_Shared/PHD/VirtuosoOS_7.2.5/virtuoso-opensource"
+    export VirtuosoBaseDir="/home/tioannid/NetBeansProjects/PhD/vso"
     export VirtuosoDataDir="${VirtuosoBaseDir}/repos"
 else
     # common for all SUTs
@@ -66,7 +66,7 @@ else
     export StrabonBaseDir="/home/journal/Strabon"
     export StrabonLoaderBaseDir="/home/journal/StrabonLoader"
     # VirtuosoSUT only
-    export VirtuosoBaseDir="/home/journal/VirtuosoOS_7.2.5/virtuoso-opensource"
+    export VirtuosoBaseDir="/home/journal/vso"
     export VirtuosoDataDir="${VirtuosoBaseDir}/repos"
 fi
 
