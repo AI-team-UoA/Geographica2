@@ -1,1 +1,0 @@
--bd "/home/journal/graphdb-free-8.5.0/data" -rp synthetic -cr false -r 3 -t 3600 -l "/home/journal/Results43/GraphDB/Synthetic" -N 512 run

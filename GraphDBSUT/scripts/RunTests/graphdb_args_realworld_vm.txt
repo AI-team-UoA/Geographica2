@@ -1,1 +1,0 @@
--bd "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/data5" -rp realworld -cr false -r 3 -t 3600 -m 60 -l "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/Results40/GraphDB" run

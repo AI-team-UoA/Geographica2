@@ -19,7 +19,7 @@ if (( $# != 4 )); then
         Action="run"
         Repetitions=3
         DispRows=0
-        TestsFile="${BASE}/testslist_synthetic_pois.txt"
+        TestsFile="${BASE}/testslist_synthetic.txt"
     else
         echo -e "Illegal number of parameters $SYNTAX"
         exit 1
@@ -43,8 +43,8 @@ if [ -z ${GraphDBBaseDir+x} ] || [ -z ${ExperimentResultDir+x} ] || [ -z ${JVM_X
     return 1    # return instead of exit because we need to source the script
 fi
 
-# Check if ${ExperimentResultDir}/Synthetic_Pois/LOGS exists and create it if necessary
-LogsDir="${ExperimentResultDir}/Synthetic_Pois/LOGS"
+# Check if ${ExperimentResultDir}/Synthetic/LOGS exists and create it if necessary
+LogsDir="${ExperimentResultDir}/Synthetic/LOGS"
 if [ ! -d "${LogsDir}" ]; then
     echo "Will create ${LogsDir}"
     mkdir -p "${LogsDir}"
@@ -56,7 +56,7 @@ fi
 if [ ! -e ${TestsFile} ]; then
     echo "The file \"${TestsFile}\" with the testlist does not exist!"
     echo "SyntheticPOIs" > ${TESTSFILE}
-    echo "GraphDBSUT will run the following tests on Synthetic_Pois dataset"
+    echo "GraphDBSUT will run the following tests on Synthetic dataset"
     cat ${TestsFile}
 fi
 
@@ -64,8 +64,8 @@ fi
 sudo /sbin/sysctl vm.drop_caches=3
 # returns all arguments except experiment and
 # executes experiment
-echo "-bd \"${GraphDBDataDir}\" -rp synthetic_pois -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -l \"${ExperimentResultDir}/Synthetic_Pois\" -N 1024 ${Action}" | ./runTestsForGraphDBSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${GraphDBBaseDir}
+echo "-bd \"${GraphDBDataDir}\" -rp synthetic -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -l \"${ExperimentResultDir}/Synthetic_Pois\" -N 512 ${Action}" | ./runTestsForGraphDBSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${GraphDBBaseDir}
 # archive log
 mv ../../geographica*.log ${LogsDir}
 # create report
-${GeographicaScriptsDir}/createreport.sh ${ExperimentResultDir}/Synthetic_Pois
+${GeographicaScriptsDir}/createreport.sh ${ExperimentResultDir}/Synthetic

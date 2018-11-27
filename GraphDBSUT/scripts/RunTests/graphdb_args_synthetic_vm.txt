@@ -1,1 +1,0 @@
--bd "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/data5" -rp synthetic -cr false -r 3 -t 3600 -l "/home/tioannid/NetBeansProjects/PhD/Geographica_Misc/Results40/GraphDB" -N 512 run

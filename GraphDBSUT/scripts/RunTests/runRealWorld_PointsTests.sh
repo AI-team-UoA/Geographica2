@@ -19,7 +19,7 @@ if (( $# != 4 )); then
         Action="run"
         Repetitions=3
         DispRows=0
-        TestsFile="${BASE}/testslist_synthetic_pois.txt"
+        TestsFile="${BASE}/testslist_realworld_points.txt"
     else
         echo -e "Illegal number of parameters $SYNTAX"
         exit 1
@@ -43,8 +43,8 @@ if [ -z ${GraphDBBaseDir+x} ] || [ -z ${ExperimentResultDir+x} ] || [ -z ${JVM_X
     return 1    # return instead of exit because we need to source the script
 fi
 
-# Check if ${ExperimentResultDir}/Synthetic_Pois/LOGS exists and create it if necessary
-LogsDir="${ExperimentResultDir}/Synthetic_Pois/LOGS"
+# Check if ${ExperimentResultDir}/RealWorld_Points/LOGS exists and create it if necessary
+LogsDir="${ExperimentResultDir}/RealWorld_Points/LOGS"
 if [ ! -d "${LogsDir}" ]; then
     echo "Will create ${LogsDir}"
     mkdir -p "${LogsDir}"
@@ -55,8 +55,9 @@ fi
 # Check if the file $TestsFile does exist
 if [ ! -e ${TestsFile} ]; then
     echo "The file \"${TestsFile}\" with the testlist does not exist!"
-    echo "SyntheticPOIs" > ${TESTSFILE}
-    echo "GraphDBSUT will run the following tests on Synthetic_Pois dataset"
+    return 2;
+else
+    echo "GraphDBSUT will run the following tests on RealWorld_Points dataset"
     cat ${TestsFile}
 fi
 
@@ -64,8 +65,8 @@ fi
 sudo /sbin/sysctl vm.drop_caches=3
 # returns all arguments except experiment and
 # executes experiment
-echo "-bd \"${GraphDBDataDir}\" -rp synthetic_pois -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -l \"${ExperimentResultDir}/Synthetic_Pois\" -N 1024 ${Action}" | ./runTestsForGraphDBSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${GraphDBBaseDir}
+echo "-bd \"${GraphDBDataDir}\" -rp realworld_points -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -m 60 -l \"${ExperimentResultDir}/RealWorld\" ${Action}" | ./runTestsForGraphDBSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${GraphDBBaseDir}
 # archive log
 mv ../../geographica*.log ${LogsDir}
 # create report
-${GeographicaScriptsDir}/createreport.sh ${ExperimentResultDir}/Synthetic_Pois
+${GeographicaScriptsDir}/createreport.sh ${ExperimentResultDir}/RealWorld_Points
