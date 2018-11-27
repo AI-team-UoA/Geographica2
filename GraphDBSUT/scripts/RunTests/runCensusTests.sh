@@ -3,21 +3,23 @@
 #    <script> action repetitions
 SCRIPT_NAME=`basename "$0"`
 SYNTAX="
-SYNTAX: $SCRIPT_NAME action repetitions disprows
+SYNTAX: $SCRIPT_NAME action repetitions disprows testsfile
 \action\t:\taction = {run | print},
 \repetitions\t:\trepetitions (1..3)
-\disprows\t:\tdisplayed rows (0..n)"
+\disprows\t:\tdisplayed rows (0..n)
+\testsfile\t:\tfile with list of tests to run"
 
 # STEP 0: Find the directory where the script is located in
 BASE="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # STEP 1: Validate the script's syntax
 #      1.1: check number of arguments and assign them to variables
-if (( $# != 3 )); then
+if (( $# != 4 )); then
     if (( $# == "0" )); then # assign default values
         Action="run"
         Repetitions=3
         DispRows=0
+        TestsFile="${BASE}/testslist_census.txt"
     else
         echo -e "Illegal number of parameters $SYNTAX"
         exit 1
@@ -26,11 +28,13 @@ else
     Action=$1
     Repetitions=$2
     DispRows=$3
+    TestsFile=${4}
 fi
 
 #echo "Action = ${Action}"
 #echo "Repetitions = ${Repetitions}"
 #echo "DispRows = ${DispRows}"
+#echo "TestsFile = ${TestsFile}"
 
 # in case no arguments are present there might be environment variables defined
 # globally ! Please check and then exit if necessary
@@ -40,29 +44,28 @@ if [ -z ${GraphDBBaseDir+x} ] || [ -z ${ExperimentResultDir+x} ] || [ -z ${JVM_X
 fi
 
 # Check if ${ExperimentResultDir}/Census/LOGS exists and create it if necessary
-if [ ! -d "${ExperimentResultDir}/Census/LOGS" ]; then
-    echo "Will create ${ExperimentResultDir}/Census/LOGS"
-    mkdir -p "${ExperimentResultDir}/Census/LOGS"
+LogsDir="${ExperimentResultDir}/Census/LOGS"
+if [ ! -d "${LogsDir}" ]; then
+    echo "Will create ${LogsDir}"
+    mkdir -p "${LogsDir}"
 else
-    echo "${ExperimentResultDir}/Census/LOGS already exists"
+    echo "${LogsDir} already exists"
 fi
 
-# Census experiment
-experiment="MacroGeocoding"
-TESTSFILE=${BASE}/"testslist_census.txt"
+# Check if the file $TestsFile does exist
+if [ ! -e ${TestsFile} ]; then
+    echo "The file \"${TestsFile}\" with the testlist does not exist!"
+    echo "MacroGeocoding" > ${TestsFile}
+    echo "GraphDBSUT will run the following tests on Census dataset"
+    cat ${TestsFile}
+fi
 
-echo ${experiment} > ${TESTSFILE}
-echo "GraphDBSUT will run the following test on Census dataset"
-cat ${TESTSFILE}
 # clear system caches
 sudo /sbin/sysctl vm.drop_caches=3
 # returns all arguments except experiment and
 # executes experiment
-echo "-bd \"${GraphDBDataDir}\" -rp census -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -l \"${ExperimentResultDir}/Census\" -N 1024 ${Action}" | ./runTestsForGraphDBSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${GraphDBBaseDir}
+echo "-bd \"${GraphDBDataDir}\" -rp census -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -l \"${ExperimentResultDir}/Census\" ${Action}" | ./runTestsForGraphDBSUT.sh /dev/stdin ${TestsFile} ${JVM_Xmx} ${GraphDBBaseDir}
 # archive log
-mv ../../geographica*.log ${ExperimentResultDir}/Census/LOGS
-#remove test file
-rm ${TESTSFILE}
-
+mv ../../geographica*.log ${LogsDir}
 # create report
 ${GeographicaScriptsDir}/createreport.sh ${ExperimentResultDir}/Census

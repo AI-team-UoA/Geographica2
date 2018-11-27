@@ -55,7 +55,7 @@ fi
 # Check if the file $TestsFile does exist
 if [ ! -e ${TestsFile} ]; then
     echo "The file \"${TestsFile}\" with the testlist does not exist!"
-    echo "SyntheticPOIs" > ${TESTSFILE}
+    echo "SyntheticPOIs" > ${TestsFile}
     echo "GraphDBSUT will run the following tests on Synthetic dataset"
     cat ${TestsFile}
 fi
@@ -64,7 +64,7 @@ fi
 sudo /sbin/sysctl vm.drop_caches=3
 # returns all arguments except experiment and
 # executes experiment
-echo "-bd \"${GraphDBDataDir}\" -rp synthetic -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -l \"${ExperimentResultDir}/Synthetic_Pois\" -N 512 ${Action}" | ./runTestsForGraphDBSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${GraphDBBaseDir}
+echo "-bd \"${GraphDBDataDir}\" -rp synthetic -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -l \"${ExperimentResultDir}/Synthetic_Pois\" -N 512 ${Action}" | ./runTestsForGraphDBSUT.sh /dev/stdin ${TestsFile} ${JVM_Xmx} ${GraphDBBaseDir}
 # archive log
 mv ../../geographica*.log ${LogsDir}
 # create report

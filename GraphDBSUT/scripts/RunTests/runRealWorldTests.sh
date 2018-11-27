@@ -65,7 +65,7 @@ fi
 sudo /sbin/sysctl vm.drop_caches=3
 # returns all arguments except experiment and
 # executes experiment
-echo "-bd \"${GraphDBDataDir}\" -rp realworld -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -m 60 -l \"${ExperimentResultDir}/RealWorld\" ${Action}" | ./runTestsForGraphDBSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${GraphDBBaseDir}
+echo "-bd \"${GraphDBDataDir}\" -rp realworld -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -m 60 -l \"${ExperimentResultDir}/RealWorld\" ${Action}" | ./runTestsForGraphDBSUT.sh /dev/stdin ${TestsFile} ${JVM_Xmx} ${GraphDBBaseDir}
 # archive log
 mv ../../geographica*.log ${LogsDir}
 # create report
