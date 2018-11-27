@@ -31,7 +31,7 @@
         <dependency>
             <groupId>com.ontotext.graphdb</groupId>
             <artifactId>graphdb-free-runtime</artifactId>
-            <version>8.7.2</version>
+            <version>8.6.1</version>
             <exclusions>
                 <exclusion>  <!-- declare the exclusion here -->
                     <groupId>ch.qos.logback</groupId>

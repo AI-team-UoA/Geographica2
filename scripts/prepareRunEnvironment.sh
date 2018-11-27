@@ -43,7 +43,7 @@ if [ "$Environment" == "VM" ]; then
     export DatasetBaseDir="/media/sf_VM_Shared/PHD/Geographica2_Datasets"
     export ResultsBaseDir="/media/sf_VM_Shared/PHD/Results_Store/VM_Results"
     # GraphDBSUT only
-    export GraphDBBaseDir="/home/tioannid/graphdb-free-8.7.2"
+    export GraphDBBaseDir="/home/tioannid/graphdb-free-8.6.1"
     # RDF4JSUT only
     export JVM_Xmx="-Xmx16g"
     export RDF4JRepoBaseDir="/media/sf_VM_Shared/PHD/RDF4J_LuceneRepos/server"
@@ -58,7 +58,7 @@ else
     export DatasetBaseDir="/home/journal/Geographica_Datasets"
     export ResultsBaseDir="/home/journal"
     # GraphDBSUT only
-    export GraphDBBaseDir="/home/journal/graphdb-free-8.7.2"
+    export GraphDBBaseDir="/home/journal/graphdb-free-8.6.1"
     # RDF4JSUT only
     export JVM_Xmx="-Xmx24g"
     export RDF4JRepoBaseDir="/home/journal/RDF4J_LuceneRepos/server"

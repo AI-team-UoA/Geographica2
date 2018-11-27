@@ -99,7 +99,7 @@
             </snapshots>
             <id>opengeo</id>
             <name>OpenGeo Maven Repository</name>
-            <url>http://repo.opengeo.org</url>
+            <url>http://download.osgeo.org/webdav/geotools/</url>
         </repository>
         <repository>
             <releases>
