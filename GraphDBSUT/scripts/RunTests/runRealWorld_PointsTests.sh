@@ -64,8 +64,18 @@ fi
 # clear system caches
 sudo /sbin/sysctl vm.drop_caches=3
 # returns all arguments except experiment and
-# executes experiment
-echo "-bd \"${GraphDBDataDir}\" -rp realworld_points -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -m 60 -l \"${ExperimentResultDir}/RealWorld_Points\" ${Action}" | ./runTestsForGraphDBSUT.sh /dev/stdin ${TestsFile} ${JVM_Xmx} ${GraphDBBaseDir}
+# IMPORTANT!!! - RealWorld_Points scenario concerns <realworld_points> repo
+#              with queries Q7, Q8 from MicroSelections and Q0 from MicroJoins
+# executes experiment MicroSelections
+echo "MicroSelections" > ${TestsFile}
+QueryList="\"7,8\""
+echo "-bd \"${GraphDBDataDir}\" -rp realworld_points -cr false -dr ${DispRows} -q ${QueryList} -r ${Repetitions} -t 3600 -m 60 -l \"${ExperimentResultDir}/RealWorld_Points\" ${Action}" | ./runTestsForGraphDBSUT.sh /dev/stdin ${TestsFile} ${JVM_Xmx} ${GraphDBBaseDir}
+# archive log
+mv ../../geographica*.log ${LogsDir}
+# executes experiment MicroJoins
+echo "MicroJoins" > ${TestsFile}
+QueryList="\"0\""
+echo "-bd \"${GraphDBDataDir}\" -rp realworld_points -cr false -dr ${DispRows} -q ${QueryList} -r ${Repetitions} -t 3600 -m 60 -l \"${ExperimentResultDir}/RealWorld_Points\" ${Action}" | ./runTestsForGraphDBSUT.sh /dev/stdin ${TestsFile} ${JVM_Xmx} ${GraphDBBaseDir}
 # archive log
 mv ../../geographica*.log ${LogsDir}
 # create report
