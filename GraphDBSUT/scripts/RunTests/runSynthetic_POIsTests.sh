@@ -55,7 +55,7 @@ fi
 # Check if the file $TestsFile does exist
 if [ ! -e ${TestsFile} ]; then
     echo "The file \"${TestsFile}\" with the testlist does not exist!"
-    echo "SyntheticPOIs" > ${TESTSFILE}
+    echo "SyntheticPOIs" > ${TestsFile}
     echo "GraphDBSUT will run the following tests on Synthetic_Pois dataset"
     cat ${TestsFile}
 fi

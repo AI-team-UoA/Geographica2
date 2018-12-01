@@ -68,7 +68,7 @@ sudo /sbin/sysctl vm.drop_caches=3
 #              with queries Q7, Q8 from MicroSelections and Q0 from MicroJoins
 # executes experiment MicroSelections
 echo "MicroSelections" > ${TestsFile}
-QueryList="\"7,8\""
+QueryList="\"7 8\""
 echo "-bd \"${GraphDBDataDir}\" -rp realworld_points -cr false -dr ${DispRows} -q ${QueryList} -r ${Repetitions} -t 3600 -m 60 -l \"${ExperimentResultDir}/RealWorld_Points\" ${Action}" | ./runTestsForGraphDBSUT.sh /dev/stdin ${TestsFile} ${JVM_Xmx} ${GraphDBBaseDir}
 # archive log
 mv ../../geographica*.log ${LogsDir}
