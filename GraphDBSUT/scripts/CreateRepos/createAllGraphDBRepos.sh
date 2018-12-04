@@ -28,12 +28,13 @@ echo -e "`date`\n"
 # Synthetic dataset
 #./createGraphDBRepo.sh synthetic.ttl ${DatasetBaseDir}/SyntheticWorkload/Synthetic N-TRIPLES $GraphDBBaseDir
 # Real World dataset - Points only!
-#./createGraphDBRepo.sh realworld_points.ttl ${DatasetBaseDir}/RealWorldWorkload/NO_CRS/RealWorld_Points N-TRIPLES $GraphDBBaseDir
+./createGraphDBRepo.sh realworld_points.ttl ${DatasetBaseDir}/RealWorldWorkload/NO_CRS/RealWorld_Points TRIG $GraphDBBaseDir
 # Synthetic dataset - Points Of Interest only!
 #./createGraphDBRepo.sh synthetic_pois.ttl ${DatasetBaseDir}/SyntheticWorkload/Synthetic_POIs N-TRIPLES $GraphDBBaseDir
 # Census dataset
 #./createGraphDBRepo.sh census.ttl ${DatasetBaseDir}/Census/NO_CRS N-TRIPLES $GraphDBBaseDir
 
+exit 0;
 # OSM+CORINE2012 datasets - Scalability 10K, 100K, 1M, 10M, 100M, 500M
 levels=(  "10K" "100K" )
 #levels=(  "10K" "100K" "1M" "10M" "100M" "500M" )
