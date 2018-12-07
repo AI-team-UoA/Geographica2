@@ -48,7 +48,8 @@ public abstract class RunSystemUnderTest  {
 		options.addOption("t", "timeout", true, "Timeout (seconds) for experiments (default 30mins)");
 		options.addOption("m", "runtime", true, "Run time (minutes) for experiments (Macro scenarios) (default: 2hours)");
 		options.addOption("N", "syntheticN", true, "Parameter for synthetic experiments");
-		options.addOption("l", "logpath", true, "Log path");               
+		options.addOption("l", "logpath", true, "Log path");   
+                options.addOption("uPred", "usePredicates", true, "Use geospatial predicates in queries if query set supports it");
 	}
 
 	private void logAllArguments(String[] args) {
@@ -70,6 +71,7 @@ public abstract class RunSystemUnderTest  {
 		logger.info("N:\t"+syntheticN);
 		logger.info("Log Path:\t"+cmd.getOptionValue("logpath"));
 		logger.info("Queries to run:\t"+cmd.getOptionValue("queries"));
+                logger.info("Use geospatial predicates:\t"+cmd.getOptionValue("usePredicates"));
 	}
 	
 	protected abstract void initSystemUnderTest() throws Exception; 
@@ -111,6 +113,7 @@ public abstract class RunSystemUnderTest  {
 		int runTimeInMinutes = (cmd.getOptionValue("m")!=null?Integer.parseInt(cmd.getOptionValue("runtime")):2*60); // 2 hours		 			
 		int syntheticN = Integer.parseInt((cmd.getOptionValue("N")!=null?cmd.getOptionValue("N"):"0"));
 		String logPath = cmd.getOptionValue("l");
+                boolean usePredicates = Boolean.parseBoolean((cmd.getOptionValue("uPred")!=null?cmd.getOptionValue("uPred"):"false"));
 		
 		// List of queries to run
 		String queriesToRunString = cmd.getOptionValue("q");
@@ -160,7 +163,7 @@ public abstract class RunSystemUnderTest  {
 				experiment = new SyntheticOnlyPointsExperiment(sut, repetitions, timeoutSecs, syntheticN, queriesToRun, logPath);
                         // Scalability
 			} else if ( args[i].equalsIgnoreCase("Scalability") ) {
-				experiment = new ScalabilityExperiment(sut, repetitions, timeoutSecs, queriesToRun, logPath);
+				experiment = new ScalabilityExperiment(sut, usePredicates, repetitions, timeoutSecs, queriesToRun, logPath);
 			}                         
 			else {
 				System.err.println("Error: "+args[i]+" is not recognized.");

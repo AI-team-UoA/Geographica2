@@ -21,13 +21,13 @@ import org.apache.log4j.Logger;
 public class ScalabilityExperiment extends Experiment {
 
     public ScalabilityExperiment(SystemUnderTest sut, int repetitions, int timeoutSecs, String logPath) throws IOException {
-        this(sut, repetitions, timeoutSecs, null, logPath);
+        this(sut, false, repetitions, timeoutSecs, null, logPath);
     }
 
-    public ScalabilityExperiment(SystemUnderTest sut, int repetitions, int timeoutSecs, int[] queriesToRun, String logPath) throws IOException {
+    public ScalabilityExperiment(SystemUnderTest sut, boolean usePredicates, int repetitions, int timeoutSecs, int[] queriesToRun, String logPath) throws IOException {
         // TODO - Create repository with scalabilityN 
         super(sut, repetitions, timeoutSecs, queriesToRun, logPath);
         logger = Logger.getLogger(ScalabilityExperiment.class.getSimpleName());
-        queriesSet = new ScalabilityQueriesSet(sut);
+        queriesSet = new ScalabilityQueriesSet(sut, usePredicates);
     }
 }
