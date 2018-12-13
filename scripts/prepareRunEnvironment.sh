@@ -42,6 +42,8 @@ if [ "$Environment" == "VM" ]; then
     # common for all SUTs
     export DatasetBaseDir="/media/sf_VM_Shared/PHD/Geographica2_Datasets"
     export ResultsBaseDir="/media/sf_VM_Shared/PHD/Results_Store/VM_Results"
+    export CompletionReportDaemonIP="127.0.0.1"
+    export CompletionReportDaemonPort="3333"
     # GraphDBSUT only
     export GraphDBBaseDir="/home/tioannid/graphdb-free-8.6.1"
     # RDF4JSUT only
@@ -57,6 +59,8 @@ else
     # common for all SUTs
     export DatasetBaseDir="/home/journal/Geographica_Datasets"
     export ResultsBaseDir="/home/journal"
+    export CompletionReportDaemonIP="10.0.10.13" # TELEIO4
+    export CompletionReportDaemonPort="3333"
     # GraphDBSUT only
     export GraphDBBaseDir="/home/journal/graphdb-free-8.6.1"
     # RDF4JSUT only

@@ -123,6 +123,11 @@ time $PreLoad_Exe -c $RepoConfig *$rdffiletype
 #    rm *.trig
 #fi
 
+# send completion report signal to listening daemon
+# both IP=${CompletionReportDaemonIP} and Port=${CompletionReportDaemonPort} depend on the daemon setup
+logEntry="GraphDB repo \"${RepoName}\" creation completed at "`date --iso-8601='seconds'`
+nc ${CompletionReportDaemonIP} ${CompletionReportDaemonPort} <<< ${logEntry}
+
 # print repository size in MB
 echo -e "GraphDB repository \"${RepoDir}/\" has size: `du -hs -BM ${RepoDir} | cut -d 'M' -f 1`MB"
 

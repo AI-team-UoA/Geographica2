@@ -38,38 +38,43 @@ MAIN_CLASS="gr.uoa.di.rdf.Geographica2.graphdbsut.RunGraphDB"
 # run all experiments
 START_TIME=`date`
 while read experiment; do
-  echo "====> Experiment : $experiment"
-  # set the ARGS
-  ARGS="$ARGS_NO_EXPERIMENT $experiment"
-  #echo "ARGS = $ARGS"
-  # define the run command
-  EXEC="java $JAVA_OPTS -cp $CLASS_PATH $MAIN_CLASS ${ARGS}"
-  # record start time of experiment
-  EXPIR_START_TIME=$SECONDS
+    echo "====> Experiment : $experiment"
+    # set the ARGS
+    ARGS="$ARGS_NO_EXPERIMENT $experiment"
+    #echo "ARGS = $ARGS"
+    # define the run command
+    EXEC="java $JAVA_OPTS -cp $CLASS_PATH $MAIN_CLASS ${ARGS}"
+    # record start time of experiment
+    EXPIR_START_TIME=$SECONDS
 
-  eval ${EXEC}
+    eval ${EXEC}
 
-  # record end time of experiment
-  DURATION_SECS=$(($SECONDS-$EXPIR_START_TIME))
-  DURATION_HOURS=$(($DURATION_SECS / 3600))
-  DURATION_REMAINING_SECS=$(($DURATION_SECS % 3600))
-  echo "-------------------------------" >> geographica.log
-  echo "Experiment Duration : $DURATION_HOURS hours $((DURATION_REMAINING_SECS / 60)) min and $((DURATION_REMAINING_SECS % 60)) secs" >> geographica.log
+    # record end time of experiment
+    DURATION_SECS=$(($SECONDS-$EXPIR_START_TIME))
+    DURATION_HOURS=$(($DURATION_SECS / 3600))
+    DURATION_REMAINING_SECS=$(($DURATION_SECS % 3600))
+    echo "-------------------------------" >> geographica.log
+    echo "Experiment Duration : $DURATION_HOURS hours $((DURATION_REMAINING_SECS / 60)) min and $((DURATION_REMAINING_SECS % 60)) secs" >> geographica.log
   
-  # record hardware description used by the experiment
-  echo "-------------------------------" >> geographica.log
-  echo "Host used : $HOSTNAME" >> geographica.log
+    # send completion report signal to listening daemon
+    # both IP=${CompletionReportDaemonIP} and Port=${CompletionReportDaemonPort} depend on the daemon setup
+    logEntry="GraphDB experiment \"${experiment}\" completed at "`date --iso-8601='seconds'`
+    nc ${CompletionReportDaemonIP} ${CompletionReportDaemonPort} <<< ${logEntry}
 
-  CPU_INFO=`lscpu`
-  echo "-------------------------------" >> geographica.log
-  echo "CPU Used " >> geographica.log
-  echo $CPU_INFO >> geographica.log
-  MEM_INFO=`cat /proc/meminfo`
-  echo "-------------------------------" >> geographica.log
-  echo "MEMORY Info " >> geographica.log
-  echo $MEM_INFO >> geographica.log
+    # record hardware description used by the experiment
+    echo "-------------------------------" >> geographica.log
+    echo "Host used : $HOSTNAME" >> geographica.log
 
-  mv geographica.log ../geographica_${experiment}.log
+    CPU_INFO=`lscpu`
+    echo "-------------------------------" >> geographica.log
+    echo "CPU Used " >> geographica.log
+    echo $CPU_INFO >> geographica.log
+    MEM_INFO=`cat /proc/meminfo`
+    echo "-------------------------------" >> geographica.log
+    echo "MEMORY Info " >> geographica.log
+    echo $MEM_INFO >> geographica.log
+
+    mv geographica.log ../geographica_${experiment}.log
   
 done < $EXPERIMENT_LIST_FILE
 END_TIME=`date`

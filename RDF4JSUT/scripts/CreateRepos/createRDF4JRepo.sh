@@ -137,6 +137,12 @@ EXEC_LOAD_REPO="java $JAVA_OPTS -cp $CLASS_PATH $MAIN_CLASS dirloadman \"$RepoDi
 eval ${EXEC_CREATE_REPO}
 eval ${EXEC_LOAD_REPO}
 
+# send completion report signal to listening daemon
+# both IP=${CompletionReportDaemonIP} and Port=${CompletionReportDaemonPort} depend on the daemon setup
+logEntry="RDF4J repo \"${RepoID}\" creation completed at "`date --iso-8601='seconds'`
+nc ${CompletionReportDaemonIP} ${CompletionReportDaemonPort} <<< ${logEntry}
+
+
 # print repository size in MB
 echo -e "RDF4J repository \"${RepoDir}/repositories/${RepoID}\" has size: `du -hs -BM ${RepoDir}/repositories/${RepoID} | cut -d 'M' -f 1`MB"
 exit 0
