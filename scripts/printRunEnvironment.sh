@@ -9,6 +9,8 @@ echo "ResultsBaseDir = $ResultsBaseDir"
 echo "ResultsDirName = $ResultsDirName"
 echo "ActiveSUT = $ActiveSUT"
 echo "ExperimentResultDir = $ExperimentResultDir"
+echo "CompletionReportDaemonIP = $CompletionReportDaemonIP"
+echo "CompletionReportDaemonPort = $CompletionReportDaemonPort"
 echo ""
 # GraphDBSUT only
 echo "GraphDB SUT"
