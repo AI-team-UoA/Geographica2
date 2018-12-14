@@ -1,5 +1,41 @@
 #!/bin/bash
+# SYNTAX :
+#    <script> action repetitions
 SCRIPT_NAME=`basename "$0"`
+SYNTAX="
+SYNTAX: $SCRIPT_NAME action repetitions disprows testsfile
+\action\t:\taction = {run | print},
+\repetitions\t:\trepetitions (1..3)
+\disprows\t:\tdisplayed rows (0..n)
+\testsfile\t:\tfile with list of tests to run"
+
+# STEP 0: Find the directory where the script is located in
+BASE="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# STEP 1: Validate the script's syntax
+#      1.1: check number of arguments and assign them to variables
+if (( $# != 4 )); then
+    if (( $# == "0" )); then # assign default values
+        Action="run"
+        Repetitions=3
+        DispRows=0
+        TestsFile="${BASE}/testslist_realworld_points.txt"
+    else
+        echo -e "Illegal number of parameters $SYNTAX"
+        exit 1
+    fi
+else
+    Action=$1
+    Repetitions=$2
+    DispRows=$3
+    TestsFile=${4}
+fi
+
+#echo "Action = ${Action}"
+#echo "Repetitions = ${Repetitions}"
+#echo "DispRows = ${DispRows}"
+#echo "TestsFile = ${TestsFile}"
+
 # in case no arguments are present there might be environment variables defined
 # globally ! Please check and then exit if necessary
 if [ -z ${RDF4JRepoBaseDir+x} ] || [ -z ${ExperimentResultDir+x} ] || [ -z ${JVM_Xmx+x} ]; then
@@ -8,45 +44,39 @@ if [ -z ${RDF4JRepoBaseDir+x} ] || [ -z ${ExperimentResultDir+x} ] || [ -z ${JVM
 fi
 
 # Check if ${ExperimentResultDir}/RealWorld_Points/LOGS exists and create it if necessary
-if [ ! -d "${ExperimentResultDir}/RealWorld_Points/LOGS" ]; then
-    echo "Will create ${ExperimentResultDir}/RealWorld_Points/LOGS"
-    mkdir -p "${ExperimentResultDir}/RealWorld_Points/LOGS"
+LogsDir="${ExperimentResultDir}/RealWorld_Points/LOGS"
+if [ ! -d "${LogsDir}" ]; then
+    echo "Will create ${LogsDir}"
+    mkdir -p "${LogsDir}" > /dev/null 2>&1
 else
-    echo "${ExperimentResultDir}/RealWorld_Points/LOGS already exists"
+    echo "${LogsDir} already exists"
 fi
 
-# RealWorld_Points experiment comprises 2 queries from MicroSelections and
-# one query from MicroJoins
-experiments=( "MicroSelections" "MicroJoins" )
-querylists=( "-q \"7 8\"" "-q \"0\"" )
-TESTSFILE="testslist_realworld_points.txt"
+# Check if the file $TestsFile does exist
+if [ ! -e ${TestsFile} ]; then
+    echo "The file \"${TestsFile}\" with the testlist does not exist!"
+    return 2;
+else
+    echo "RDF4JSUT will run the following tests on RealWorld_Points dataset"
+    cat ${TestsFile}
+fi
 
-# PART 1 : Execute Q14, Q15 (relative positions 7 and 8) of the MicroSelections experiment
-# PART 2 : Execute Q18 (relative position 0) of the MicroJoins experiment
-for index in "${!experiments[@]}"; do
-    echo ${experiments[$index]} > ${TESTSFILE}
-    echo "RDF4JSUT will run the following test on RealWorld_Points dataset"
-    cat ${TESTSFILE}
-    # clear system caches
-    sudo /sbin/sysctl vm.drop_caches=3
-    # returns all arguments except experiment and
-    # executes experiment
-    echo "-bd \"${RDF4JRepoBaseDir}\" -rp realworld_points -cr false -dr 0 ${querylists[$index]} -r 3 -t 3600 -m 60 -l \"${ExperimentResultDir}/RealWorld_Points\" run" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${RDF4JRepoBaseDir}
-    # archive log
-    mv ../../geographica*.log ${ExperimentResultDir}/RealWorld_Points/LOGS
-done
-
-
-echo ${EXPERIMENT_MICROJOINS} > ${TESTSFILE}
-echo "RDF4JSUT will run the following test on RealWorld_Points dataset"
-cat ${TESTSFILE}
 # clear system caches
 sudo /sbin/sysctl vm.drop_caches=3
 # returns all arguments except experiment and
-# executes experiment
-echo "-bd \"${RDF4JRepoBaseDir}\" -rp realworld_points -cr false -dr 0 ${MICROJOINS_QUERYLIST} -r 3 -t 3600 -m 60 -l \"${ExperimentResultDir}/RealWorld_Points\" run" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${RDF4JRepoBaseDir}
+# IMPORTANT!!! - RealWorld_Points scenario concerns <realworld_points> repo
+#              with queries Q7, Q8 from MicroSelections and Q0 from MicroJoins
+# executes experiment MicroSelections
+echo "MicroSelections" > ${TestsFile}
+QueryList="\"7 8\""
+echo "-bd \"${RDF4JRepoBaseDir}\" -rp realworld_points -cr false -dr ${DispRows} -q ${QueryList} -r ${Repetitions} -t 3600 -m 60 -l \"${ExperimentResultDir}/RealWorld_Points\" ${Action}" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${RDF4JRepoBaseDir}
 # archive log
-mv ../../geographica*.log ${ExperimentResultDir}/RealWorld_Points/LOGS
-
+mv ../../geographica*.log ${LogsDir}
+# executes experiment MicroJoins
+echo "MicroJoins" > ${TestsFile}
+QueryList="\"0\""
+echo "-bd \"${RDF4JRepoBaseDir}\" -rp realworld_points -cr false -dr ${DispRows} -q ${QueryList} -r ${Repetitions} -t 3600 -m 60 -l \"${ExperimentResultDir}/RealWorld_Points\" ${Action}" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${RDF4JRepoBaseDir}
+# archive log
+mv ../../geographica*.log ${LogsDir}
 # create report
 ${GeographicaScriptsDir}/createreport.sh ${ExperimentResultDir}/RealWorld_Points

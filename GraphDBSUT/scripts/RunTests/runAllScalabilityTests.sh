@@ -40,7 +40,6 @@ fi
 #echo "Use Geospatial Predicates = ${UsePredicates}"
 #echo "TestsFile = ${TestsFile}"
 
-
 # in case no arguments are present there might be environment variables defined
 # globally ! Please check and then exit if necessary
 if [ -z ${GraphDBBaseDir+x} ] || [ -z ${ExperimentResultDir+x} ] || [ -z ${JVM_Xmx+x} ]; then
@@ -48,11 +47,11 @@ if [ -z ${GraphDBBaseDir+x} ] || [ -z ${ExperimentResultDir+x} ] || [ -z ${JVM_X
     return 1    # return instead of exit because we need to source the script
 fi
 
-# Check if ${ExperimentResultDir}/RealWorld/LOGS exists and create it if necessary
+# Check if ${ExperimentResultDir}/Scalability/LOGS exists and create it if necessary
 LogsDir="${ExperimentResultDir}/Scalability/LOGS"
 if [ ! -d "${LogsDir}" ]; then
     echo "Will create ${LogsDir}"
-    mkdir -p "${LogsDir}"
+    mkdir -p "${LogsDir}" > /dev/null 2>&1
 else
     echo "${LogsDir} already exists"
 fi

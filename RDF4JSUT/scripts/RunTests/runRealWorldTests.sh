@@ -1,5 +1,41 @@
 #!/bin/bash
+# SYNTAX :
+#    <script> action repetitions
 SCRIPT_NAME=`basename "$0"`
+SYNTAX="
+SYNTAX: $SCRIPT_NAME action repetitions disprows testsfile
+\action\t:\taction = {run | print},
+\repetitions\t:\trepetitions (1..3)
+\disprows\t:\tdisplayed rows (0..n)
+\testsfile\t:\tfile with list of tests to run"
+
+# STEP 0: Find the directory where the script is located in
+BASE="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# STEP 1: Validate the script's syntax
+#      1.1: check number of arguments and assign them to variables
+if (( $# != 4 )); then
+    if (( $# == "0" )); then # assign default values
+        Action="run"
+        Repetitions=3
+        DispRows=0
+        TestsFile="${BASE}/testslist_realworld.txt"
+    else
+        echo -e "Illegal number of parameters $SYNTAX"
+        exit 1
+    fi
+else
+    Action=$1
+    Repetitions=$2
+    DispRows=$3
+    TestsFile=${4}
+fi
+
+#echo "Action = ${Action}"
+#echo "Repetitions = ${Repetitions}"
+#echo "DispRows = ${DispRows}"
+#echo "TestsFile = ${TestsFile}"
+
 # in case no arguments are present there might be environment variables defined
 # globally ! Please check and then exit if necessary
 if [ -z ${RDF4JRepoBaseDir+x} ] || [ -z ${ExperimentResultDir+x} ] || [ -z ${JVM_Xmx+x} ]; then
@@ -8,37 +44,29 @@ if [ -z ${RDF4JRepoBaseDir+x} ] || [ -z ${ExperimentResultDir+x} ] || [ -z ${JVM
 fi
 
 # Check if ${ExperimentResultDir}/RealWorld/LOGS exists and create it if necessary
-if [ ! -d "${ExperimentResultDir}/RealWorld/LOGS" ]; then
-    echo "Will create ${ExperimentResultDir}/RealWorld/LOGS"
-    mkdir -p "${ExperimentResultDir}/RealWorld/LOGS"
+LogsDir="${ExperimentResultDir}/RealWorld/LOGS"
+if [ ! -d "${LogsDir}" ]; then
+    echo "Will create ${LogsDir}"
+    mkdir -p "${LogsDir}" > /dev/null 2>&1
 else
-    echo "${ExperimentResultDir}/RealWorld/LOGS already exists"
+    echo "${LogsDir} already exists"
 fi
 
-# Check if there is a parameter. If there is it should contain a sublist of
-# the test list for the RealWorld dataset
-if (( $# != 1 )); then
-    # in case no arguments are present then assign the default file with tests
-    TESTSFILE="testslist_realworld.txt"
-else # else use the file in argument 1
-    TESTSFILE=${1}
-fi
-
-# Check if the file $TESTSFILE does exist
-if [ ! -e ${TESTSFILE} ]; then
-    echo "The file \"${TESTSFILE}\" with the testlist does not exist!"
+# Check if the file $TestsFile does exist
+if [ ! -e ${TestsFile} ]; then
+    echo "The file \"${TestsFile}\" with the testlist does not exist!"
     return 2;
 else
     echo "RDF4JSUT will run the following tests on RealWorld dataset"
-    cat ${TESTSFILE}
+    cat ${TestsFile}
 fi
 
 # clear system caches
 sudo /sbin/sysctl vm.drop_caches=3
 # returns all arguments except experiment and
 # executes experiment
-./rdf4j_args_realworld.sh | ./runTestsForRDF4JSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${RDF4JRepoBaseDir}
+echo "-bd \"${RDF4JRepoBaseDir}\" -rp realworld -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -m 60 -l \"${ExperimentResultDir}/RealWorld\" ${Action}" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${RDF4JRepoBaseDir}
 # archive log
-mv ../../geographica*.log ${ExperimentResultDir}/RealWorld/LOGS
+mv ../../geographica*.log ${LogsDir}
 # create report
 ${GeographicaScriptsDir}/createreport.sh ${ExperimentResultDir}/RealWorld

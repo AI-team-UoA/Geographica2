@@ -47,7 +47,7 @@ fi
 LogsDir="${ExperimentResultDir}/Census/LOGS"
 if [ ! -d "${LogsDir}" ]; then
     echo "Will create ${LogsDir}"
-    mkdir -p "${LogsDir}"
+    mkdir -p "${LogsDir}" > /dev/null 2>&1
 else
     echo "${LogsDir} already exists"
 fi
