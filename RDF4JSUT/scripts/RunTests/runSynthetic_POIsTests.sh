@@ -64,7 +64,7 @@ fi
 sudo /sbin/sysctl vm.drop_caches=3
 # returns all arguments except experiment and
 # executes experiment
-echo "-bd \"${RDF4JRepoBaseDir}\" -rp synthetic_pois -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -l \"${ExperimentResultDir}/Synthetic_Pois\" -N 1024 ${Action}" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${RDF4JRepoBaseDir}
+echo "-bd \"${RDF4JRepoBaseDir}\" -rp synthetic_pois -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -l \"${ExperimentResultDir}/Synthetic_Pois\" -N 1024 ${Action}" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TestsFile} ${JVM_Xmx}
 # archive log
 mv ../../geographica*.log ${LogsDir}
 # create report

@@ -69,13 +69,13 @@ sudo /sbin/sysctl vm.drop_caches=3
 # executes experiment MicroSelections
 echo "MicroSelections" > ${TestsFile}
 QueryList="\"7 8\""
-echo "-bd \"${RDF4JRepoBaseDir}\" -rp realworld_points -cr false -dr ${DispRows} -q ${QueryList} -r ${Repetitions} -t 3600 -m 60 -l \"${ExperimentResultDir}/RealWorld_Points\" ${Action}" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${RDF4JRepoBaseDir}
+echo "-bd \"${RDF4JRepoBaseDir}\" -rp realworld_points -cr false -dr ${DispRows} -q ${QueryList} -r ${Repetitions} -t 3600 -m 60 -l \"${ExperimentResultDir}/RealWorld_Points\" ${Action}" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TestsFile} ${JVM_Xmx}
 # archive log
 mv ../../geographica*.log ${LogsDir}
 # executes experiment MicroJoins
 echo "MicroJoins" > ${TestsFile}
 QueryList="\"0\""
-echo "-bd \"${RDF4JRepoBaseDir}\" -rp realworld_points -cr false -dr ${DispRows} -q ${QueryList} -r ${Repetitions} -t 3600 -m 60 -l \"${ExperimentResultDir}/RealWorld_Points\" ${Action}" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx} ${RDF4JRepoBaseDir}
+echo "-bd \"${RDF4JRepoBaseDir}\" -rp realworld_points -cr false -dr ${DispRows} -q ${QueryList} -r ${Repetitions} -t 3600 -m 60 -l \"${ExperimentResultDir}/RealWorld_Points\" ${Action}" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TestsFile} ${JVM_Xmx}
 # archive log
 mv ../../geographica*.log ${LogsDir}
 # create report

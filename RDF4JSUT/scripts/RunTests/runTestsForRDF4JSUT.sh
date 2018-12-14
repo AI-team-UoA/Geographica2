@@ -56,7 +56,7 @@ while read experiment; do
 
     # send completion report signal to listening daemon
     # both IP=${CompletionReportDaemonIP} and Port=${CompletionReportDaemonPort} depend on the daemon setup
-    logEntry="GraphDB experiment \"${experiment}\" completed at "`date --iso-8601='seconds'`
+    logEntry="RDF4J experiment \"${experiment}\" completed at "`date --iso-8601='seconds'`
     nc ${CompletionReportDaemonIP} ${CompletionReportDaemonPort} <<< ${logEntry}
 
     # record hardware description used by the experiment

@@ -77,7 +77,7 @@ for level in "${levels[@]}"; do
         # returns all arguments except experiment and
         # executes experiment
         mkdir -p "${resultsDir}" > /dev/null 2>&1s
-        echo "-bd \"${RDF4JRepoBaseDir}\" -rp ${repo} -cr false -dr ${DispRows} -r ${Repetitions} -uPred ${UsePredicates} -t 86400 -m 60 -l \"${resultsDir}\" ${Action}" | ./runTestsForRDF4JSUT.sh /dev/stdin testslist_scalability.txt ${JVM_Xmx} ${RDF4JRepoBaseDir}
+        echo "-bd \"${RDF4JRepoBaseDir}\" -rp ${repo} -cr false -dr ${DispRows} -r ${Repetitions} -uPred ${UsePredicates} -t 86400 -m 60 -l \"${resultsDir}\" ${Action}" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TestsFile} ${JVM_Xmx}
         # archive log
         mv ../../geographica_Scalability.log ${logFullPathName}
         # create report
