@@ -33,7 +33,7 @@ public class MacroComputeStatisticsQueriesSet extends QueriesSet {
 
 	private List<String> municipalities = null;
 	private String municipalityWKT, municipalityName;
-	private int queriesN = 4; // IMPORTANT: Add/remove queries in getQuery
+	private int queriesN = 3; // IMPORTANT: Add/remove queries in getQuery
 								// implies changing queriesN
 	Random rn;
 
@@ -124,39 +124,8 @@ public class MacroComputeStatisticsQueriesSet extends QueriesSet {
 //						+ "GROUP BY ?fClass ?fCode \n"
 //						;
 				break;	
-
-			case 2:
-				// Auto to query argei polu sto uSeekM (TODO mhpws na to e bgaza h na to 
-				// ekana kai auto me clc:continuousUrbanFabric ????
-				label = "List_GeoNames_categories_per_CLC_category";
-				query = prefixes + "\n"
-						+ "SELECT distinct ?fClass ?clcLandUse \n"
-//						+ "SELECT ?clcLandUse ?fClass ?fCode (COUNT(DISTINCT ?f) as ?count) \n"
-						+ "WHERE { \n"
-						+ "	GRAPH ns:clc { \n"
-						+ "		?clc rdf:type clc:Area. \n"
-						+ "		?clc clc:hasLandUse ?clcLandUse. \n"
-//						+ "		?clc clc:hasLandUse clc:continuousUrbanFabric. \n" 
-						+ "		?clc clc:hasGeometry ?clcGeo. \n"
-						+ "		?clcGeo clc:asWKT ?clcWkt. \n"
-						+ "		FILTER(geof:sfIntersects(?clcWkt, "+municipalityWKT+"^^geo:wktLiteral)). \n"
-						+ "} \n"
-						+ "	GRAPH ns:geonames { \n"
-						+ "		?f rdf:type geonames:Feature. \n"
-						+ "		?f geonames:featureClass ?fClass. \n"
-//						+ "		?f geonames:featureCode ?fCode. \n"
-						+ "		?f geonames:hasGeometry ?fGeo. \n"
-						+ "		?fGeo geonames:asWKT ?fWkt. \n"
-						+ "		FILTER(geof:sfIntersects(?fWkt, "+municipalityWKT+"^^geo:wktLiteral)). \n"						
-						+ " } \n"
-						+ "	FILTER(geof:sfIntersects(?clcWkt, ?fWkt)). \n"
-						+ "} \n"
-//						+ "GROUP BY ?clcLandUse ?fClass ?fCode \n"
-//						+ "GROUP BY ?fClass \n"
-				;
-				break;
 				
-			case 3:
+			case 2:
 				label = "Count_GeoNames_categories_in_ContinuousUrbanFabric";
 				query = prefixes + "\n"
 						+ "SELECT ?fClass (COUNT(DISTINCT ?f) as ?count) \n"

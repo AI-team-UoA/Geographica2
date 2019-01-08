@@ -10,7 +10,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Xmx7g -classpath %classpath gr.uoa.di.rdf.Geographica2.rdf4jsut.RunRdf4J -bd "/media/sf_VM_Shared/PHD/RDF4J_LuceneRepos/server" -rp realworld_points -cr false -dr 0 -q "7 8" -r 3 -t 3600 -m 60 -l "/media/sf_VM_Shared/PHD/Results_Store/VM_Results/RDF4JSUT/83#_2018-12-04_TestRWPoints/RealWorld_Points" print MicroSelections</exec.args>
+                <exec.args>-Xmx7g -classpath %classpath gr.uoa.di.rdf.Geographica2.rdf4jsut.RunRdf4J -bd "/media/sf_VM_Shared/PHD/RDF4J_LuceneRepos/server" -rp scalability_10K -cr false -dr 0 -r 3 -uPred false -t 3600 -m 60 -l "/media/sf_VM_Shared/PHD/Results_Store/VM_Results/RDF4JSUT/89#_2018-12-18_TestScalability/Scalability/10K" run Scalability</exec.args>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
@@ -24,7 +24,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -Xmx7g -classpath %classpath gr.uoa.di.rdf.Geographica2.rdf4jsut.RunRdf4J -bd "/media/sf_VM_Shared/PHD/RDF4J_LuceneRepos/server" -rp realworld_points -cr false -dr 0 -q "7 8" -r 3 -t 3600 -m 60 -l "/media/sf_VM_Shared/PHD/Results_Store/VM_Results/RDF4JSUT/83#_2018-12-04_TestRWPoints/RealWorld_Points" print MicroSelections</exec.args>
+                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -Xmx7g -classpath %classpath gr.uoa.di.rdf.Geographica2.rdf4jsut.RunRdf4J -bd "/media/sf_VM_Shared/PHD/RDF4J_LuceneRepos/server" -rp scalability_10K -cr false -dr 0 -r 3 -uPred false -t 3600 -m 60 -l "/media/sf_VM_Shared/PHD/Results_Store/VM_Results/RDF4JSUT/89#_2018-12-18_TestScalability/Scalability/10K" run Scalability</exec.args>
                 <exec.executable>java</exec.executable>
                 <jpda.listen>true</jpda.listen>
             </properties>
@@ -39,7 +39,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Xmx7g -classpath %classpath gr.uoa.di.rdf.Geographica2.rdf4jsut.RunRdf4J -bd "/media/sf_VM_Shared/PHD/RDF4J_LuceneRepos/server" -rp realworld_points -cr false -dr 0 -q "7 8" -r 3 -t 3600 -m 60 -l "/media/sf_VM_Shared/PHD/Results_Store/VM_Results/RDF4JSUT/83#_2018-12-04_TestRWPoints/RealWorld_Points" print MicroSelections</exec.args>
+                <exec.args>-Xmx7g -classpath %classpath gr.uoa.di.rdf.Geographica2.rdf4jsut.RunRdf4J -bd "/media/sf_VM_Shared/PHD/RDF4J_LuceneRepos/server" -rp scalability_10K -cr false -dr 0 -r 3 -uPred false -t 3600 -m 60 -l "/media/sf_VM_Shared/PHD/Results_Store/VM_Results/RDF4JSUT/89#_2018-12-18_TestScalability/Scalability/10K" run Scalability</exec.args>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>

@@ -64,8 +64,8 @@ if [ ! -e ${TestsFile} ]; then
     cat ${TestsFile}
 fi
 
-#levels=( "10K" )
-levels=(  "10K" "100K" "1M" "10M" )
+levels=( "10K" )
+#levels=(  "10K" "100K" "1M" "10M" )
 #levels=(  "10K" "100K" "1M" "10M" "100M" "500M" )
 for level in "${levels[@]}"; do
         repo="scalability_${level}"
@@ -76,7 +76,7 @@ for level in "${levels[@]}"; do
         # creates/clears ${resultsDir} with no error message
         # returns all arguments except experiment and
         # executes experiment
-        mkdir -p "${resultsDir}" > /dev/null 2>&1s
+        mkdir -p "${resultsDir}" > /dev/null 2>&1
         echo "-bd \"${RDF4JRepoBaseDir}\" -rp ${repo} -cr false -dr ${DispRows} -r ${Repetitions} -uPred ${UsePredicates} -t 86400 -m 60 -l \"${resultsDir}\" ${Action}" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TestsFile} ${JVM_Xmx}
         # archive log
         mv ../../geographica_Scalability.log ${logFullPathName}
