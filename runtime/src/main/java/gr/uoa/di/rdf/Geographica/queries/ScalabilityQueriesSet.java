@@ -95,14 +95,14 @@ public class ScalabilityQueriesSet extends QueriesSet {
 
             case 1:
                 // SC2 - Intensive: Find all features that spatially intersect with other features
-                label = "SC2__Intensive_Geometries_Intersect_Geometries";
+                label = "SC2_Intensive_Geometries_Intersect_Geometries";
                 query = spatialJoinHardQryTemplate;
                 query = query.replace("FUNCTION", "sfIntersects");
                 break;
 
             case 2:
                 // SC3 - Relaxed: Find all features that spatially intersect with other features
-                label = "SC3__Relaxed_Geometries_Intersect_Geometries";
+                label = "SC3_Relaxed_Geometries_Intersect_Geometries";
                 query = spatialJoinEasyQryTemplate;
                 query = query.replace("FUNCTION", "sfIntersects");
                 break;

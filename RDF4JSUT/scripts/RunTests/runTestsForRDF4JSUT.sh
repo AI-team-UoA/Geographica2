@@ -42,6 +42,12 @@ while read experiment; do
     #echo "ARGS = $ARGS"
     # define the run command
     EXEC="java $JAVA_OPTS -cp $CLASS_PATH $MAIN_CLASS ${ARGS}"
+
+    # send start report signal to listening daemon
+    # both IP=${CompletionReportDaemonIP} and Port=${CompletionReportDaemonPort} depend on the daemon setup
+    logEntry="RDF4J experiment \"${experiment}\" started at "`date --iso-8601='seconds'`
+    nc ${CompletionReportDaemonIP} ${CompletionReportDaemonPort} <<< ${logEntry}
+
     # record start time of experiment
     EXPIR_START_TIME=$SECONDS
 
