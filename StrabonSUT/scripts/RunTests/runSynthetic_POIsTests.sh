@@ -19,7 +19,7 @@ else
 fi
 
 # Synthetic_Pois experiment
-experiment="SyntheticPOIs"
+experiment="Synthetic"
 TESTSFILE=${BASE}/"testslist_synthetic_pois.txt"
 
 echo ${experiment} > ${TESTSFILE}
@@ -29,7 +29,7 @@ cat ${TESTSFILE}
 sudo /sbin/sysctl vm.drop_caches=3
 # returns all arguments except experiment and
 # executes experiment
-echo "-h localhost -db synthetic_pois -p 5432 -u postgres -P postgres -r 3 -t 3600 -l \"${ResultsBaseDir}/StrabonSUT/Synthetic_Pois\" -N 1024 run" | ./runTestsForStrabonSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx}
+echo "-h localhost -db synthetic_pois -p 5432 -u postgres -P postgres -q \"12 13 14 15 16 17 18 19 20 21 22 23\" -r 3 -t 3600 -l \"${ResultsBaseDir}/StrabonSUT/Synthetic_Pois\" -N 1024 run" | ./runTestsForStrabonSUT.sh /dev/stdin ${TESTSFILE} ${JVM_Xmx}
 
 # archive log
 mv ../../geographica*.log ${ResultsBaseDir}/StrabonSUT/Synthetic_Pois/LOGS

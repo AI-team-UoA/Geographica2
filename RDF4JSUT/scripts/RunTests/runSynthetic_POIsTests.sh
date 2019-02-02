@@ -55,7 +55,7 @@ fi
 # Check if the file $TestsFile does exist
 if [ ! -e ${TestsFile} ]; then
     echo "The file \"${TestsFile}\" with the testlist does not exist!"
-    echo "SyntheticPOIs" > ${TestsFile}
+    echo "Synthetic" > ${TestsFile}
     echo "RDF4JSUT will run the following tests on Synthetic_Pois dataset"
     cat ${TestsFile}
 fi
@@ -64,7 +64,7 @@ fi
 sudo /sbin/sysctl vm.drop_caches=3
 # returns all arguments except experiment and
 # executes experiment
-echo "-bd \"${RDF4JRepoBaseDir}\" -rp synthetic_pois -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -l \"${ExperimentResultDir}/Synthetic_Pois\" -N 1024 ${Action}" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TestsFile} ${JVM_Xmx}
+echo "-bd \"${RDF4JRepoBaseDir}\" -rp synthetic_pois -q \"12 13 14 15 16 17 18 19 20 21 22 23\" -cr false -dr ${DispRows} -r ${Repetitions} -t 3600 -l \"${ExperimentResultDir}/Synthetic_Pois\" -N 1024 ${Action}" | ./runTestsForRDF4JSUT.sh /dev/stdin ${TestsFile} ${JVM_Xmx}
 # archive log
 mv ../../geographica*.log ${LogsDir}
 # create report
