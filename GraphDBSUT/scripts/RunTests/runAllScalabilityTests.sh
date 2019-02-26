@@ -64,8 +64,8 @@ if [ ! -e ${TestsFile} ]; then
     cat ${TestsFile}
 fi
 
-#levels=( "10K" )
-levels=(  "10K" "100K" "1M" "10M" )
+levels=( "1M" )
+#levels=(  "10K" "100K" "1M" "10M" )
 #levels=(  "10K" "100K" "1M" "10M" "100M" "500M" )
 for level in "${levels[@]}"; do
         repo="scalability_${level}"

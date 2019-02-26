@@ -5,6 +5,8 @@
  */
 package gr.uoa.di.rdf.Geographica2.graphdbsut;
 
+import com.ontotext.trree.plugin.notifications.NotifyingOwlimConnection;
+import com.ontotext.trree.plugin.notifications.RepositoryNotificationsListener;
 import gr.uoa.di.rdf.Geographica2.systemsundertest.SystemUnderTest;
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -22,7 +24,10 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import org.apache.log4j.Logger;
+import org.eclipse.rdf4j.model.IRI;
+import org.eclipse.rdf4j.model.Literal;
 import org.eclipse.rdf4j.model.Resource;
+import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.model.impl.TreeModel;
 import org.eclipse.rdf4j.model.util.Models;
@@ -43,6 +48,7 @@ import org.eclipse.rdf4j.repository.config.RepositoryConfig;
 import org.eclipse.rdf4j.repository.config.RepositoryConfigException;
 import org.eclipse.rdf4j.repository.config.RepositoryConfigSchema;
 import org.eclipse.rdf4j.repository.manager.LocalRepositoryManager;
+import org.eclipse.rdf4j.repository.sparql.query.SPARQLUpdate;
 import org.eclipse.rdf4j.rio.*;
 import org.eclipse.rdf4j.rio.RDFParser;
 import org.eclipse.rdf4j.rio.Rio;
@@ -67,6 +73,25 @@ public class GraphDBSUT implements SystemUnderTest {
     ** Similar to Strabon, encapsulates key objects of GraphDB
      */
     public static class GraphDB {
+
+        // ---------------- Static Mmebers & Methods ---------------------------
+        private static String[] GeoSPARQLPluginDDLQueries = new String[]{
+            // Q1: Configure plugin with geohash, precision 9 (lower precision than 11 as requested by Ontotext)
+            "PREFIX : <http://www.ontotext.com/plugins/geosparql#> \n" +
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" +
+            "INSERT DATA { _:s :enabled \"true\" .  } ; \n" +
+            "INSERT DATA { _:s :prefixTree \"geohash\"; :precision \"10\". }",
+            // Q2: Enable plugin
+            "PREFIX : <http://www.ontotext.com/plugins/geosparql#>\n "
+            + "INSERT DATA {\n "
+            + "  _:s :enabled \"true\" .\n "
+            + "}",
+            // Q3: Disable plugin
+            "PREFIX : <http://www.ontotext.com/plugins/geosparql#>\n "
+            + "INSERT DATA {\n "
+            + "  _:s :enabled \"false\" .\n "
+            + "}"
+        };
 
         static final String EMPTY_TEMPLATE_TTL
                 = "/home/tioannid/NetBeansProjects/PhD/Geographica/GraphDBSUT/graphdb-free_template.ttl";
@@ -213,6 +238,84 @@ public class GraphDBSUT implements SystemUnderTest {
                 }
                 logger.info("[GraphDB.close] Connection closed.");
             }
+        }
+
+        // Execute GeoSPARQL DDL Query in <repoDir> 
+        public static long excGeoSPARQLDDLQuery(String baseDirString, String repositoryId, int queryNo) {
+            String queryString = GeoSPARQLPluginDDLQueries[(queryNo <= GeoSPARQLPluginDDLQueries.length) ? queryNo - 1 : 0];
+            long start = System.currentTimeMillis();
+            // create a new LocalRepositoryManager in <baseDirString>
+            File baseDir = new File(baseDirString);
+            LocalRepositoryManager manager = new LocalRepositoryManager(baseDir);
+            manager.initialize();
+            // request the repository <repoId> back from the LocalRepositoryManager
+            Repository repository = null;
+            try {
+                repository = manager.getRepository(repositoryId);
+                repository.initialize();
+            } catch (RepositoryException | RepositoryConfigException e) {
+                logger.error(e.getMessage());
+            }
+            // Open a connection to the database
+//            RepositoryNotificationsListener listener = null;
+//            NotifyingOwlimConnection nConn = null;
+            RepositoryConnection conn = null;
+            try {
+                conn = repository.getConnection();
+                
+//                listener = new RepositoryNotificationsListener() {
+//
+//                    @Override
+//                    public void transactionStarted(long tid) {
+//                        System.out.println("Started transaction " + tid);
+//                    }
+//
+//                    @Override
+//                    public void transactionComplete(long tid) {
+//                        System.out.println("Finished transaction " + tid);
+//                    }
+//
+//                    @Override
+//                    public void addStatement(Resource rsrc, IRI iri, Value value, Resource rsrc1, boolean bln, long l) {
+//                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                    }
+//
+//                    @Override
+//                    public void removeStatement(Resource rsrc, IRI iri, Value value, Resource rsrc1, boolean bln, long l) {
+//                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                    }
+//                };
+//
+//                nConn = new NotifyingOwlimConnection(conn);
+//                IRI _s = SimpleValueFactory.getInstance().createIRI("_:s");
+//                IRI _enabled = SimpleValueFactory.getInstance().createIRI(":enabled");
+//                Literal _true = SimpleValueFactory.getInstance().createLiteral("\"true\"");
+//                // subscribe for statements 
+//                nConn.subscribe(listener, null, null, _true);
+
+                conn.begin();
+                Update updateQuery = conn.prepareUpdate(QueryLanguage.SPARQL, queryString);
+                // System.out.println(queryString + "\n");
+                updateQuery.execute();
+                conn.commit();
+            } catch (UpdateExecutionException e) {
+                logger.error(e.getMessage());
+                conn.rollback();
+            } catch (MalformedQueryException | RepositoryException e) {
+                logger.error(e.getMessage());
+                conn.rollback();
+            
+            }
+            finally {
+                // before our program exits, make sure the database is properly shut down.
+                try {
+                    repository.shutDown();
+
+                } catch (RepositoryException e) {
+                    logger.error(e.getMessage());
+                }
+            }
+            return (System.currentTimeMillis() - start);
         }
     }
 

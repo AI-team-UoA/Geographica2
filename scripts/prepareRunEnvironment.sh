@@ -45,7 +45,7 @@ if [ "$Environment" == "VM" ]; then
     export CompletionReportDaemonIP="127.0.0.1"
     export CompletionReportDaemonPort="3333"
     # GraphDBSUT only
-    export GraphDBBaseDir="/home/tioannid/graphdb-free-8.6.1"
+    export GraphDBBaseDir="/home/tioannid/graphdb-free-8.8.1"
     # RDF4JSUT only
     export JVM_Xmx="-Xmx16g"
     export RDF4JRepoBaseDir="/media/sf_VM_Shared/PHD/RDF4J_LuceneRepos/server"
@@ -62,7 +62,7 @@ else
     export CompletionReportDaemonIP="10.0.10.13" # TELEIO4
     export CompletionReportDaemonPort="3333"
     # GraphDBSUT only
-    export GraphDBBaseDir="/home/journal/graphdb-free-8.6.1"
+    export GraphDBBaseDir="/home/journal/graphdb-free-8.8.1"
     # RDF4JSUT only
     export JVM_Xmx="-Xmx24g"
     export RDF4JRepoBaseDir="/home/journal/RDF4J_LuceneRepos/server"

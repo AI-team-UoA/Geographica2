@@ -131,4 +131,18 @@ nc ${CompletionReportDaemonIP} ${CompletionReportDaemonPort} <<< ${logEntry}
 # print repository size in MB
 echo -e "GraphDB repository \"${RepoDir}/\" has size: `du -hs -BM ${RepoDir} | cut -d 'M' -f 1`MB"
 
+#exit 0;
+
+# enable the GeoSPARQL plugin on the repo
+LOG4J_CONFIGURATION=${BASE}/../../../runtime/src/main/resources/log4j.properties
+echo "LOG4J_CONFIGURATION = $LOG4J_CONFIGURATION"
+JAVA_OPTS="${JVM_Xmx} -Dregister-external-plugins=${GraphDBBaseDir}/lib/plugins -Dlog4j.configuration=file:${LOG4J_CONFIGURATION}"
+echo "JAVA_OPTS = $JAVA_OPTS"
+cd ${BASE}/../../target
+pwd
+CLASS_PATH="$(for file in `ls -1 *.jar`; do myVar=$myVar./$file":"; done;echo $myVar;)"
+MAIN_CLASS="gr.uoa.di.rdf.Geographica2.graphdbsut.RepoUtil"
+EXEC_QUERY_REPO="java $JAVA_OPTS -cp $CLASS_PATH $MAIN_CLASS plugin-enable \"${GraphDBDataDir}\" $RepoName"
+echo $EXEC_QUERY_REPO
+eval ${EXEC_QUERY_REPO}
 exit 0
