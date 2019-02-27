@@ -79,6 +79,7 @@ public class GraphDBSUT implements SystemUnderTest {
             // Q1: Configure plugin with geohash, precision 9 (lower precision than 11 as requested by Ontotext)
             "PREFIX : <http://www.ontotext.com/plugins/geosparql#> \n" +
             "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" +
+            "INSERT DATA { _:s :ignoreErrors \"true\" } ; \n" +
             "INSERT DATA { _:s :enabled \"true\" .  } ; \n" +
             "INSERT DATA { _:s :prefixTree \"geohash\"; :precision \"10\". }",
             // Q2: Enable plugin

@@ -133,6 +133,8 @@ echo -e "GraphDB repository \"${RepoDir}/\" has size: `du -hs -BM ${RepoDir} | c
 
 #exit 0;
 
+sudo /sbin/sysctl vm.drop_caches=3
+
 # enable the GeoSPARQL plugin on the repo
 LOG4J_CONFIGURATION=${BASE}/../../../runtime/src/main/resources/log4j.properties
 echo "LOG4J_CONFIGURATION = $LOG4J_CONFIGURATION"
