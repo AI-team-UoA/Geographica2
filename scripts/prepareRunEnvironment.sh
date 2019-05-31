@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Example execution from within a Geographica/scripts subfolder in TELEIOS3
-# source ./prepareRunEnvironment.sh teleios3 `hg parents | head -1 | cut -d ":" -f2`
+# source ./prepareRunEnvironment.sh teleios3 `hg parents | head -1 | cut -d ":" -f2` GraphDBSUT "run graphdb tests"
 
 # SYNTAX :
 #    <script> environment
