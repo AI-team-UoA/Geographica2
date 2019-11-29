@@ -14,7 +14,7 @@
 
     <properties>
         <sesame.version>2.6.3</sesame.version>
-        <rdf4j.version>2.5.5</rdf4j.version>
+        <rdf4j.version>2.5.2</rdf4j.version>
         <geotools.version>2.7.2</geotools.version>
         <aduna.appbase.version>3.5.0</aduna.appbase.version>
         <jts.version>1.11</jts.version>

@@ -10,7 +10,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Dregister-external-plugins=/home/tioannid/graphdb-free-8.8.1/lib/plugins -classpath %classpath gr.uoa.di.rdf.Geographica2.graphdbsut.RepoUtil plugin-enable "/media/sf_VM_Shared/PHD/GraphDB_881_Repos" scalability_100K</exec.args>
+                <exec.args>-Dregister-external-plugins=/media/sf_VM_Shared/PHD/graphdb-free-8.11.1/lib/plugins -classpath %classpath gr.uoa.di.rdf.Geographica2.graphdbsut.RepoUtil true quad 20 "/media/sf_VM_Shared/PHD/GraphDB_8111/Repos" scalability_10K</exec.args>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
@@ -24,7 +24,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -Dregister-external-plugins=/home/tioannid/graphdb-free-8.8.1/lib/plugins -classpath %classpath gr.uoa.di.rdf.Geographica2.graphdbsut.RepoUtil plugin-enable "/media/sf_VM_Shared/PHD/GraphDB_881_Repos" scalability_100K</exec.args>
+                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -Dregister-external-plugins=/media/sf_VM_Shared/PHD/graphdb-free-8.11.1/lib/plugins -classpath %classpath gr.uoa.di.rdf.Geographica2.graphdbsut.RepoUtil true quad 20 "/media/sf_VM_Shared/PHD/GraphDB_8111/Repos" scalability_10K</exec.args>
                 <exec.executable>java</exec.executable>
                 <jpda.listen>true</jpda.listen>
             </properties>
@@ -39,7 +39,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Dregister-external-plugins=/home/tioannid/graphdb-free-8.8.1/lib/plugins -classpath %classpath gr.uoa.di.rdf.Geographica2.graphdbsut.RepoUtil plugin-enable "/media/sf_VM_Shared/PHD/GraphDB_881_Repos" scalability_100K</exec.args>
+                <exec.args>-Dregister-external-plugins=/media/sf_VM_Shared/PHD/graphdb-free-8.11.1/lib/plugins -classpath %classpath gr.uoa.di.rdf.Geographica2.graphdbsut.RepoUtil true quad 20 "/media/sf_VM_Shared/PHD/GraphDB_8111/Repos" scalability_10K</exec.args>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
