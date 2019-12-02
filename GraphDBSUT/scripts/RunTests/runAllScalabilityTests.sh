@@ -1,6 +1,6 @@
 #!/bin/bash
 # SYNTAX :
-#    <script> action repetitions
+#    <script> action repetitions disprows usePredicates testsfile
 SCRIPT_NAME=`basename "$0"`
 SYNTAX="
 SYNTAX: $SCRIPT_NAME action repetitions disprows testsfile
@@ -64,7 +64,7 @@ if [ ! -e ${TestsFile} ]; then
     cat ${TestsFile}
 fi
 
-levels=( "1M" )
+levels=( "10K" )
 #levels=(  "10K" "100K" "1M" "10M" )
 #levels=(  "10K" "100K" "1M" "10M" "100M" "500M" )
 for level in "${levels[@]}"; do

@@ -45,9 +45,9 @@ if [ "$Environment" == "VM" ]; then
     export CompletionReportDaemonIP="127.0.0.1"
     export CompletionReportDaemonPort="3333"
     # GraphDBSUT only
-    export GraphDBBaseDir="/home/tioannid/graphdb-free-8.8.1"
+    export GraphDBBaseDir="/media/sf_VM_Shared/PHD/graphdb-free-8.11.1"
     # RDF4JSUT only
-    export JVM_Xmx="-Xmx16g"
+    export JVM_Xmx="-Xmx8g"
     export RDF4JRepoBaseDir="/media/sf_VM_Shared/PHD/RDF4J_LuceneRepos/server"
     # StrabonSUT only
     export StrabonBaseDir="/home/tioannid/NetBeansProjects/PhD/Strabon"
@@ -82,6 +82,12 @@ export GraphDBDataDir="${matchedLine##*= }"
 if [ -z ${GraphDBDataDir} ]; then
         export GraphDBDataDir="${GraphDBBaseDir}/data"
 fi
+
+# GraphDB dependent, environment independent
+export EnableGeoSPARQLPlugin=false
+export IndexingAlgorithm=geohash
+export IndexingPrecision=11
+
 
 # define Results base directory
 export ExperimentResultDir="${ResultsBaseDir}/${ActiveSUT}/${ResultsDirName}"

@@ -5,8 +5,6 @@
  */
 package gr.uoa.di.rdf.Geographica2.graphdbsut;
 
-import com.ontotext.trree.plugin.notifications.NotifyingOwlimConnection;
-import com.ontotext.trree.plugin.notifications.RepositoryNotificationsListener;
 import gr.uoa.di.rdf.Geographica2.systemsundertest.SystemUnderTest;
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -24,10 +22,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import org.apache.log4j.Logger;
-import org.eclipse.rdf4j.model.IRI;
-import org.eclipse.rdf4j.model.Literal;
 import org.eclipse.rdf4j.model.Resource;
-import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.model.impl.TreeModel;
 import org.eclipse.rdf4j.model.util.Models;
@@ -48,7 +43,6 @@ import org.eclipse.rdf4j.repository.config.RepositoryConfig;
 import org.eclipse.rdf4j.repository.config.RepositoryConfigException;
 import org.eclipse.rdf4j.repository.config.RepositoryConfigSchema;
 import org.eclipse.rdf4j.repository.manager.LocalRepositoryManager;
-import org.eclipse.rdf4j.repository.sparql.query.SPARQLUpdate;
 import org.eclipse.rdf4j.rio.*;
 import org.eclipse.rdf4j.rio.RDFParser;
 import org.eclipse.rdf4j.rio.Rio;
@@ -76,22 +70,23 @@ public class GraphDBSUT implements SystemUnderTest {
 
         // ---------------- Static Mmebers & Methods ---------------------------
         private static String[] GeoSPARQLPluginDDLQueries = new String[]{
-            // Q1: Configure plugin with geohash, precision 9 (lower precision than 11 as requested by Ontotext)
-            "PREFIX : <http://www.ontotext.com/plugins/geosparql#> \n" +
-            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" +
-            "INSERT DATA { _:s :ignoreErrors \"true\" } ; \n" +
-            "INSERT DATA { _:s :enabled \"true\" .  } ; \n" +
-            "INSERT DATA { _:s :prefixTree \"geohash\"; :precision \"10\". }",
+            // Q1: Configure GeoSPARQL plugin
+            "PREFIX : <http://www.ontotext.com/plugins/geosparql#>"
+            + "\n INSERT DATA { _:s :ignoreErrors \"true\" . };"
+            + "\n INSERT DATA { _:s :enabled \"true\" . };"
+            + "\n INSERT DATA { _:s :prefixTree \"<<algorithm>>\"; :precision \"@@precision@@\" . }",
             // Q2: Enable plugin
-            "PREFIX : <http://www.ontotext.com/plugins/geosparql#>\n "
-            + "INSERT DATA {\n "
-            + "  _:s :enabled \"true\" .\n "
-            + "}",
+             "PREFIX : <http://www.ontotext.com/plugins/geosparql#>"
+            + "\n INSERT DATA { _:s :enabled \"true\" . }",
             // Q3: Disable plugin
-            "PREFIX : <http://www.ontotext.com/plugins/geosparql#>\n "
-            + "INSERT DATA {\n "
-            + "  _:s :enabled \"false\" .\n "
-            + "}"
+             "PREFIX : <http://www.ontotext.com/plugins/geosparql#>"
+            + "\n INSERT DATA { _:s :enabled \"false\" . }",
+            // Q4: Force reindex geometry data
+            //     usually used after a configuration change or when index files
+            //     are either corrupted or have been mistakenly deleted
+             "PREFIX : <http://www.ontotext.com/plugins/geosparql#>"
+            + "\n INSERT DATA {_:s :forceReindex . }"
+
         };
 
         static final String EMPTY_TEMPLATE_TTL
@@ -241,19 +236,46 @@ public class GraphDBSUT implements SystemUnderTest {
             }
         }
 
+        // Execute GeoSPARQL Update the current configuration
+        public static long execGeoSPARQL_UpdateConfiguration(String indexingAlgorith, int indexingPrecision, String baseDirString, String repositoryId) {
+            String queryString = GeoSPARQLPluginDDLQueries[0];
+            // we need to dynamically replace the indexing algorithm and precision
+            queryString = queryString.replace("<<algorithm>>", indexingAlgorith);
+            queryString = queryString.replace("@@precision@@", String.valueOf(indexingPrecision));
+            return execQuery(baseDirString, repositoryId, queryString);
+        }
+
+        // Execute GeoSPARQL Enable plugin
+        public static long execGeoSPARQL_EnablePlugin(String baseDirString, String repositoryId) {
+            String queryString = GeoSPARQLPluginDDLQueries[1];
+            return execQuery(baseDirString, repositoryId, queryString);
+        }
+
+        // Execute GeoSPARQL Enable plugin
+        public static long execGeoSPARQL_DisablePlugin(String baseDirString, String repositoryId) {
+            String queryString = GeoSPARQLPluginDDLQueries[2];
+            return execQuery(baseDirString, repositoryId, queryString);
+        }
+
+        // Execute GeoSPARQL Enable plugin
+        public static long execGeoSPARQL_ForceReindex(String baseDirString, String repositoryId) {
+            String queryString = GeoSPARQLPluginDDLQueries[3];
+            return execQuery(baseDirString, repositoryId, queryString);
+        }
+
         // Execute GeoSPARQL DDL Query in <repoDir> 
-        public static long excGeoSPARQLDDLQuery(String baseDirString, String repositoryId, int queryNo) {
-            String queryString = GeoSPARQLPluginDDLQueries[(queryNo <= GeoSPARQLPluginDDLQueries.length) ? queryNo - 1 : 0];
+        public static long execQuery(String baseDirString, String repositoryId, String query) {
+
             long start = System.currentTimeMillis();
             // create a new LocalRepositoryManager in <baseDirString>
             File baseDir = new File(baseDirString);
             LocalRepositoryManager manager = new LocalRepositoryManager(baseDir);
-            manager.initialize();
+            manager.init();
             // request the repository <repoId> back from the LocalRepositoryManager
             Repository repository = null;
             try {
                 repository = manager.getRepository(repositoryId);
-                repository.initialize();
+                repository.init();
             } catch (RepositoryException | RepositoryConfigException e) {
                 logger.error(e.getMessage());
             }
@@ -263,7 +285,7 @@ public class GraphDBSUT implements SystemUnderTest {
             RepositoryConnection conn = null;
             try {
                 conn = repository.getConnection();
-                
+
 //                listener = new RepositoryNotificationsListener() {
 //
 //                    @Override
@@ -293,10 +315,9 @@ public class GraphDBSUT implements SystemUnderTest {
 //                Literal _true = SimpleValueFactory.getInstance().createLiteral("\"true\"");
 //                // subscribe for statements 
 //                nConn.subscribe(listener, null, null, _true);
-
                 conn.begin();
-                Update updateQuery = conn.prepareUpdate(QueryLanguage.SPARQL, queryString);
-                // System.out.println(queryString + "\n");
+                Update updateQuery = conn.prepareUpdate(QueryLanguage.SPARQL, query);
+                logger.info("Executing query : " + query + "\n");
                 updateQuery.execute();
                 conn.commit();
             } catch (UpdateExecutionException e) {
@@ -305,9 +326,8 @@ public class GraphDBSUT implements SystemUnderTest {
             } catch (MalformedQueryException | RepositoryException e) {
                 logger.error(e.getMessage());
                 conn.rollback();
-            
-            }
-            finally {
+
+            } finally {
                 // before our program exits, make sure the database is properly shut down.
                 try {
                     repository.shutDown();
