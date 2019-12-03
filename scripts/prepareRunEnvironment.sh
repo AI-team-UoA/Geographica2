@@ -48,7 +48,7 @@ if [ "$Environment" == "VM" ]; then
     export GraphDBBaseDir="/media/sf_VM_Shared/PHD/graphdb-free-8.11.1"
     # RDF4JSUT only
     export JVM_Xmx="-Xmx8g"
-    export RDF4JRepoBaseDir="/media/sf_VM_Shared/PHD/RDF4J_LuceneRepos/server"
+    export RDF4JRepoBaseDir="/media/sf_VM_Shared/PHD/RDF4J_252_Repos/server"
     # StrabonSUT only
     export StrabonBaseDir="/home/tioannid/NetBeansProjects/PhD/Strabon"
     export StrabonLoaderBaseDir="/home/tioannid/NetBeansProjects/PhD/StrabonLoader"
@@ -65,7 +65,7 @@ else
     export GraphDBBaseDir="/home/journal/graphdb-free-8.8.1"
     # RDF4JSUT only
     export JVM_Xmx="-Xmx24g"
-    export RDF4JRepoBaseDir="/home/journal/RDF4J_LuceneRepos/server"
+    export RDF4JRepoBaseDir="/home/journal/RDF4J_252_Repos/server"
     # StrabonSUT only
     export StrabonBaseDir="/home/journal/Strabon"
     export StrabonLoaderBaseDir="/home/journal/StrabonLoader"

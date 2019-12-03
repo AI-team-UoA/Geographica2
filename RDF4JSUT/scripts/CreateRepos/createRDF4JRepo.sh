@@ -1,17 +1,19 @@
 # SYNTAX :
-#    <script> repoDir repoId repoIndexes RDFFileType tripleFileDir -Xmx
+#    <script> repoDir repoId removeFlag repoIndexes RDFFileType RDFDir -Xmx hasLucene wktIdxList ReportDaemonIP ReportDaemonPort
 SCRIPT_NAME=`basename "$0"`
 SYNTAX="
-SYNTAX: $SCRIPT_NAME <repoDir> <repoId> <removeFlag> <repoIndexes> <RDFFileType> <tripleFileDir> <-Xmx> <hasLucene> <wktIdxList>
+SYNTAX: $SCRIPT_NAME <repoDir> <repoId> <removeFlag> <repoIndexes> <RDFFileType> <RDFDir> <-Xmx> <hasLucene> <wktIdxList> <ReportDaemonIP> <ReportDaemonPort>
 \t<repoDir>\t:\tdirectory where repo will be stored (usually the base dir),
 \t<repoId>\t:\trepository Id,
 \t<removeFlag>\t:\tremove repository if it exists,
 \t<repoIndexes>\t:\tindexes to create for the repo,
 \t<RDFFileType>\t:\tRDF file type,
-\t<tripleFileDir>\t:\tdirectory for RDF triple files to load,
+\t<RDFDir>\t:\tdirectory for RDF triple files to load,
 \t<-Xmx>\t\t:\tJVM max memory e.g. -Xmx6g
 \t<hasLucene>\t:\thas Lucene support
-\t<wktIdxList>\t:\tWKT Index List"
+\t<wktIdxList>\t:\tWKT Index List,
+\tReportDaemonIP\t:\treport daemon IP,
+\tReportDaemonPort\t:\treport daemon port"
 
 MAP_CONTEXTS_FILE="map_to_contexts.txt"
 
@@ -22,7 +24,7 @@ MAP_CONTEXTS_FILE=$BASE/$MAP_CONTEXTS_FILE
 
 # STEP 1: Validate the script's syntax
 #      1.1: check number of arguments
-if (( $# != 9 )); then
+if (( $# != 11 )); then
     echo -e "Illegal number of parameters $SYNTAX"
 	exit 1
 fi
@@ -38,17 +40,21 @@ RepoIndexes=$4
 #echo $RepoIndexes
 RDFFileType=${5^^}
 #echo $RDFFileType
-TripleFileDir=$6
-#echo $TripleFileDir
+RDFDir=$6
+#echo $RDFDir
 JVM_Xmx=$7
 #echo $JVM_Xmx
 HasLucene=$8
 #echo $HasLucene
 WKTIdxList=$9
 #echo $WKTIdxList
+ReportDaemonIP=$10
+#echo "ReportDaemonIP = $ReportDaemonIP"
+ReportDaemonPort=$11
+#echo "ReportDaemonPort = $ReportDaemonPort"
 
 #      1.3: check whether the directory (<fileDir>) do not exist
-dirs=(  "$TripleFileDir" )
+dirs=(  "$RDFDir" )
 for dir in "${dirs[@]}"; do
 	if [ ! -d "$dir" ]; then
 		echo -e "Directory \"$dir\" does not exist.\nNo Triple files to load!"
@@ -92,9 +98,9 @@ EXEC_CREATE_REPO="java $JAVA_OPTS -cp $CLASS_PATH $MAIN_CLASS createman \"$RepoD
 #echo $EXEC_CREATE_REPO
 
 
-# STEP 4: For the directory $TripleFileDir create TRIG from N-Triple files
+# STEP 4: For the directory $RDFDir create TRIG from N-Triple files
 #      4.1: change working directory to $NtripleDir
-cd $TripleFileDir
+cd $RDFDir
 #      4.2: if $RDFFileType is TRIG, convert N-Triples to TRIG
 if [ "${RDFFileType}" = "TRIG" ]; then
     #      4.2.1: check if $MAP_CONTEXTS_FILE file exists
@@ -130,17 +136,22 @@ fi
 # change to the ../target directory to more easily create the classpath
 cd ${BASE}/../../target
 # define the run command to LOAD RDF FILES FROM DIR TO REPO
-EXEC_LOAD_REPO="java $JAVA_OPTS -cp $CLASS_PATH $MAIN_CLASS dirloadman \"$RepoDir\" \"$RepoID\" \"$RDFFileType\" \"$TripleFileDir\" true"
+EXEC_LOAD_REPO="java $JAVA_OPTS -cp $CLASS_PATH $MAIN_CLASS dirloadman \"$RepoDir\" \"$RepoID\" \"$RDFFileType\" \"$RDFDir\" true"
 #echo $EXEC_LOAD_REPO
 
-# execute commnads
+# execute commnads - Create repo
 eval ${EXEC_CREATE_REPO}
-eval ${EXEC_LOAD_REPO}
-
 # send completion report signal to listening daemon
-# both IP=${CompletionReportDaemonIP} and Port=${CompletionReportDaemonPort} depend on the daemon setup
+# both IP=${ReportDaemonIP} and Port=${ReportDaemonPort} depend on the daemon setup
 logEntry="RDF4J repo \"${RepoID}\" creation completed at "`date --iso-8601='seconds'`
-nc ${CompletionReportDaemonIP} ${CompletionReportDaemonPort} <<< ${logEntry}
+nc ${ReportDaemonIP} ${ReportDaemonPort} <<< ${logEntry}
+
+# execute commnads - Load repo
+eval ${EXEC_LOAD_REPO}
+# send completion report signal to listening daemon
+# both IP=${ReportDaemonIP} and Port=${ReportDaemonPort} depend on the daemon setup
+logEntry="RDF4J repo \"${RepoID}\" loading completed at "`date --iso-8601='seconds'`
+nc ${ReportDaemonIP} ${ReportDaemonPort} <<< ${logEntry}
 
 
 # print repository size in MB

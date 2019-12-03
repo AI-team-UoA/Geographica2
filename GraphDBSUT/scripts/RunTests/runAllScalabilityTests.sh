@@ -3,7 +3,7 @@
 #    <script> action repetitions disprows usePredicates testsfile
 SCRIPT_NAME=`basename "$0"`
 SYNTAX="
-SYNTAX: $SCRIPT_NAME action repetitions disprows testsfile
+SYNTAX: $SCRIPT_NAME action repetitions disprows usePredicates testsfile
 \action\t:\taction = {run | print},
 \repetitions\t:\trepetitions (1..3)
 \disprows\t:\tdisplayed rows (0..n)

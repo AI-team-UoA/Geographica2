@@ -18,7 +18,7 @@ if (( $# != 7 )); then
     # globally ! Please check and then exit if necessary
     if [ -z ${DatasetBaseDir+x} ] || [ -z ${GraphDBBaseDir+x} ] || [ -z ${EnableGeoSPARQLPlugin+x} ] || [ -z ${IndexingAlgorithm+x} ] || [ -z ${IndexingPrecision+x} ] || [ -z ${CompletionReportDaemonIP+x} ] || [ -z ${CompletionReportDaemonPort+x} ] ; then
         echo -e "Illegal number of parameters $SYNTAX"
-	echo "some or all of the following environment variables {DatasetBaseDir, GraphDBBaseDir, EnableGeoSPARQLPlugin, IndexingAlgorithm, IndexingPrecision} is/are not set";
+	echo "some or all of the following environment variables {DatasetBaseDir, GraphDBBaseDir, EnableGeoSPARQLPlugin, IndexingAlgorithm, IndexingPrecision, ReportDaemonIP, ReportDaemonPort} is/are not set";
 	return 1    # return instead of exit because we need to source the script
     fi
 else
@@ -28,8 +28,8 @@ else
     export EnableGeoSPARQLPlugin=${3}
     export IndexingAlgorithm=${4}
     export IndexingPrecision=${5}
-    export ReportDaemonIP=${6}
-    export ReportDaemonPort=${7}
+    export CompletionReportDaemonIP=${6}
+    export CompletionReportDaemonPort=${7}
 fi
 
 echo -e "`date`\n"
