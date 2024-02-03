@@ -1,0 +1,13 @@
+edu/lehigh/swat/bench/ubt/api/RepositoryFactory.class
+edu/lehigh/swat/bench/ubt/KbConfigParser.class
+edu/lehigh/swat/bench/ubt/api/QueryResult.class
+edu/lehigh/swat/bench/ubt/QuerySpecification.class
+edu/lehigh/swat/bench/ubt/ConfigParser.class
+edu/lehigh/swat/bench/ubt/QueryConfigParser.class
+edu/lehigh/swat/bench/ubt/RepositoryCreator.class
+edu/lehigh/swat/bench/ubt/api/Repository.class
+edu/lehigh/swat/bench/ubt/QueryTestResult.class
+edu/lehigh/swat/bench/ubt/api/Query.class
+edu/lehigh/swat/bench/ubt/api/Atom.class
+edu/lehigh/swat/bench/ubt/KbSpecification.class
+edu/lehigh/swat/bench/ubt/Test.class

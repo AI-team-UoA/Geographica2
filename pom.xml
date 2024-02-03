@@ -27,7 +27,7 @@
 
 
     <!-- Repositories -->
-    <repositories>
+<!--    <repositories>
         <repository>
             <releases>
                 <enabled>true</enabled>
@@ -127,8 +127,54 @@
             <id>public.opensahara.com</id>
             <url>http://dev.opensahara.com/nexus/content/groups/public/</url>
         </repository>
-    </repositories>
+    </repositories>-->
 
+    <repositories>
+        
+        <repository>
+            <id>jena</id>
+            <name>Apache Jena repository</name>
+            <url>https://repository.apache.org/content/repositories/releases/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+
+        <repository>
+            <id>maven2-repository.dev.java.net</id>
+            <name>Java.net repository</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+        
+        <repository>
+            <id>osgeo</id>
+            <name>OSGeo Release Repository</name>
+            <url>https://repo.osgeo.org/repository/release/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+
+        <repository>
+            <id>osgeo-snapshot</id>
+            <name>OSGeo Snapshot Repository</name>
+            <url>https://repo.osgeo.org/repository/snapshot/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        
+    </repositories>
+    
     <build>
         <plugins>
             <!-- Enable generics -->
